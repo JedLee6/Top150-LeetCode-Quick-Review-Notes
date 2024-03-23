@@ -73,6 +73,12 @@ Once the loop finishes, the value of `j` represents the length of the resulting 
 
 Finally, we return `j` as the desired result.
 
+## Complexity
+
+- Time complexity: O(n)
+
+- Space complexity: O(1)
+
 ## Code
 
 ```java

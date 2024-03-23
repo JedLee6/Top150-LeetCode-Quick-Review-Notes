@@ -39,6 +39,8 @@ The intuition behind this approach is that if an element occurs more than n/2 ti
    - This is because the majority element occurs more than n/2 times, and when the array is sorted, it will occupy the middle position.
 3. The code returns the element at index `n/2` as the majority element.
 
+## Complexity
+
 The time complexity of this approach is O(n log n) since sorting an array of size n takes O(n log n) time.
 
 ## Code
@@ -71,6 +73,8 @@ Explanation:
    - If the count is greater than `n`, it means that `x.first` occurs more than n/2 times, so it returns `x.first` as the majority element.
 6. If no majority element is found in the hash map, the code returns 0 as the default value.
    - Note that this will only occur if the input array `nums` is empty or does not have a majority element.
+
+## Complexity
 
 The time complexity of this approach is O(n) because it iterates through the array once to count the occurrences and then iterates through the hash map, which has a maximum size of the number of distinct elements in the array.
 
@@ -140,6 +144,8 @@ Let's consider two cases:
    - However, the majority element will still be selected as the final candidate because it will always have a lead over any other element.
 
 In both cases, the algorithm will correctly identify the majority element.
+
+## Complexity
 
 The time complexity of the Moore's Voting Algorithm is O(n) since it traverses the array once.
 
