@@ -32,7 +32,7 @@ Explanation: In this case, no transactions are done and the max profit = 0.
 
 ## Approach
 
-To solve this problem, I employed a straightforward approach that iterates through the array of stock prices. At each step, I kept track of the minimum stock price seen so far (`min_price`) and calculated the potential profit that could be obtained by selling at the current price (`prices[i] - min_price`). I updated the `maxprof` (maximum profit) variable with the maximum of its current value and the calculated profit. Additionally, I updated the `min_price` to be the minimum of the current stock price and the previously seen minimum.
+To solve this problem, I employed a straightforward approach that iterates through the array of stock prices. At each step, I kept track of the minimum stock price seen so far, `minPriceSoFar`,  and calculated the potential profit that could be obtained by selling at the current price,  `prices[i] - minPriceSoFar`. I updated the `minPriceSoFar` to be the minimum of the current stock price and the previously seen minimum. Additionally, I updated the `maxProfitSoFar`  variable with the maximum of its current value and the calculated profit.
 
 ## Complexity
 
