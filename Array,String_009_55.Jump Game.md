@@ -33,13 +33,13 @@ The basic idea is this: at each step, we keep track of the furthest reachable in
 >
 > suffice /səˈfaɪs/ If you say that something will <b>suffice</b>, you mean it will be enough to achieve a purpose or to fulfil a need.
 
-Upon analyzing the problem and solution, my initial thought was to consider the possible jumps from each position and track the maximum reachable index. The provided solution suggests a greedy approach, where we iteratively update the maximum reachable index and check if it's sufficient to reach the last index. Therefore, my intuition for solving this problem aligns with a greedy strategy that focuses on efficiently determining if the last index can be reached based on the maximum jump lengths at each position.
+Upon analyzing the problem and solution, my initial thought was to consider the possible jumps from each position and track the maximum reachable index, which is a greedy approach, where we iteratively update the maximum reachable index and check if it's sufficient to reach the last index. Therefore, my intuition for solving this problem aligns with a greedy strategy that focuses on efficiently determining if the last index can be reached based on the maximum jump lengths at each position.
 
 ## Approach
 
 The approach taken here is based on a greedy strategy. We iterate through the array, maintaining the maximum reachable index (`reach`). At each position, we update `reach` by considering the maximum jump length at the current position and adding it to the current index. By continuously updating `reach` as we traverse the array, we determine whether it's possible to reach the last index. If `reach` surpasses or equals the index of the last element, we can conclude that reaching the last index is possible.
 
-1. Initilize variable reach as 0, to store reach of the highest index.
+1. Initilize variable reach as 0, to store the maximum reachable index so far.
 
 ```java
 int reach = 0;
@@ -49,9 +49,11 @@ int reach = 0;
 
 ```java
 for(int i=0;i<nums.length;i++){
+  	//If reach is smaller than the current iretation index, we can conclude that reaching the last index isn't possible.
     if(reach<i){
         return false;
     }
+  	// overwrite reach with max of reach and i+nums[i]
     reach = Math.max(reach,i+nums[i]);
 }
 ```
