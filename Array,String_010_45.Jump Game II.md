@@ -64,10 +64,6 @@ class Solution {
     for (int i = 0; i < nums.length - 1; ++i) {
       // At each iteration, we update farthest with the maximum of its current value and i + nums[i], which represents the farthest index reachable from the current position i. This step is similar to queue.push(node) step of BFS, but here we are only greedily storing the max reachable index on next jump.
       farthest = Math.max(farthest, i + nums[i]);
-      if (farthest >= nums.length - 1) {
-        ++jumps;
-        break;
-      }
       // If i reaches currentJumpEnd, it means we've reached the end of the current jump. So, we increment jumps and update currentJumpEnd with the value of farthest, indicating the end of the next jump.
       if (i == currentJumpEnd) {
         // Increment the level
