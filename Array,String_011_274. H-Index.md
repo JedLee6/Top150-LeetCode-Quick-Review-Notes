@@ -28,68 +28,112 @@ Output: 1
 - `1 <= n <= 5000`
 - `0 <= citations[i] <= 1000`
 
-## Intuition
-
-- The problem is to find the h-index of a researcher based on their citation counts. The h-index is the maximum value h such that the researcher has published at least h papers that have each been cited at least h times.
-
 ------
 
-## Approach
+## Approach 1: Sorting 
 
-- ***Two common approaches to solve this problem are:***
+### Intuition
 
-### 1. Brute Force Approach:
+One straightforward way to approach this is to sort the citations array in descending order. This way, we can easily compare the citation count of each paper with its rank in the sorted list (which, in a way, represents the number of papers with equal or more citations).
 
-- Sort the array of citations in descending order and iterate through the sorted array. For each paper, check if its citation count is greater than or equal to its position in the sorted array. Keep track of the maximum h-index encountered. This approach has a time complexity of O(n log n) due to the sorting step.
+#### Step-by-Step Solution
 
-### 2. Binary Search Approach:
+1. Sort the `citations` array in ascending order.
+2. Iterate through the sorted array. Let `i` be the current index (0-based).
+3. The condition to check at each step is whether the citation at the current index `citations[i]` is greater than or equal to `i+1` (since `i` is 0-based, `i+1` represents the number of papers).
+4. If the condition fails for the first time, the value of `i` (before the failure) is the H-Index. If the loop completes without this condition failing, then the H-Index is the array length.
 
-- Sort the array of citations and perform a binary search to find the h-index. Initialize a search range between 0 and the length of the citations array. In each iteration, calculate the mid-point and count the number of papers with citations greater than or equal to the mid-point. Adjust the search range based on this count. This approach has a time complexity of O(n log n) due to the sorting step.
+#### Code
 
-## Time complexity:
-
-1. **Code 1 (Brute Force)**
-
-- Time complexity: O(n log n) - Sorting the array takes O(n log n) time, and the subsequent iteration takes O(n) time.
-
-1. **Code 2 (Binary Search)**
-
-- Time complexity: O(n log n) - Sorting the array takes O(n log n) time, and the binary search takes O(log n) time.
-
-## Space complexity:
-
-1. **Code 1 (Brute Force)**
-
-- Space complexity: O(1) - Constant space is used.
-
-1. **Code 2 (Binary Search)**
-
-- Space complexity: O(1) - Constant space is used.
-
-## Code(Binary Search)
-
-```cpp
-public int hIndex(int[] citations) {
-    int n = citations.length;
-    int[] buckets = new int[n+1];
-    for(int c : citations) {
-        if(c >= n) {
-            buckets[n]++;
-        } else {
-            buckets[c]++;
-        }
+```java
+import java.util.Arrays;
+public class Solution {
+    public int hIndex(int[] citations) {
+        // Step 1: Sort the citations array in ascending order
+        Arrays.sort(citations);
+        // Step 2: Iterate through the array to find the H-Index
+        for (int i = 0; i < citations.length; i++) {
+            int h = citations.length - i; // Calculate the H-Index at the current position
+            if (citations[i] >= h) {
+                // If the citation count is greater than or equal to the calculated H,
+                // we've found the H-Index
+                return h;
+            }
+        }  
+        // If we didn't return within the loop, the H-Index is 0
+        return 0;
     }
-    int count = 0;
-    for(int i = n; i >= 0; i--) {
-        count += buckets[i];
-        if(count >= i) {
-            return i;
-        }
-    }
-    return 0;
 }
 ```
 
-This type of problems always throw me off, but it just takes some getting used to. The idea behind it is some bucket sort mechanisms. First, you may ask why bucket sort. Well, the h-index is defined as the number of papers with reference greater than the number. So assume `n` is the total number of papers, if we have `n+1` buckets, number from 0 to n, then for any paper with reference corresponding to the index of the bucket, we increment the count for that bucket. The only exception is that for any paper with larger number of reference than `n`, we put in the `n`-th bucket.
+#### Explanation:
 
-Then we iterate from the back to the front of the buckets, whenever the total count exceeds the index of the bucket, meaning that we have the index number of papers that have reference greater than or equal to the index. Which will be our h-index result. The reason to scan from the end of the array is that we are looking for the greatest h-index. For example, given array `[3,0,6,5,1]`, we have 6 buckets to contain how many papers have the corresponding index. Hope to image and explanation help.
+- **`Arrays.sort(citations);`**: We sort the `citations` array in ascending order (the Java default).
+- **`for (int i = 0; i < citations.length; i++)`**: We iterate through each citation.
+- **`int h = citations.length - i;`**: We calculate `h` for the current position. In an ascending order array, `h` is the length of the array minus the current index, which effectively counts how many elements are greater than or equal to the current citation.
+- **`if (citations[i] >= h)`**: We check if the current citation is greater than or equal to `h`. If so, it means we have found the H-Index.
+- **`return h;`**: Once we find the H-Index, we return it.
+- **`return 0;`**: If no such condition is met, it implies an H-Index of 0.
+
+#### Time Complexity Analysis:
+
+- Sorting the array takes O(n log n) time.
+- Iterating over the sorted array takes O(n) time.
+- Overall time complexity: O(n log n)
+
+#### Space Complexity Analysis:
+
+- Sorting in-place doesn't require extra space.
+- Only a constant amount of extra space is used.
+- Space complexity: O(1)
+
+### Approach 2: Counting Sort (Optimized for this problem)
+
+#### Intuition
+
+We can also employ a different strategy that avoids sorting the array. The key idea here is to use a counting sort mechanism, which is particularly effective because the range of possible citation counts (hence, the possible H-Index values) is limited to the length of the citations array. This approach is based on creating a histogram of citations, where each bin represents the number of papers with a certain citation count. Then, we'll aggregate the counts from the end of this histogram to find the H-Index.
+
+#### Step-by-Step Solution
+
+1. **Create a histogram of citations:** Since the H-Index cannot be larger than the number of papers, create an array `histogram` of length `n + 1`, where `n` is the number of papers. For any paper with `citations[i]` greater than `n`, increment `histogram[n]`. Otherwise, increment `histogram[citations[i]]`.
+2. **Find the H-Index by accumulating counts backwards:** Start from the end of the histogram, which corresponds to the maximum possible H-Index. Accumulate the count of papers while moving backwards. The first time the accumulated count is equal to or exceeds the index, that index is the H-Index.
+
+#### Code
+
+```java
+public class Solution {
+    public int hIndex(int[] citations) {
+        int n = citations.length;
+        int[] counts = new int[n + 1]; // Counts array for citation counts
+        // Step 1: Count citations for each paper
+        for (int citation : citations) {
+            counts[Math.min(citation, n)]++; // Count citations within range [0, n]
+        }
+        int papers = 0;
+        // Step 2: Iterate backwards to find the h-index
+        for (int i = n; i >= 0; i--) {
+            papers += counts[i]; // Accumulate papers with citation count >= i
+            if (papers >= i) return i; // Check if we found h-index
+        }
+        return 0; // Default case
+    }
+}
+```
+
+#### Explanation:
+
+1. **Counting Citations**: We use a counts array to count the number of papers having each citation count. Since the h-index cannot be greater than the total number of papers, we maintain counts up to `n`.
+2. **Iterating Backwards**: We start iterating from the highest possible citation count (`n`) and move downwards. This way, we ensure we find the maximum h-index.
+3. **Accumulating Papers**: We accumulate the number of papers as we iterate through the counts array. Once the accumulated papers count becomes greater than or equal to the current citation count (`i`), we've found the h-index.
+4. **Return**: We return the current citation count `i` as the h-index.
+
+#### Time Complexity Analysis:
+
+- Counting citations takes O(n) time.
+- Iterating backwards through the counts array takes O(n) time.
+- Overall time complexity: O(n)
+
+#### Space Complexity Analysis:
+
+- We use an extra counts array of size `n + 1`.
+- Space complexity: O(n)
