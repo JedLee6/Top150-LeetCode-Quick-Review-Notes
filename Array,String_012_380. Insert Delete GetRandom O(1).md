@@ -43,19 +43,6 @@ To achieve (O(1)) average time complexity for all required operations, we need t
 2. **Use an ArrayList for (O(1)) access and to support getRandom()**: An ArrayList allows (O(1)) access time, which is perfect for the `getRandom()` operation. By storing the elements of the set in an ArrayList, we can easily pick a random element by generating a random index.
 3. **Handle deletion cleverly to maintain (O(1)) time**: The tricky part is deleting an element in (O(1)) time from the ArrayList, as direct removal would have (O(n)) time complexity due to the need to shift elements. To overcome this, we can swap the element to be deleted with the last element in the ArrayList and then remove the last element. This operation maintains the ArrayList's integrity and allows constant time deletion.
 
-## Approach Analysis
-
-- **insert(int val)**: Checks if the value exists using `valToIndex`. If not, adds the value to `nums` and records its index in `valToIndex`. Time Complexity: (O(1)), Space Complexity: (O(1)) for each insert operation, but grows with the number of elements in the set.
-- **remove(int val)**: Checks if the value exists. If it does, swaps it with the last element in `nums`, updates `valToIndex` accordingly, and removes the last element. This ensures that the ArrayList can still be used for efficient random access without gaps. Time Complexity: (O(1)), as each operation involved is constant time.
-- **getRandom()**: Simply picks a random index and retrieves the element at that index from `nums`. Time Complexity: (O(1)), since accessing an element by index in an ArrayList is constant time.
-
-## Complexity
-
-- Time complexity:
-  O(1)
-- Space complexity:
-  O(n)
-
 ## Code
 
 ```java
@@ -96,3 +83,18 @@ public class RandomizedSet {
     }
 }
 ```
+
+1. 
+
+## Approach Analysis
+
+- **insert(int val)**: Checks if the value exists using `valToIndex`. If not, adds the value to `nums` and records its index in `valToIndex`. Time Complexity: (O(1)), Space Complexity: (O(1)) for each insert operation, but grows with the number of elements in the set.
+- **remove(int val)**: Checks if the value exists. If it does, swaps it with the last element in `nums`, updates `valToIndex` accordingly, and removes the last element. This ensures that the ArrayList can still be used for efficient random access without gaps. Time Complexity: (O(1)), as each operation involved is constant time.
+- **getRandom()**: Simply picks a random index and retrieves the element at that index from `nums`. Time Complexity: (O(1)), since accessing an element by index in an ArrayList is constant time.
+
+## Complexity
+
+- Time complexity:
+  O(1)
+- Space complexity:
+  O(n)
