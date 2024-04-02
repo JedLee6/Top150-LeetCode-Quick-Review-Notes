@@ -75,25 +75,25 @@ Directly store the product of prefix and suffix into the final answer array.
 ```java
 class Solution {
     public int[] productExceptSelf(int[] nums) {
-      	//Initialize an array to store the final product for each index.
+        // Initialize an array to store the final product for each index.
         int n = nums.length;
         int ans[] = new int[n];
-      	//set each element as 1, as to multiply every prefix product and suffix product by itself
+        // set each element as 1, as to multiply every prefix product and suffix product by itself
         Arrays.fill(ans, 1);
-      	//set currentPrefixProduct as 1
+        // set currentPrefixProduct as 1
         int currentPrefixProduct = 1;
-      	//Calculate Prefix Products
-        for(int i = 0; i < n; i++) {
+        // Calculate Prefix Products
+        for (int i = 0; i < n; i++) {
             ans[i] *= currentPrefixProduct;
-          	//update the prefix product for the next element
+            // update the prefix product for the next element
             currentPrefixProduct *= nums[i];
         }
-	      //set currentSuffixProduct to 1
+        // set currentSuffixProduct to 1
         int currentSuffixProduct = 1;
-	      //Calculate Suffix Products
-        for(int i = n - 1; i >= 0; i--) {
+        // Calculate Suffix Products
+        for (int i = n - 1; i >= 0; i--) {
             ans[i] *= currentSuffixProduct;
-          	//update the suffix product for the next element
+            // update the suffix product for the next element
             currentSuffixProduct *= nums[i];
         }
         return ans;
