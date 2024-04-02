@@ -6,6 +6,8 @@ The product of any prefix or suffix of `nums` is **guaranteed** to fit in a **32
 
 You must write an algorithm that runs in `O(n)` time and without using the division operation.
 
+> Product is a quantity obtained by multiplying several numbers. The product of 21 and 16 is 336.
+
 **Example 1:**
 
 ```
@@ -62,33 +64,43 @@ class Solution {
 
 ### 2 Dynamic Programming Approach(Tabulation, Space Optimization)
 
+To adhere to the constraint of not using division and achieving (O(n)) time complexity, we can use a two-pass approach that involves prefix and suffix products.
+
 Directly store the product of prefix and suffix into the final answer array.
 
-1. Initialize an array `result` to store the final product for each index.
-2. Compute the prefix products and store them in the `result` array. Start from the leftmost element and multiply the running product by the element at the current index.
-3. Compute the suffix product while updating the `result` array. Start from the rightmost element, multiply the running product by the element at the current index, and update the `result` array by multiplying it with the current suffix product.
-
-Time Complexity : O(N), As we iterate the Array(nums) twice. Where N = size of the array.
-
-Space complexity : O(1), Constant space. Extra space is only allocated for the Array(output), however the output does not count towards the space complexity.
+1. Initialize an array `ans` to store the final product for each index.
+2. Compute the prefix products and store them in the `ans` array. Start from the leftmost element and multiply the running product by the element at the current index.
+3. Compute the suffix product while updating the `ans` array. Start from the rightmost element, multiply the running product by the element at the current index, and update the `ans` array by multiplying it with the current suffix product.
 
 ```java
 class Solution {
     public int[] productExceptSelf(int[] nums) {
+      	//Initialize an array to store the final product for each index.
         int n = nums.length;
         int ans[] = new int[n];
+      	//set each element as 1, as to multiply every prefix product and suffix product by itself
         Arrays.fill(ans, 1);
-        int curr = 1;
+      	//set currentPrefixProduct as 1
+        int currentPrefixProduct = 1;
+      	//Calculate Prefix Products
         for(int i = 0; i < n; i++) {
-            ans[i] *= curr;
-            curr *= nums[i];
+            ans[i] *= currentPrefixProduct;
+          	//update the prefix product for the next element
+            currentPrefixProduct *= nums[i];
         }
-        curr = 1;
+	      //set currentSuffixProduct to 1
+        int currentSuffixProduct = 1;
+	      //Calculate Suffix Products
         for(int i = n - 1; i >= 0; i--) {
-            ans[i] *= curr;
-            curr *= nums[i];
+            ans[i] *= currentSuffixProduct;
+          	//update the suffix product for the next element
+            currentSuffixProduct *= nums[i];
         }
         return ans;
     }
 }
 ```
+
+Time Complexity : O(N), As we iterate the Array(nums) twice. Where N = size of the array.
+
+Space complexity : O(1), Constant space. Extra space is only allocated for the Array(output), however the output does not count towards the space complexity.
