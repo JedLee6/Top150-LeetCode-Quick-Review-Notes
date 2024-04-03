@@ -91,19 +91,19 @@ So, now we know if we start at **index 3** gas station will be able to complete 
 ```cpp
 class Solution {
     public int canCompleteCircuit(int[] gas, int[] cost) {
-        int n = gas.length;
-        for (int i = 0; i < n; i++) {
-            int totalFuel = 0;
-            int stopCount = 0, j = i;
-            while (stopCount < n) {
-                totalFuel += gas[j % n] - cost[j % n];
-                if (totalFuel < 0)
-                    break; // whenever we reach negative
-                stopCount++;
-                j++;
+        //intuition: brute force, traverse every starting point to check if we can finish our trip
+        for (int i = 0; i < gas.length; i++) {
+            int totalGas = 0;
+            int passedStationCount = 0;
+            for (int j = i; passedStationCount < gas.length; passedStationCount++, j++) {
+                totalGas += gas[ j % gas.length] - cost[j % gas.length];
+                if (totalGas < 0) {
+                    break;
+                }
             }
-            if (stopCount == n && totalFuel >= 0)
-                return i; // cover all the stops & our fuel left is 0 or more than that
+            if (passedStationCount == gas.length && totalGas >= 0) {
+                return i;
+            }
         }
         return -1;
     }
