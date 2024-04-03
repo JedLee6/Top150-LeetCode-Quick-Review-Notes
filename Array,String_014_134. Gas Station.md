@@ -43,6 +43,8 @@ Therefore, you can't travel around the circuit once no matter where you start.
 - `1 <= n <= 105`
 - `0 <= gas[i], cost[i] <= 104`
 
+
+
 ## Intuition
 
 **First Understand the problem :**
@@ -82,6 +84,10 @@ So, now we know if we start at **index 3** gas station will be able to complete 
 
 ### 1 Brute Force
 
+#### Intuition
+
+#### Code
+
 ```cpp
 class Solution {
     public int canCompleteCircuit(int[] gas, int[] cost) {
@@ -92,7 +98,7 @@ class Solution {
             while (stopCount < n) {
                 totalFuel += gas[j % n] - cost[j % n];
                 if (totalFuel < 0)
-                    break; // whenever we reach -ve
+                    break; // whenever we reach negative
                 stopCount++;
                 j++;
             }
@@ -104,18 +110,58 @@ class Solution {
 }
 ```
 
-ANALYSIS :-
+#### Complexity
 
 - **Time Complexity :-** BigO(N^2)
 - **Space Complexity :-** BigO(1)
 
+
+
 ### 2 Greedy Algorithm
+
+#### Intuition
+
+Find the key points behind the problem description and constraints:
+
+1. If the total amount of gas is less than the total cost required to move between all stations, it's impossible to complete the journey, otherwise, we can definitely find the only feasible starting point, as the description says, If there exists a solution, it is **guaranteed** to be **unique**.
+2. Elements of gas and cost array are non-negative, which means if we run out of fuel say at `ith` gas station. All the gas station between `ith and starting point` are unfeasible starting point as well. Because we definitely have positive or zero gas at starting point, which is better then start at the middle point with zero gas.
+   So, we can start trying at next gas station on the `i + 1` station, which means we can found the starting point by **O(N) solution**.
+
+#### Code
+
+```java
+class Solution {
+    public int canCompleteCircuit(int[] gas, int[] cost) {
+        int totalSurplus = 0;
+        int surplus = 0;
+        int start = 0;
+        
+        for(int i = 0; i < gas.length; i++){
+            totalSurplus += gas[i] - cost[i];
+            surplus += gas[i] - cost[i];
+          // If we run out of fuel at `ith` gas station
+            if(surplus < 0){
+              // All the gas station between `ith and starting point` are unfeasible starting point as well. Because we definitely have positive or zero gas at starting point, which is better then start at the middle point with zero gas.
+                surplus = 0;
+              // We can start trying at next gas station on the `i + 1` station
+                start = i + 1;
+            }
+        }
+      // If the total amount of gas is less than the total cost required to move between all stations, it's impossible to complete the journey
+      	return (totalSurplus < 0) ? -1 : start;
+    }
+}
+```
+
+
+
+#### Detail Expalnation
 
 Let's **Improve this solution** which runs linear in **O(N) time**.
 
 As Inorder to improve the solution we have to look into where it's wasting time
 
-So, our **brute-force** ran a simulation, as soon as a gas station became **-ve**. It's stop and move to the next station as a starting point. But this is inefficient and inorder for us to understand why? we have to look at what makes car stop.
+So, our **brute-force** ran a simulation, as soon as a gas station became negative. It's stop and move to the next station as a starting point. But this is inefficient and inorder for us to understand why? we have to look at what makes car stop.
 Let's say for this example the **car start at 0** and it's able to make at **3** gas station. And after trying to make it at **4th station** its run out of gas.
 ![image](https://raw.githubusercontent.com/JedLee6/PublicPicBed/main/uPic/bc1d1e8d-66e1-4232-88a6-50ee630652bd_1642739783.4066157.png)
 
@@ -123,38 +169,18 @@ Once the brute force solution realises it can make this trip, it's start over si
 But this next simulation is **useless and wasting time**
 
 **Here's why,**
-![image](https://raw.githubusercontent.com/JedLee6/PublicPicBed/main/uPic/201c0770-bc89-4e1c-8a76-d0af270d86fa_1642740255.742468.png)Well we already know that these**3 gas stations** and trips **weren't successfull**. Which means comparing our fuel accumulation to our fuel consumption we were at some kind of **surplus** or at the very least we were breaking even with exactly enough fuel to make every trip.
+
+![image](https://raw.githubusercontent.com/JedLee6/PublicPicBed/main/uPic/201c0770-bc89-4e1c-8a76-d0af270d86fa_1642740255.742468.png)
+
+Well we already know that these **3 gas stations** and trips **weren't successfull**. Which means comparing our fuel accumulation to our fuel consumption we were at some kind of **surplus** or at the very least we were breaking even with exactly enough fuel to make every trip.
 
 This is because if we were at some kind of deficit then our car would have already run on gas sometime earlier. So, this means on the last trip because we ran out of fuel we were in some kind of deficit.
-So, as we can't make the trip **starting at very beginning we can't make over here at index 1 or index 2 or index 3**
+So, as we can't make the trip **starting at very beginning we can't make over here at index 1 or index 2 or index 3**.
 
 So what does this means in terms of our algorithm, it means that we know if we run out of fuel say at some `ith` gas station. All the gas station between `ith and starting point` are bad starting point as well.
 So, this means we can start trying at next gas station on the `i + 1` station. So, hopefully now you understand how this **O(N) solution** will takes place.
 
-## Code
-
-```java
-class Solution {
-    public int canCompleteCircuit(int[] gas, int[] cost) {
-        int n = gas.length;
-        int total_surplus = 0;
-        int surplus = 0;
-        int start = 0;
-        
-        for(int i = 0; i < n; i++){
-            total_surplus += gas[i] - cost[i];
-            surplus += gas[i] - cost[i];
-            if(surplus < 0){
-                surplus = 0;
-                start = i + 1;
-            }
-        }
-        return (total_surplus < 0) ? -1 : start;
-    }
-}
-```
-
-ANALYSIS :-
+#### Complexity
 
 - **Time Complexity :-** BigO(N)
 - **Space Complexity :-** BigO(1)
