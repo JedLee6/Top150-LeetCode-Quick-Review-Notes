@@ -27,7 +27,7 @@ Output: 9
 
 ## Intuition
 
-Here we will use two pointer approach
+A key insight for this problem is understanding that the amount of water trapped on top of a bar is determined by the height of the tallest bars to its left and right. Specifically, the water level above a bar is the minimum of the tallest bar to its left and right minus the height of the bar itself.
 
 ## Approach
 
@@ -83,18 +83,27 @@ Loop will run till the left pointer doesn't cross the right pointer. In terms of
 
 Time complexity: Here the time complexity would be O(n) as there is only one loop running in the two pointers.
 
-Space complexity: Here the space complexity is constant as we are not creating any extra space excluding the variables.
+Space complexity: Here the space complexity is constant O(1), as we are not creating any extra space excluding the variables.
 
 ## Code
 
 ```java
 public class Solution {
     public int trap(int[] h) {
-        int l = 0, r = h.length - 1, lmax = Integer.MIN_VALUE, rmax = Integer.MIN_VALUE, ans = 0;
+      //the start element and end element defenitly can't trap water, so we initialize leftMax and rightMax with the value of the start element and end element
+        int l = 0, r = h.length - 1, leftMax = h[l], rightMax = h[r], ans = 0;
         while (l < r) {
-        lmax = Math.max(lmax, h[l]);
-        rmax = Math.max(rmax, h[r]);
-        ans += (lmax < rmax) ? lmax - h[l++] : rmax - h[r--];
+          //the water level above a bar is the minimum of the tallest bar to its left and right minus the height of the bar itself.
+            if (leftMax < rightMax) {
+                l++;
+                leftMax = Math.max(leftMax, h[l]);
+              // `leftMax - h[l]` won't be negative, as leftMax is the maximum value so far
+                ans += leftMax - h[l];
+            } else {
+                r--;
+                rightMax = Math.max(rightMax, h[r]);
+                ans += rightMax - h[r];
+            }
         }
         return ans;
     }
@@ -108,6 +117,6 @@ public class Solution {
 ![pic1.png](https://raw.githubusercontent.com/JedLee6/PublicPicBed/main/uPic/d5703973-8ea3-4427-8e28-a6cd53053572_1681157571.4794183.webp)
 
 - As shown in the figure we start with finding the left most height and the right most height and then we do left++ , right-- and continue. Now if the new left height is greater than max left height then we update the lmax height and similarly for the right side.
-- When This is not the case the we proceed with the side with the minimum height , say it's left for the further understanding , now we take the difference b/w the left heights and add to the water stored i.ei.e*i*.*e* `water += lmax - height[lpos];` or `water += rmax - height[rpos];` according to the current scenario as explained above.
+- When This is not the case the we proceed with the side with the minimum height , say it's left for the further understanding , now we take the difference b/w the left heights and add to the water stored i.e `water += lmax - height[lpos];` or `water += rmax - height[rpos];` according to the current scenario as explained above.
 
-- In the same way depicted above we further continue till the loop i.ei.e*i*.*e* ends `while(lpos <= ros)` then we would finally obtain the water which can be trapped during this process.
+- In the same way depicted above we further continue till the loop i.e ends `while(lpos <= ros)` then we would finally obtain the water which can be trapped during this process.
