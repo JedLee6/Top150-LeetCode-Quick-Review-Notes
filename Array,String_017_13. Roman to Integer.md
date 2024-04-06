@@ -109,6 +109,7 @@ The key intuition lies in the fact that in Roman numerals, when a smaller value 
 ```java
 class Solution {
     public int romanToInt(String s) {
+      //mappings between Roman numeral characters and their corresponding integer values
         Map<Character, Integer> m = new HashMap<>();
         m.put('I', 1);
         m.put('V', 5);
@@ -119,6 +120,7 @@ class Solution {
         m.put('M', 1000);
         int ans = 0;
         for (int i = 0; i < s.length(); i++) {
+          //when a smaller value appears before a larger value, it represents subtraction, while when a smaller value appears after or equal to a larger value, it represents addition.
             if (i < s.length() - 1 && m.get(s.charAt(i)) < m.get(s.charAt(i + 1))) {
                 ans -= m.get(s.charAt(i));
             } else {
