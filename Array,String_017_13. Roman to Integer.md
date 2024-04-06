@@ -57,6 +57,33 @@ Explanation: M = 1000, CM = 900, XC = 90 and IV = 4.
 
 The key intuition lies in the fact that in Roman numerals, when a smaller value appears before a larger value, it represents subtraction, while when a smaller value appears after or equal to a larger value, it represents addition.
 
+## Code
+
+```java
+class Solution {
+    public int romanToInt(String s) {
+      //mappings between Roman numeral characters and their corresponding integer values
+        Map<Character, Integer> m = new HashMap<>();
+        m.put('I', 1);
+        m.put('V', 5);
+        m.put('X', 10);
+        m.put('L', 50);
+        m.put('C', 100);
+        m.put('D', 500);
+        m.put('M', 1000);
+        int ans = 0;
+        for (int i = 0; i < s.length(); i++) {
+          //when a smaller value appears before a larger value, it represents subtraction, while when a smaller value appears after or equal to a larger value, it represents addition.
+            if (i < s.length() - 1 && m.get(s.charAt(i)) < m.get(s.charAt(i + 1))) {
+                ans -= m.get(s.charAt(i));
+            } else {
+                ans += m.get(s.charAt(i));
+            }
+        }
+        return ans;
+    }
+}
+```
 ## Explanation:
 
 1. The unordered map `m` is created and initialized with mappings between Roman numeral characters and their corresponding integer values. For example, 'I' is mapped to 1, 'V' to 5, 'X' to 10, and so on.
@@ -103,31 +130,3 @@ The key intuition lies in the fact that in Roman numerals, when a smaller value 
 - Time complexity: O(N)
 
 - Space complexity: O(N)
-
-## Code
-
-```java
-class Solution {
-    public int romanToInt(String s) {
-      //mappings between Roman numeral characters and their corresponding integer values
-        Map<Character, Integer> m = new HashMap<>();
-        m.put('I', 1);
-        m.put('V', 5);
-        m.put('X', 10);
-        m.put('L', 50);
-        m.put('C', 100);
-        m.put('D', 500);
-        m.put('M', 1000);
-        int ans = 0;
-        for (int i = 0; i < s.length(); i++) {
-          //when a smaller value appears before a larger value, it represents subtraction, while when a smaller value appears after or equal to a larger value, it represents addition.
-            if (i < s.length() - 1 && m.get(s.charAt(i)) < m.get(s.charAt(i + 1))) {
-                ans -= m.get(s.charAt(i));
-            } else {
-                ans += m.get(s.charAt(i));
-            }
-        }
-        return ans;
-    }
-}
-```
