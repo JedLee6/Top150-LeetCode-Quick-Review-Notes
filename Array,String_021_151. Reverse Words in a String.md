@@ -51,36 +51,45 @@ The intuition behind this solution is to split the input string into individual 
 
 ## Approach
 
-1. The input string `s` is trimmed to remove any leading or trailing spaces using the `trim()` method.
-2. The trimmed string is then split into an array of words using the `split("\\s+")` method. The regular expression "\s+" matches one or more whitespace characters, effectively separating the words.
-3. A variable `out` is initialized as an empty string to store the reversed words.
-4. Starting from the last word in the array (`str.length - 1`), the loop iterates backwards until the first word (index 0) is reached.
-5. In each iteration, the current word `str[i]` is appended to `out` along with a space (" ") to separate the words.
-6. Finally, the first word `str[0]` is appended to `out`.
-7. The reversed string of words, stored in `out`, is returned as the result.
+To solve this problem, we can follow these steps:
 
-## Complexity
+1. Trim leading and trailing spaces from the input string.
+2. Split the string into words using space as a delimiter.
+3. Reverse the order of the words.
+4. Concatenate the reversed words with a single space between them.
 
-- Time complexity:O(n)
+### Meaning of every character in "\\s+"
 
-- Space complexity:O(n)
+In the regular expression "\s+", each character has a specific meaning:
+
+1. **"\\"**: The backslash is an escape character in Java strings. It's used to indicate that the next character should be treated literally, rather than as a special character. In this case, the backslash is escaping the following backslash.
+2. **"s"**: The letter "s" represents a whitespace character in regular expressions. It matches any whitespace character, including spaces, tabs, and line breaks.
+3. **"+"**: The plus sign is a quantifier in regular expressions, meaning "one or more occurrences" of the preceding character or expression. In this case, it indicates that there should be one or more whitespace characters.
+
+So, when combined together as "\\s+", it represents a regular expression pattern that matches one or more whitespace characters. **The reason for the double backslashes is that in Java strings, the backslash itself needs to be escaped with another backslash to represent a single backslash character in the regular expression**. Therefore, "\s+" matches one or more whitespace characters in a string.
 
 ## Code
 
-```rust
-class Solution {
-    public String reverseWords(String s) {
-        // Trim the input string to remove leading and trailing spaces
-        String[] str = s.trim().split("\\s+");
-        // Initialize the output string
-        String out = "";
-        // Iterate through the words in reverse order
-        for (int i = str.length - 1; i > 0; i--) {
-            // Append the current word and a space to the output
-            out += str[i] + " ";
+```java
+public String reverseWords(String s) {    
+    // Split the string into words
+  //The regular expression "\s+" matches one or more whitespace characters, effectively separating the words.
+    String[] words = s.trim().split("\\s+");
+    // Reverse the order of words
+    StringBuilder reversed = new StringBuilder();
+    for (int i = words.length - 1; i >= 0; i--) {
+        reversed.append(words[i]);
+      //Concatenate the reversed words with a single space between them
+        if (i != 0) {
+            reversed.append(" ");
         }
-        // Append the first word to the output (without trailing space)
-        return out + str[0];
     }
+    return reversed.toString();
 }
 ```
+
+## Complexity
+
+- Time Complexity: O(n), where n is the length of the input string `s`. Trimming the string takes O(n) time, splitting the string takes O(n) time, and reversing and concatenating the words takes O(n) time.
+
+- Space Complexity: O(n), where n is the length of the input string `s`. We use extra space to store the split words and the final reversed string.
