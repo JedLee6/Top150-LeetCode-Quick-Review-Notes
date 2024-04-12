@@ -56,59 +56,49 @@ Output: "A"
 
 ## Intuition:
 
-1. Just look at the top row what is the difference b/w each char i.e A and I and I and Q = 8
-   5*2-2 == numberOf rows *2 - 2 (The corner elements are excluded).
-   Similarly for each row i.e B and J the diff is 8, C and K is 8
+When arranging the string "PAYPALISHIRING" in a zigzag pattern with 3 rows, the characters of the string are written in a diagonal fashion downward until the number of specified rows is reached, and then they proceed in a reverse diagonal fashion upwards, forming a zigzag pattern. This cycle continues until all characters of the string are included in the pattern.
 
-2. The interesting part comes when the char in the diagnoal has to be added, but even this has a pattern
-
-   There will be no char in between for row 0 and row n.
-   There can be only one diagonal char and the diagonal diff is original diff -2 at each step or diff - (rowNumber*2);
+The main idea is to simulate this writing process by maintaining an array of `StringBuilder` objects, each corresponding to a row in the zigzag pattern. We'll iterate over the string, determining which row each character belongs to. We'll use a direction flag to decide whether we're moving "down" the rows or going back "up".
 
 ![image](https://raw.githubusercontent.com/JedLee6/PublicPicBed/main/uPic/fdf22375-8354-4cb7-adb0-cef316e39a2d_1675385332.2793877-20240202231737765.png)
 
-## Approach
+## Code
 
-1. Create an empty StringBuilder which is our ans.
-2. Calculate the diff = numRows*2 -2;
-3. Iterate over 0 to rowNumber in a for loop
-   The first char will be row number or i (append to String)
-4. Write a while loop in the above for loop :
-5. The first char will be row number or i (append to String)
-6. Calculate the diagonalDiff if any and append to the String.
-7. Increase the index by diff and return ans.
+```java
+public String convert(String s, int numRows) {
+    if (numRows == 1 || s.length() <= numRows) {
+        return s;
+    }
+  //Initialize StringBuilder objects for each row
+    StringBuilder[] rows = new StringBuilder[numRows];
+    for (int i = 0; i < numRows; i++) {
+        rows[i] = new StringBuilder();
+    }
+  //Initialize currentRow to track which row we're on, and goingDown to control the direction of movement through rows.
+    int currentRow = 0;
+    boolean goingDown = false;
+  //Iterate over each character in the string
+    for (char c : s.toCharArray()) {
+      //Append the character to the corresponding row
+        rows[currentRow].append(c);
+      //Switch the direction when reaching the first or last row
+        if (currentRow == 0 || currentRow == numRows - 1) {
+            goingDown = !goingDown;  // Change direction at the topmost and bottommost rows
+        }
+        currentRow += goingDown ? 1 : -1;  // Move up or down
+    }
+  //Concatenate all rows to form the final string
+    StringBuilder result = new StringBuilder();
+    for (StringBuilder row : rows) {
+        result.append(row);
+    }
+
+    return result.toString();
+}
+```
 
 ## Complexity
 
-- Time complexity: **O(N)**
+- **Time Complexity**: O(n), where `n` is the length of the string, since we go through all characters once.
 
-- Space complexity: **O(N)**
-
-## Code
-
-```dart
-class Solution {
-    public String convert(String s, int numRows) {
-        int n = s.length();
-        StringBuffer [] arr = new StringBuffer[numRows]; 
-        for(int i=0; i<numRows; i++) arr[i] = new StringBuffer();
-
-        int i=0;
-        while(i<n){
-            /// verticaly downword
-            for(int ind=0; ind<numRows && i<n; ind++){
-                arr[ind].append(s.charAt(i++));
-            }
-            /// bent upword
-            for(int ind=numRows-2; ind>0 && i<n; ind--){
-                arr[ind].append(s.charAt(i++));
-            }
-        }
-        StringBuffer ans = new StringBuffer();
-        for(StringBuffer el : arr){
-            ans.append(el);
-        }
-        return ans.toString();
-    }
-}
-```
+- **Space Complexity**: O(n), as we store all characters in the `StringBuilder` array.
