@@ -76,15 +76,17 @@ public String convert(String s, int numRows) {
     }
   //Initialize currentRow to track which row we're on, and goingDown to control the direction of movement through rows.
     int currentRow = 0;
-    boolean goingDown = false;
+    boolean goingDown = true;
   //Iterate over each character in the string
     for (char c : s.toCharArray()) {
       //Append the character to the corresponding row
         rows[currentRow].append(c);
       //Switch the direction when reaching the first or last row
-        if (currentRow == 0 || currentRow == numRows - 1) {
-            goingDown = !goingDown;  // Change direction at the topmost and bottommost rows
-        }
+      if (currentRow == 0) {
+                goingDown = true;
+            } else if (currentRow == numRows - 1) {
+                goingDown = false;
+            }
         currentRow += goingDown ? 1 : -1;  // Move up or down
     }
   //Concatenate all rows to form the final string
