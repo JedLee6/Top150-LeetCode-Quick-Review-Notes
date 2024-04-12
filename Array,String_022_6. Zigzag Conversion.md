@@ -66,35 +66,33 @@ The main idea is to simulate this writing process by maintaining an array of `St
 
 ```java
 public String convert(String s, int numRows) {
-    if (numRows == 1 || s.length() <= numRows) {
-        return s;
-    }
-  //Initialize StringBuilder objects for each row
+    if (numRows == 1 || s.length() <= numRows) return s;
+    // Initialize StringBuilder objects for each row
     StringBuilder[] rows = new StringBuilder[numRows];
     for (int i = 0; i < numRows; i++) {
         rows[i] = new StringBuilder();
     }
-  //Initialize currentRow to track which row we're on, and goingDown to control the direction of movement through rows.
+    // Initialize currentRow to track which row we're on, and goingDown to control
+    // the direction of movement through rows.
     int currentRow = 0;
     boolean goingDown = true;
-  //Iterate over each character in the string
+    // Iterate over each character in the string
     for (char c : s.toCharArray()) {
-      //Append the character to the corresponding row
+        // Append the character to the corresponding row
         rows[currentRow].append(c);
-      //Switch the direction when reaching the first or last row
-      if (currentRow == 0) {
-                goingDown = true;
-            } else if (currentRow == numRows - 1) {
-                goingDown = false;
-            }
-        currentRow += goingDown ? 1 : -1;  // Move up or down
+        // Switch the direction when reaching the first or last row
+        if (currentRow == 0) {
+            goingDown = true;
+        } else if (currentRow == numRows - 1) {
+            goingDown = false;
+        }
+        currentRow += goingDown ? 1 : -1; // Move up or down
     }
-  //Concatenate all rows to form the final string
+    // Concatenate all rows to form the final string
     StringBuilder result = new StringBuilder();
     for (StringBuilder row : rows) {
         result.append(row);
     }
-
     return result.toString();
 }
 ```
