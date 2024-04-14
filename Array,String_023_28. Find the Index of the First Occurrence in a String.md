@@ -50,6 +50,7 @@ public int strStr(String haystack, String needle) {
 ```
 
 **Complexity Analysis**:
+
 - **Time Complexity**: O((n - L + 1) * L) because for each of the n - L + 1 possible starting positions in `haystack`, we compare a substring of length L.
 - **Space Complexity**: O(1) because no additional space is proportional to the input size.
 
@@ -57,27 +58,6 @@ public int strStr(String haystack, String needle) {
 The KMP algorithm performs the search by maintaining a state of the longest prefix of the `needle` (pattern) that matches a suffix of the part of the `haystack` (text) scanned so far. When a mismatch occurs after some matches, it uses the LPS(Longest Prefix Suffix) array to determine where to restart the search, avoiding redoing matches that are known to be valid.
 
 ```java
-public int strStr(String haystack, String needle) {
-    if (needle.length() == 0) return 0; // Handle the edge case where needle is empty.
-    int[] lps = computeLPSArray(needle); // Compute the LPS array for the needle.
-    int i = 0; // Index for haystack.
-    int j = 0; // Index for needle.
-    while (i < haystack.length()) {
-        if (haystack.charAt(i) == needle.charAt(j)) {
-            i++;
-            j++;
-            if (j == needle.length()) { // Full needle found in haystack.
-                return i - j; // Return the start position of the match in haystack.
-            }
-        } else if (j > 0) {
-            j = lps[j - 1]; // Move the needle index to the position given by the LPS array.
-        } else {
-            i++;
-        }
-    }
-    return -1; // If no match found, return -1.
-}
-
 private int[] computeLPSArray(String needle) {
     int[] lps = new int[needle.length()];
     int len = 0; // Length of the previous longest prefix suffix.
@@ -98,6 +78,26 @@ private int[] computeLPSArray(String needle) {
         }
     }
     return lps;
+}
+public int strStr(String haystack, String needle) {
+    if (needle.length() == 0) return 0; // Handle the edge case where needle is empty.
+    int[] lps = computeLPSArray(needle); // Compute the LPS array for the needle.
+    int i = 0; // Index for haystack.
+    int j = 0; // Index for needle.
+    while (i < haystack.length()) {
+        if (haystack.charAt(i) == needle.charAt(j)) {
+            i++;
+            j++;
+            if (j == needle.length()) { // Full needle found in haystack.
+                return i - j; // Return the start position of the match in haystack.
+            }
+        } else if (j > 0) {
+            j = lps[j - 1]; // Move the needle index to the position given by the LPS array.
+        } else {
+            i++;
+        }
+    }
+    return -1; // If no match found, return -1.
 }
 ```
 
