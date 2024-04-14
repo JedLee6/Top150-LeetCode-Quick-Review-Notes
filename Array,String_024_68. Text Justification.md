@@ -75,7 +75,7 @@ To tackle the Text Justification problem, we can break down the solution into a 
 
 1. **Greedy Construction**: Start by attempting to fit as many words as possible on a line until adding another word would exceed the `maxWidth`.
 2. **Space Distribution**: Once we have a line's words, distribute spaces to meet the exact `maxWidth`. The spaces should be as evenly distributed as possible between the words.
-3. **Special Handling of the Last Line**: The last line is left-justified without extra space between words, and any remaining space is added to the end of the line.
+3. **Special Handling of the Last Line and the line with one word**: The last line and the line with one word is left-justified without extra space between words, and any remaining space is added to the end of the line.
 
 #### Code
 
