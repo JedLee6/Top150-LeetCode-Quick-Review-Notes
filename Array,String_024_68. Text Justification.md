@@ -94,7 +94,6 @@ class Solution {
                 charNum += words[lastWordIndex].length() + 1; // 1 for space
                 lastWordIndex++;
             }
-
             // Build the line
             StringBuilder builder = new StringBuilder();
             int gap = lastWordIndex - firstWordIndex - 1; // Number of gaps between words
