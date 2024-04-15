@@ -44,12 +44,12 @@ Since an empty string reads the same forward and backward, it is a palindrome.
 
 
 
-### Main Idea:
+### Intuition
 
 1. **Normalize the String**: Convert the string such that it contains only lowercase alphanumeric characters.
 2. **Check for Palindrome**: Compare the string from the beginning and end, moving towards the center, to see if it reads the same both ways.
 
-### Approach : Two-Pointer Technique
+### Approach: Two-Pointer Technique
 
 This approach involves using two pointers, one starting from the beginning of the string and the other from the end, moving towards the center, comparing characters as they go.
 
