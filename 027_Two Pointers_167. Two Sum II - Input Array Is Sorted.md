@@ -55,6 +55,12 @@ Given the constraints and requirements:
 
 **Intuition**: Since the array is sorted, we can use two pointers—one starting from the beginning (left) and the other from the end (right) of the array. By comparing the sum of these two elements to the target, we can decide to move the pointers inward until we find the exact pair that sums up to the target.
 
+> inward /ˈɪnwəd/ 
+>
+> adj. Your inward thoughts or feelings are the ones that you do not express or show to other people.
+>
+> adv. If something moves or faces inward, it moves or faces toward the inside or centre of something.
+
 #### Step-by-Step Java Implementation:
 
 ```java
@@ -76,14 +82,6 @@ public class Solution {
     }
 }
 ```
-
-#### Explanation by Annotations:
-- **Line 3-4**: Initialize two pointers, `left` and `right`.
-- **Line 6**: Loop until the two pointers meet.
-- **Line 8**: Calculate the sum of the elements at the two pointers.
-- **Line 10**: If the sum matches the target, return the indices of these elements as a 1-indexed array.
-- **Line 12-13**: If the sum is less than the target, increment the `left` pointer to increase the sum.
-- **Line 14-15**: If the sum is greater than the target, decrement the `right` pointer to decrease the sum.
 
 #### Complexity Analysis:
 - **Time Complexity**: O(n), where `n` is the number of elements in the array. Each element is visited at most once by either the `left` or the `right` pointer.
