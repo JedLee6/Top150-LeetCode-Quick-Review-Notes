@@ -2,7 +2,7 @@
 
 Given an array of positive integers `nums` and a positive integer `target`, return the **minimal length** of a subarray whose sum is greater than or equal to `target`. If there is no such subarray, return `0` instead.
 
- 
+> subarray /'sʌbərei/
 
 **Example 1:**
 
@@ -42,7 +42,7 @@ Output: 0
 
 ### Intuitive Approach
 
-The problem suggests a need for a method to explore contiguous subarrays. A brute-force method would involve calculating the sum for every possible subarray and keeping track of the smallest subarray that meets or exceeds the target sum. However, this approach is inefficient.
+The problem suggests a need for a method to explore contiguous subarrays. A brute-force method would involve calculating the sum for every possible subarray and keeping track of the smallest subarray that meets or exceeds the target sum, whose time complexity is O(n^3). However, this approach is inefficient.
 
 ### Optimized Approach: Sliding Window Technique
 
@@ -50,20 +50,18 @@ A more efficient approach would be to use the sliding window technique. This met
 
 ### Solution Development in Java
 
-#### Sliding Window Implementation
-
 ```java
 public class Solution {
     public int minSubArrayLen(int target, int[] nums) {
-        int minLength = Integer.MAX_VALUE; // Initialize to max value to find the minimum later
+        int minLength = Integer.MAX_VALUE; // Initialize to max value to ensure any valid subarray found will be smaller
         int sum = 0; // This will store the sum of the current window
         int start = 0; // Starting index of our sliding window
+        // Window Expansion: Iterate through the array with the end pointer, adding each element to sum.
         for (int end = 0; end < nums.length; end++) {
             sum += nums[end]; // Expand the window by adding the current element
-            // While the sum of the window is greater than or equal to the target,
-            // try to shrink the window from the left to see if we can get a smaller length
+            // Window Contraction: While the sum of the window is greater than or equal to the target, try to shrink the window from the left to see if we can get a smaller length
             while (sum >= target) {
-                minLength = Math.min(minLength, end - start + 1); // Update the minimum length
+                minLength = Math.min(minLength, end - start + 1); // Update the minimum length whenever a smaller valid window is found
                 sum -= nums[start]; // Reduce the window size by moving the start pointer
                 start++;
             }
@@ -73,13 +71,6 @@ public class Solution {
     }
 }
 ```
-
-#### Code Explanation
-
-1. **Initialization**: Set `minLength` to a large value to ensure any valid subarray found will be smaller. The `sum` tracks the total of elements within the sliding window.
-2. **Window Expansion**: Iterate through the array with the `end` pointer, adding each element to `sum`.
-3. **Window Contraction**: When `sum` meets or exceeds the `target`, attempt to reduce the window size from the left by advancing the `start` pointer, thus subtracting elements from `sum`. Update `minLength` whenever a smaller valid window is found.
-4. **Result**: If `minLength` was updated (it is no longer `Integer.MAX_VALUE`), return it; otherwise, return 0 indicating no valid subarray was found.
 
 ### Complexity Analysis
 
@@ -156,3 +147,6 @@ public class Solution {
 ### Conclusion
 
 This approach is a bit more complex than the sliding window method but showcases a different technique involving prefix sums and binary search. It can be particularly educational for understanding how different algorithmic techniques can be applied to the same problem to achieve similar efficiencies. This method is also useful in scenarios where you might need to adjust the conditions dynamically or when working with immutable data structures where sliding window modifications are not feasible.
+
+
+
