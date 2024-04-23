@@ -92,12 +92,12 @@ public List<Integer> findSubstring(String s, String[] words) {
     }
     // Sliding window to check each possible window in the string 's', i stands for the start point of sliding window, whose range is from 0 to `s.length() - windowLen`
     for (int i = 0; i <= s.length() - windowLen; i++) {
-        Map<String, Integer> seenWords = new HashMap<>(); // Collect words seen so far
+        Map<String, Integer> seenWordsMap = new HashMap<>(); // Collect words seen so far
         int j = 0; // Count the checked words so far
         while (j < words.length) {
             String word = s.substring(i + j * wordLen, i + (j + 1) * wordLen);
             if (wordCountMap.containsKey(word)) {
-                seenWords.put(word, seenWords.getOrDefault(word, 0) + 1);
+                seenWordsMap.put(word, seenWordsMap.getOrDefault(word, 0) + 1);
                 // If a word is seen more times than it appears in 'words', break
                 if (seenWordsMap.get(word) > wordCountMap.get(word)) break;
             } else {
