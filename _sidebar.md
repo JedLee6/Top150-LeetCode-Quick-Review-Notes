@@ -38,4 +38,7 @@
   - [032 Sliding Window 30. Substring with Concatenation of All Words](03_Sliding_Window/032_Sliding_Window_30._Substring_with_Concatenation_of_All_Words.md)
   - [033 Sliding Window 76. Minimum Window Substring](03_Sliding_Window/033_Sliding_Window_76._Minimum_Window_Substring.md)
 
+- 04 Matrix
+  - [04 Matrix 36. Valid Sudoku](04_Matrix/04_Matrix_36._Valid_Sudoku.md)
+
 - [README](README.md)
