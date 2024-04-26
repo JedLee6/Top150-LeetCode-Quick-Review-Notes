@@ -1,8 +1,6 @@
 ## 035_Matrix_54.Spiral Matrix
 
-Given an `m x n` `matrix`, return *all elements of the* `matrix` *in spiral order*.
-
- 
+Given an `m x n` `matrix`, return *all elements of the* `matrix` *in spiral order*. 
 
 **Example 1:**
 
@@ -22,8 +20,6 @@ Input: matrix = [[1,2,3,4],[5,6,7,8],[9,10,11,12]]
 Output: [1,2,3,4,8,12,11,10,9,5,6,7]
 ```
 
- 
-
 **Constraints:**
 
 - `m == matrix.length`
@@ -32,8 +28,6 @@ Output: [1,2,3,4,8,12,11,10,9,5,6,7]
 - `-100 <= matrix[i][j] <= 100`
 
 
-
-Certainly! Let's discuss the "Spiral Matrix" problem, where the objective is to traverse and collect elements from a `m x n` matrix in a spiral order. This problem is intriguing and requires careful handling of indices and directions.
 
 ### Intuition and Main Idea
 
