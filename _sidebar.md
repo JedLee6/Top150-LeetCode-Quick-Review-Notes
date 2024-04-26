@@ -39,6 +39,7 @@
   - [033 Sliding Window 76. Minimum Window Substring](03_Sliding_Window/033_Sliding_Window_76._Minimum_Window_Substring.md)
 
 - 04 Matrix
-  - [04 Matrix 36. Valid Sudoku](04_Matrix/04_Matrix_36._Valid_Sudoku.md)
+  - [034 Matrix 36. Valid Sudoku](04_Matrix/034_Matrix_36._Valid_Sudoku.md)
+  - [035 Matrix 54.Spiral Matrix](04_Matrix/035_Matrix_54.Spiral_Matrix.md)
 
 - [README](README.md)
