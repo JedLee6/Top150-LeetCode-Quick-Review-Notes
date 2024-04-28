@@ -42,5 +42,6 @@
   - [034 Matrix 36. Valid Sudoku](04_Matrix/034_Matrix_36._Valid_Sudoku.md)
   - [035 Matrix 54.Spiral Matrix](04_Matrix/035_Matrix_54.Spiral_Matrix.md)
   - [036 Matrix 48. Rotate Image](04_Matrix/036_Matrix_48._Rotate_Image.md)
+  - [037 Matrix 73. Set Matrix Zeroes](04_Matrix/037_Matrix_73._Set_Matrix_Zeroes.md)
 
 - [README](README.md)
