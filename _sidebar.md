@@ -43,5 +43,6 @@
   - [035 Matrix 54.Spiral Matrix](04_Matrix/035_Matrix_54.Spiral_Matrix.md)
   - [036 Matrix 48. Rotate Image](04_Matrix/036_Matrix_48._Rotate_Image.md)
   - [037 Matrix 73. Set Matrix Zeroes](04_Matrix/037_Matrix_73._Set_Matrix_Zeroes.md)
+  - [038 Matrix 289. Game of Life](04_Matrix/038_Matrix_289._Game_of_Life.md)
 
 - [README](README.md)
