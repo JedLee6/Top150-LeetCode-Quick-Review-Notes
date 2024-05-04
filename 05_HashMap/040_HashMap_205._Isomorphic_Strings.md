@@ -85,7 +85,7 @@ public boolean isIsomorphic(String s, String t) {
         char tChar = t.charAt(i);
         // Check if it has a mapping rule from s to t for sChar 
         if (sToT.containsKey(sChar)) {
-            // If so check for the consistency of the mapping rule from sChar to tChar
+            // If so check the consistency of the mapping rule from sChar to tChar
             if (sToT.get(sChar) != tChar) {
                 return false; // Inconsistent mapping
             }
@@ -96,7 +96,7 @@ public boolean isIsomorphic(String s, String t) {
 
         // Check if it has a mapping rule from t to s for tChar 
         if (tToS.containsKey(tChar)) {
-            // If so check for the consistency of the mapping rule from tChar to sChar
+            // If so check the consistency of the mapping rule from tChar to sChar
             if (tToS.get(tChar) != sChar) {
                 return false; // Inconsistent mapping
             }
