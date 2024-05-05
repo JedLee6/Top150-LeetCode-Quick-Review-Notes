@@ -49,5 +49,6 @@
   - [039 HashMap 383. Ransom Note](05_HashMap/039_HashMap_383._Ransom_Note.md)
   - [040 HashMap 205. Isomorphic Strings](05_HashMap/040_HashMap_205._Isomorphic_Strings.md)
   - [041 HashMap 290. Word Pattern](05_HashMap/041_HashMap_290._Word_Pattern.md)
+  - [042 HashMap 242. Valid Anagram](05_HashMap/042_HashMap_242._Valid_Anagram.md)
 
 - [README](README.md)
