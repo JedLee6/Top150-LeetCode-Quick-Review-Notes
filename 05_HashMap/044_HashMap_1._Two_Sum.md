@@ -58,7 +58,7 @@ public int[] twoSum(int[] nums, int target) {
         // Iterate through the array
         for (int i = 0; i < nums.length; i++) {
             int complement = target - nums[i];
-            // Check if the complement exists in the hashmap
+            // Check if the complement exists in the hashmap, each lookup and insertion in the hashmap takes \( O(1) \) time on average.
             if (map.containsKey(complement)) {
                 // If yes, return the indices of the current number and its complement
                 return new int[] { map.get(complement), i };
