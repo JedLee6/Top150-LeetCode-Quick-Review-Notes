@@ -51,5 +51,6 @@
   - [041 HashMap 290. Word Pattern](05_HashMap/041_HashMap_290._Word_Pattern.md)
   - [042 HashMap 242. Valid Anagram](05_HashMap/042_HashMap_242._Valid_Anagram.md)
   - [043 HashMap 49. Group Anagrams](05_HashMap/043_HashMap_49._Group_Anagrams.md)
+  - [044 HashMap 1. Two Sum](05_HashMap/044_HashMap_1._Two_Sum.md)
 
 - [README](README.md)
