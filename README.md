@@ -4,7 +4,7 @@ Hi. My name is Jed. Welcome to the "Top 150 LeetCode Quick Review Notes" reposit
 
 You can visit https://jedlee6.github.io/Top150-LeetCode-Quick-Review-Notes to see the [online gitbook of this project](https://jedlee6.github.io/Top150-LeetCode-Quick-Review-Notes).
 
-![image-20240508232928515](https://raw.githubusercontent.com/JedLee6/PublicPicBed/main/uPic/image-20240508232928515.png)
+<img src="https://raw.githubusercontent.com/JedLee6/PublicPicBed/main/uPic/image-20240508232928515.png" width="600px">
 
 ## About This Repository
 
