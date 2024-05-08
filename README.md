@@ -4,6 +4,8 @@ Hi. My name is Jed. Welcome to the "Top 150 LeetCode Quick Review Notes" reposit
 
 You can visit https://jedlee6.github.io/Top150-LeetCode-Quick-Review-Notes to see the [online gitbook of this project](https://jedlee6.github.io/Top150-LeetCode-Quick-Review-Notes).
 
+![image-20240508232928515](https://raw.githubusercontent.com/JedLee6/PublicPicBed/main/uPic/image-20240508232928515.png)
+
 ## About This Repository
 
 This repository contains detailed notes and explanations for 150 LeetCode problems that are commonly asked in technical interviews. The goal is to provide clear, concise, and effective strategies to not only solve each problem but also to understand the underlying concepts and techniques.
