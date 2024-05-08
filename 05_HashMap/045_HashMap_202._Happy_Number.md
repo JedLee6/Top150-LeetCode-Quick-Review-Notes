@@ -74,7 +74,7 @@ private int getNext(int n) {
 - **Time Complexity**: The complexity depends on the number of times the digits are squared and summed until 1 is reached or a loop is detected. This is generally hard to predict, but in practice, it converges quickly for most numbers.
 - **Space Complexity**: O(k), where k is the number of unique numbers encountered. In the worst case, this could be large if the sequence takes many iterations to repeat or reach 1.
 
-#### Method 2: Floyd's Cycle Detection Algorithm (Tortoise and Hare)
+## Method 2: Floyd's Cycle Detection Algorithm (Tortoise and Hare)
 
 Floyd's Cycle Detection Algorithm, often referred to as the "Tortoise and the Hare" algorithm, is a pointer technique used to detect cycles within a sequence of iterated values. It's widely used in computer science to identify loops within linked lists, number sequences, and other iterative processes.
 
@@ -96,6 +96,8 @@ The algorithm is based on the premise that if there is a cycle, the faster-movin
 3. **Detection**: Continue the iteration until either:
     - The sequence reaches a terminating condition (e.g., reaches 1 in the happy number problem).
     - The hare meets the tortoise, indicating a cycle.
+
+### Java Code
 
 ```java
 public boolean isHappy(int n) {
@@ -125,6 +127,6 @@ private int getNext(int n) {
 - **Time Complexity**: As before, hard to predict but tends to be efficient in detecting cycles.
 - **Space Complexity**: O(1) since we are only using a few extra variables, regardless of the length of the sequence.
 
-### Conclusion
+## Conclusion
 
 Both methods provide efficient ways to determine if a number is happy. The HashSet approach is straightforward and easy to understand, while Floyd's cycle detection provides an elegant solution with constant space complexity.
