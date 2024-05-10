@@ -54,5 +54,6 @@
   - [044 HashMap 1. Two Sum](05_HashMap/044_HashMap_1._Two_Sum.md)
   - [045 HashMap 202. Happy Number](05_HashMap/045_HashMap_202._Happy_Number.md)
   - [046 HashMap 219. Contains Duplicate II](05_HashMap/046_HashMap_219._Contains_Duplicate_II.md)
+  - [047 HashMap 128. Longest Consecutive Sequence](05_HashMap/047_HashMap_128._Longest_Consecutive_Sequence.md)
 
 - [README](README.md)
