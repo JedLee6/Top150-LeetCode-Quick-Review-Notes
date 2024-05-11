@@ -56,4 +56,7 @@
   - [046 HashMap 219. Contains Duplicate II](05_HashMap/046_HashMap_219._Contains_Duplicate_II.md)
   - [047 HashMap 128. Longest Consecutive Sequence](05_HashMap/047_HashMap_128._Longest_Consecutive_Sequence.md)
 
+- 06 Intervals
+  - [048 Intervals 228. Summary Ranges](06_Intervals/048_Intervals_228._Summary_Ranges.md)
+
 - [README](README.md)
