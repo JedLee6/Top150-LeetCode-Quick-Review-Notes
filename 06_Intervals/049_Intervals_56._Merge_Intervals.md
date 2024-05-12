@@ -66,11 +66,11 @@ public int[][] merge(int[][] intervals) {
 
 ### Complexity Analysis
 - **Time Complexity**: 
-  - Sorting the intervals takes \(O(n \log n)\), where \(n\) is the number of intervals.
+  - Sorting the intervals takes \(O(n * log n)\), where \(n\) is the number of intervals.
   - The merging process is \(O(n)\), as each interval is processed once.
-  - Hence, the overall time complexity is \(O(n \log n)\).
+  - Hence, the overall time complexity is \(O(n * log n)\).
 - **Space Complexity**: 
   - \(O(n)\) for the `result` list in the worst case, if no intervals are merged.
-  - Sorting might also take \(O(\log n)\) space depending on the implementation.
+  - Sorting might also take \(O(log n)\) space depending on the implementation.
 
 This approach is optimal in terms of time complexity given the need to sort the intervals. It ensures that all overlapping intervals are merged correctly while maintaining a linear scan for the merge phase after sorting.
