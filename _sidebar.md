@@ -58,5 +58,6 @@
 
 - 06 Intervals
   - [048 Intervals 228. Summary Ranges](06_Intervals/048_Intervals_228._Summary_Ranges.md)
+  - [049 Intervals 56. Merge Intervals](06_Intervals/049_Intervals_56._Merge_Intervals.md)
 
 - [README](README.md)
