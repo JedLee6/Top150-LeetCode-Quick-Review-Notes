@@ -60,5 +60,6 @@
   - [048 Intervals 228. Summary Ranges](06_Intervals/048_Intervals_228._Summary_Ranges.md)
   - [049 Intervals 56. Merge Intervals](06_Intervals/049_Intervals_56._Merge_Intervals.md)
   - [050 Intervals 57. Insert Interval](06_Intervals/050_Intervals_57._Insert_Interval.md)
+  - [051 Intervals 452. Minimum Number of Arrows to Burst Balloons](06_Intervals/051_Intervals_452._Minimum_Number_of_Arrows_to_Burst_Balloons.md)
 
 - [README](README.md)
