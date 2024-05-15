@@ -62,4 +62,7 @@
   - [050 Intervals 57. Insert Interval](06_Intervals/050_Intervals_57._Insert_Interval.md)
   - [051 Intervals 452. Minimum Number of Arrows to Burst Balloons](06_Intervals/051_Intervals_452._Minimum_Number_of_Arrows_to_Burst_Balloons.md)
 
+- 07 Stack
+  - [052 Stack 20. Valid Parentheses](07_Stack/052_Stack_20._Valid_Parentheses.md)
+
 - [README](README.md)
