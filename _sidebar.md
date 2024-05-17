@@ -65,5 +65,6 @@
 - 07 Stack
   - [052 Stack 20. Valid Parentheses](07_Stack/052_Stack_20._Valid_Parentheses.md)
   - [053 Stack 71. Simplify Path](07_Stack/053_Stack_71._Simplify_Path.md)
+  - [054 Stack 155. Min Stack](07_Stack/054_Stack_155._Min_Stack.md)
 
 - [README](README.md)
