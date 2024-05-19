@@ -67,5 +67,6 @@
   - [053 Stack 71. Simplify Path](07_Stack/053_Stack_71._Simplify_Path.md)
   - [054 Stack 155. Min Stack](07_Stack/054_Stack_155._Min_Stack.md)
   - [055 Stack 150. Evaluate Reverse Polish Notation](07_Stack/055_Stack_150._Evaluate_Reverse_Polish_Notation.md)
+  - [056 Stack 224. Basic Calculator](07_Stack/056_Stack_224._Basic_Calculator.md)
 
 - [README](README.md)
