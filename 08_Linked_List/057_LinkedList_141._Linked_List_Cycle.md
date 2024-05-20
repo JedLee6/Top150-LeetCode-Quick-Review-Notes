@@ -117,16 +117,19 @@ This is a space-efficient method using two pointers at different speeds (slow an
 public class Solution {
     public boolean hasCycle(ListNode head) {
         if (head == null) return false;
-        ListNode slow = head; // Moves one step at a time
-        ListNode fast = head.next; // Moves two steps at a time
+        ListNode slow = head; // Start at the starting ListNode, then move one step at each time
+        ListNode fast = head.next; // Move one step ahead initially, then move two steps at each time
+        //As the condition is to check if slow is not equal to fast, so two pointers should start at different node
         while (slow != fast) {
+            // Check If fast pointer reaches the end
             if (fast == null || fast.next == null) {
-                return false; // No cycle if fast pointer reaches the end
+                return false; // If so, which means no cycle found
             }
-            slow = slow.next;
-            fast = fast.next.next;
+            slow = slow.next; // Move one step at each time
+            fast = fast.next.next; // Move two steps at each time
         }
-        return true; // Cycle detected when slow and fast meet
+        // Cycle detected when slow and fast meet
+        return true; 
     }
 }
 ```
