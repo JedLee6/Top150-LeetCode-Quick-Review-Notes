@@ -71,5 +71,6 @@
 
 - 08 Linked List
   - [057 LinkedList 141. Linked List Cycle](08_Linked_List/057_LinkedList_141._Linked_List_Cycle.md)
+  - [058 LinkedList 2. Add Two Numbers](08_Linked_List/058_LinkedList_2._Add_Two_Numbers.md)
 
 - [README](README.md)
