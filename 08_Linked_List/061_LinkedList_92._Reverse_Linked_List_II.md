@@ -33,7 +33,7 @@ Output: [5]
 
 ### Intuition and Main Idea
 
-To solve the problem of reversing a segment of a singly linked list between two given positions `left` and `right`, we need to carefully handle the pointers to ensure that only the specified segment is reversed while the rest of the list remains unchanged. 
+To solve the problem of reversing a segment of a singly linked list between two given positions `left` and `right`, we need to carefully **rearrange the pointers** to ensure that only the specified segment is reversed while the rest of the list remains unchanged. 
 
 The main idea is to:
 1. Traverse the list to find the starting point of the segment to be reversed.
