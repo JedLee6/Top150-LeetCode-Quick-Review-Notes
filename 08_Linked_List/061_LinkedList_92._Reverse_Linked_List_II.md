@@ -40,8 +40,6 @@ The main idea is to:
 2. Reverse the segment.
 3. Reconnect the reversed segment with the rest of the list.
 
-We can achieve this in one pass through the list to position ourselves correctly and another pass to reverse the segment, making the solution efficient.
-
 ### Step-by-Step Solution with Detailed Explanation
 
 ```java
