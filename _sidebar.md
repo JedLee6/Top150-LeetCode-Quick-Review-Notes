@@ -74,5 +74,6 @@
   - [058 LinkedList 2. Add Two Numbers](08_Linked_List/058_LinkedList_2._Add_Two_Numbers.md)
   - [059 LinkedList 21. Merge Two Sorted Lists](08_Linked_List/059_LinkedList_21._Merge_Two_Sorted_Lists.md)
   - [060 LinkedList 138. Copy List with Random Pointer](08_Linked_List/060_LinkedList_138._Copy_List_with_Random_Pointer.md)
+  - [061 LinkedList 92. Reverse Linked List II](08_Linked_List/061_LinkedList_92._Reverse_Linked_List_II.md)
 
 - [README](README.md)
