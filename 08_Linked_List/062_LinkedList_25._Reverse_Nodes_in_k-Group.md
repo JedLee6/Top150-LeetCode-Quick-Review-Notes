@@ -82,11 +82,11 @@ class Solution {
             cur = pre.next; // The first node in the k-group
             nex = cur.next; // The node following the first node in the k-group
             // For each group of k nodes, we reverse the k nodes within the group using a nested loop
-            for (int i = 1; i < k; i++) {
-                cur.next = nex.next; // Point the current node to the node after next
-                nex.next = pre.next; // Move next to the front of the k-group
-                pre.next = nex; // Move pre to point to the new front
-                nex = cur.next; // Move nex to the next node to be processed
+            for (int i = 1; i < k; i++) {                
+                cur.next = nex.next; // Point the `cur` node to the node after `nex` node to connect the reversed groups to the latter part of the list
+                nex.next = pre.next; // Move `nex` node to the front of the k-group
+                pre.next = nex; // Point the `pre` node to the 'nex' node to connect the former part of the list to the reversed groups
+                nex = cur.next; // Update the 'nex' node to the subsequent node, which will to be reversed in the following iteration
             }
             pre = cur; // Move pre to the end of the reversed k-group
             count -= k; // Decrease the node count by k
