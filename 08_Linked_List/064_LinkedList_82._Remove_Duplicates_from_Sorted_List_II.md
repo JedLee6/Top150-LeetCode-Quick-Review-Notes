@@ -48,6 +48,16 @@ The main idea to solve this problem is to traverse the linked list and identify 
 - Skip duplicate nodes by adjusting pointers accordingly.
 
 ```java
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
 class Solution {
     public ListNode deleteDuplicates(ListNode head) {
         // Dummy node to handle edge cases where the head node could be removed
