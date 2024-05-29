@@ -78,5 +78,6 @@
   - [062 LinkedList 25. Reverse Nodes in k Group](08_Linked_List/062_LinkedList_25._Reverse_Nodes_in_k-Group.md)
   - [063 LinkedList 19. Remove Nth Node From End of List](08_Linked_List/063_LinkedList_19._Remove_Nth_Node_From_End_of_List.md)
   - [064 LinkedList 82. Remove Duplicates from Sorted List II](08_Linked_List/064_LinkedList_82._Remove_Duplicates_from_Sorted_List_II.md)
+  - [065 LinkedList 61. Rotate List](08_Linked_List/065_LinkedList_61._Rotate_List.md)
 
 - [README](README.md)
