@@ -62,6 +62,16 @@ When we rotate a list of length n by n steps, it brings every element back to it
 - Break the circularity at the correct position to form the new rotated list.
 
 ```java
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
 class Solution {
     public ListNode rotateRight(ListNode head, int k) {
         // Check if the list is empty, has only one node, or if \( k \) is zero. In such cases, return the head as is.
@@ -112,6 +122,16 @@ The space complexity is \(O(1)\) because we only use a few extra pointers and no
 - Adjust pointers to form the rotated list.
 
 ```java
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
 class Solution {
     public ListNode rotateRight(ListNode head, int k) {
         if (head == null || head.next == null || k == 0) {
