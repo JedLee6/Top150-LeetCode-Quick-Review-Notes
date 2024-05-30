@@ -87,11 +87,11 @@ public class Solution {
 
 ### Time Complexity
 
-The time complexity of this solution is \( O(n) \), where \( n \) is the number of nodes in the linked list. This is because we traverse the list once.
+The time complexity of this solution is O(n) , where n is the number of nodes in the linked list. This is because we traverse the list once.
 
 ### Space Complexity
 
-The space complexity is \( O(1) \) extra space, as we only used a constant amount of extra space for the pointers.
+The space complexity is O(1) extra space, as we only used a constant amount of extra space for the pointers.
 
 
 
@@ -110,4 +110,4 @@ This alternative solution, however, increases the space complexity to \( O(n) \)
 
 ### Conclusion
 
-The two-pointer technique with `before` and `after` lists is optimal for this problem as it ensures \( O(n) \) time complexity and \( O(1) \) extra space, maintaining the required relative order of nodes efficiently.
+The two-pointer technique with `before` and `after` lists is optimal for this problem as it ensures O(n) time complexity and O(1) extra space, maintaining the required relative order of nodes efficiently.
