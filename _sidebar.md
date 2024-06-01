@@ -80,5 +80,6 @@
   - [064 LinkedList 82. Remove Duplicates from Sorted List II](08_Linked_List/064_LinkedList_82._Remove_Duplicates_from_Sorted_List_II.md)
   - [065 LinkedList 61. Rotate List](08_Linked_List/065_LinkedList_61._Rotate_List.md)
   - [066 LinkedList 86. Partition List](08_Linked_List/066_LinkedList_86._Partition_List.md)
+  - [067 LinkedList 146. LRU Cache](08_Linked_List/067_LinkedList_146._LRU_Cache.md)
 
 - [README](README.md)
