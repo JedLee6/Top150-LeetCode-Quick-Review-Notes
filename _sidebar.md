@@ -84,5 +84,6 @@
 
 - 09 Binary Tree General
   - [068 Binary Tree General 104. Maximum Depth of Binary Tree](09_Binary_Tree_General/068_Binary_Tree_General_104._Maximum_Depth_of_Binary_Tree.md)
+  - [069 Binary Tree General 100. Same Tree](09_Binary_Tree_General/069_Binary_Tree_General_100._Same_Tree.md)
 
 - [README](README.md)
