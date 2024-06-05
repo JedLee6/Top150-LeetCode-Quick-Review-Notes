@@ -148,7 +148,7 @@ public class Solution {
 ### Time Complexity and Space Complexity
 
 - **Time Complexity**: O(n) , where n is the number of nodes in the tree. We visit each node once.
-- **Space Complexity**: O(n) , due to the queue storage. In the worst case, the queue could store all the nodes at the last level of the tree, which is O(n) .
+- **Space Complexity**: O(n) , due to the queue storage. In the worst case, the queue could store half of the nodes at the last level of the tree, which is O(n) .
 
 ### Conclusion
 

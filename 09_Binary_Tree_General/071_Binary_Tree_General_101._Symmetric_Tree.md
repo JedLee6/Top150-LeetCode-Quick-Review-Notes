@@ -2,7 +2,7 @@
 
 Given the `root` of a binary tree, *check whether it is a mirror of itself* (i.e., symmetric around its center).
 
- 
+
 
 **Example 1:**
 
@@ -27,9 +27,7 @@ Output: false
 **Constraints:**
 
 - The number of nodes in the tree is in the range `[1, 1000]`.
-- `-100 <= Node.val <= 100`
-
- 
+- `-100 <= Node.val <= 100` 
 
 **Follow up:** Could you solve it both recursively and iteratively?
 
@@ -41,13 +39,11 @@ The main idea is to check if the tree is a mirror of itself. This means that for
 1. The left child of the left subtree with the right child of the right subtree.
 2. The right child of the left subtree with the left child of the right subtree.
 
-We can solve this problem using both **recursive** and **iterative** approaches.
+We can solve this problem using both **recursive** depth-first search (DFS) and **iterative** breadth-first search approaches.
 
 ### Recursive Approach
 
-The recursive approach involves a helper function that checks if two trees are mirrors of each other.
-
-Here is the recursive solution with detailed annotations:
+The recursive depth-first search approach involves a helper method that checks if two trees are mirrors of each other.
 
 ```java
 /**
@@ -65,29 +61,28 @@ Here is the recursive solution with detailed annotations:
  *     }
  * }
  */
-
 public class Solution {
-    
     // Main method to check if a tree is symmetric
     public boolean isSymmetric(TreeNode root) {
         // A tree is symmetric if it is empty or if its left and right subtrees are mirrors
         return root == null || isMirror(root.left, root.right);
     }
-    
     // Helper method to check if two trees are mirrors of each other
     private boolean isMirror(TreeNode left, TreeNode right) {
-        // If both nodes are null, they are mirrors
+        // If both nodes are null, they are mirrors of each other
         if (left == null && right == null) {
             return true;
         }
-        
-        // If one node is null and the other is not, they are not mirrors
+        // If one node is null and the other is not, they are not mirrors of each other
         if (left == null || right == null) {
             return false;
         }
-        
-        // Check if the current nodes have the same value and if their respective children are mirrors
-        return left.val == right.val && isMirror(left.left, right.right) && isMirror(left.right, right.left);
+        // If the values of two nodes are different, the tree is not symmetric
+        if (left.val != right.val) {
+            return false;
+        }
+        // Check if their respective subtrees are mirrors
+        return isMirror(left.left, right.right) && isMirror(left.right, right.left);
     }
 }
 ```
@@ -99,57 +94,47 @@ public class Solution {
 
 ### Iterative Approach
 
-An iterative approach can be implemented using a queue to perform a level-order traversal, where we compare nodes level by level.
-
-Here is the iterative solution with detailed annotations:
+An iterative breadth-first search approach can be implemented using a queue to perform a level-order traversal, where we compare nodes level by level.
 
 ```java
 import java.util.LinkedList;
 import java.util.Queue;
 
 public class Solution {
-    
     // Main method to check if a tree is symmetric
     public boolean isSymmetric(TreeNode root) {
         // If the root is null, the tree is symmetric
         if (root == null) {
             return true;
         }
-        
         // Initialize a queue for level-order traversal
         Queue<TreeNode> queue = new LinkedList<>();
         // Add the left and right children of the root to the queue
         queue.offer(root.left);
         queue.offer(root.right);
-        
         // Process nodes while the queue is not empty
         while (!queue.isEmpty()) {
             // Remove two nodes from the front of the queue
             TreeNode left = queue.poll();
             TreeNode right = queue.poll();
-            
             // If both nodes are null, continue to the next pair of nodes
             if (left == null && right == null) {
                 continue;
             }
-            
             // If one node is null and the other is not, the tree is not symmetric
             if (left == null || right == null) {
                 return false;
             }
-            
             // If the values of the nodes are different, the tree is not symmetric
             if (left.val != right.val) {
                 return false;
             }
-            
             // Add the children of the nodes to the queue in a mirrored order
             queue.offer(left.left);
             queue.offer(right.right);
             queue.offer(left.right);
             queue.offer(right.left);
         }
-        
         // If all nodes are processed without finding a mismatch, the tree is symmetric
         return true;
     }
@@ -159,7 +144,7 @@ public class Solution {
 ### Time Complexity and Space Complexity
 
 - **Time Complexity**: \( O(n) \), where \( n \) is the number of nodes in the tree. We visit each node once.
-- **Space Complexity**: \( O(n) \), due to the queue storage. In the worst case, the queue could store all the nodes at the last level of the tree, which is \( O(n) \).
+- **Space Complexity**: \( O(n) \), due to the queue storage. In the worst case, the queue could store half of the nodes at the last level of the tree, which is \( O(n) \).
 
 ### Conclusion
 
