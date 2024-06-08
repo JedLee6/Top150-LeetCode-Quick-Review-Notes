@@ -41,7 +41,7 @@ To solve the problem of constructing a binary tree from given inorder and postor
     - The elements to the left of the root in the inorder array represent the left subtree, and the elements to the right represent the right subtree.
 
 - **Postorder Traversal** (Left, Right, Root): The postorder traversal of a binary tree recursively visits the left subtree first, then visits the right subtree, followed by the root node.
-    - All the nodes from the left subtree are the first part of the postorde array, and followed by all the nodes from the right subtree, and elements of the left subtree, and the last node in the postorder array is the root node of the current subtree.
+    - All the nodes from the left subtree are the first part of the postorder array, and followed by all the nodes from the right subtree, and the last node in the postorder array is the root node of the binary tree.
 
 
 Using these properties, we can recursively construct the tree and its left and right subtrees using the corresponding parts of the inorder and postorder arrays.
@@ -89,7 +89,7 @@ public class Solution {
         // The root node value of the current subtree is the last element in the current postorder subarray, so we create a new TreeNode with this value to build the tree
         TreeNode root = new TreeNode(postorder[postEnd]);
         // Get the index of the root node of the current subtree in the inorder array
-        int rootIndex = inorderIndexMap.get(rootValue);
+        int rootIndex = inorderIndexMap.get(root.val);
         // Calculate the size of the left subtree
         int leftSize = rootIndex - inStart;
         // By using the above properties, we can split the inorder subarray and postorder subarray into smaller left and right subtrees and continue the recursion.
