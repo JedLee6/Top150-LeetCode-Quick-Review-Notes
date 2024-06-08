@@ -162,6 +162,133 @@ public class Solution {
 - Therefore, the overall time complexity is O(n).
 
 ### Space Complexity
+
 - The space complexity is O(n) due to the HashMap storing the indices and the recursion stack used for tree construction.
 
 By using a HashMap, we optimize the search for the root index in the inorder array, thus reducing the time complexity from O(n^2) to O(n).
+
+
+
+### Preorder, Inorder and Postorder traversals of a binary tree
+
+#### Definition
+
+**Preorder Traversal (Root, Left, Right)**:
+
+The preorder traversal of a binary tree recursively visits the the root node first, then visits left subtree, followed by the right subtree.
+
+1. Visit the root node.
+2. Recursively visit the left subtree.
+3. Recursively visit the right subtree.
+
+**Inorder Traversal (Left, Root, Right)**:
+
+The inorder traversal of a binary tree recursively visits the left subtree first, then visits the root node, followed by the right subtree.
+
+1. Recursively visit the left subtree.
+2. Visit the root node.
+3. Recursively visit the right subtree.
+
+**Postorder Traversal (Left, Right, Root)**:
+
+The postorder traversal of a binary tree recursively visits the left subtree first, then visits the right subtree, followed by the root node.
+
+1. Recursively visit the left subtree.
+2. Recursively visit the right subtree.
+3. Visit the root node.
+
+#### Real Example
+
+Consider the following binary tree:
+
+```
+       1
+      / \
+     2   3
+    / \   \
+   4   5   6
+```
+
+- **Preorder Traversal**:
+    - Start at the root: 1
+    - Traverse the left subtree: 2, 4, 5
+    - Traverse the right subtree: 3, 6
+    - Preorder: [1, 2, 4, 5, 3, 6]
+- **Inorder Traversal**:
+    - Traverse the left subtree: 4, 2, 5
+    - Visit the root: 1
+    - Traverse the right subtree: 3, 6
+    - Inorder: [4, 2, 5, 1, 3, 6]
+- **Postorder Traversal**:
+    - Traverse the left subtree: 4, 5, 2
+    - Traverse the right subtree: 6, 3
+    - Visit the root: 1
+    - Postorder: [4, 5, 2, 6, 3, 1]
+
+#### Java code implementations for performing Preorder, Inorder and Postorder traversals of a binary tree
+
+```java
+// Definition for a binary tree node. Defines the structure of a node in the binary tree, with integer value `val`, and references to left and right child nodes.
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+
+    TreeNode(int x) {
+        val = x;
+    }
+}
+
+public class BinaryTreeTraversals {
+    // Preorder traversal method visits the root node first, then recursively visits
+    // the left subtree, followed by the right subtree.
+    public static void preorderTraversal(TreeNode root) {
+        if (root == null) { return; }
+        // Visit the root node
+        System.out.print(root.val + " ");
+        // Traverse the left subtree
+        preorderTraversal(root.left);
+        // Traverse the right subtree
+        preorderTraversal(root.right);
+    }
+    // Inorder traversal method
+    public static void inorderTraversal(TreeNode root) {
+        if (root == null) { return; }
+        // Traverse the left subtree
+        inorderTraversal(root.left);
+        // Visit the root node
+        System.out.print(root.val + " ");
+        // Traverse the right subtree
+        inorderTraversal(root.right);
+    }
+    // Postorder traversal method
+    public static void postorderTraversal(TreeNode root) {
+        if (root == null) { return; }
+        // Traverse the left subtree
+        postorderTraversal(root.left);
+        // Traverse the right subtree
+        postorderTraversal(root.right);
+        // Visit the root node
+        System.out.print(root.val + " ");
+    }
+
+    public static void main(String[] args) {
+        // Constructing the example binary tree
+        TreeNode root = new TreeNode(1);
+        root.left = new TreeNode(2);
+        root.right = new TreeNode(3);
+        root.left.left = new TreeNode(4);
+        root.left.right = new TreeNode(5);
+        root.right.right = new TreeNode(6);
+        // Preorder Traversal: 1 2 4 5 3 6
+        System.out.print("Preorder Traversal: ");
+        BinaryTreeTraversals.preorderTraversal(root);
+        // Inorder Traversal: 4 2 5 1 3 6
+        System.out.print("Inorder Traversal: ");
+        BinaryTreeTraversals.inorderTraversal(root);
+        // Postorder Traversal: 4 5 2 6 3 1
+        System.out.print("Postorder Traversal: ");
+        BinaryTreeTraversals.postorderTraversal(root);
+    }
+}
+```
