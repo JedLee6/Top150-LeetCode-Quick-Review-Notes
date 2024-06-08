@@ -77,7 +77,7 @@ public class Solution {
         for (int i = 0; i < inorder.length; i++) {
             inorderIndexMap.put(inorder[i], i);
         }
-        // Call the helper method with 6 input parameters, the first 3 parameters are postorder array with its start and end indices, and the last 3 parameters are inorder array with its start and end indices
+        // Call the helper method with 5 input parameters, the first 3 parameters are postorder array pointer with its start and end indices, and the last 2 parameters are the start and end indices of the inorder array
         return buildTreeHelper(postorder, 0, postorder.length - 1, 0, inorder.length - 1);
     }
     
@@ -93,9 +93,11 @@ public class Solution {
         // Calculate the size of the left subtree
         int leftSize = rootIndex - inStart;
         // By using the above properties, we can split the inorder subarray and postorder subarray into smaller left and right subtrees and continue the recursion.
-        // Recursively construct the smaller left subtree, the 6 parameters are postorder and inorder pointer, with their corresponding start and end indices of the smaller left subtree
+        // Recursively construct the smaller left subtree, the 5 parameters are postorder array pointer with the corresponding start and end indices of the inorder and postorder array
+        // As we got the leftSize, so the index range in postorder of the smaller left subtree is from `postStart` to `postStart + leftSize - 1`. We also got the rootIndex in inorder, therefore the the index range in inorder of the smaller left subtree is from `inStart` to `rootIndex - 1`
         root.left = buildTreeHelper(postorder, postStart, postStart + leftSize - 1, inStart, rootIndex - 1);
-        // Recursively construct the smaller right subtree, the 6 parameters are postorder and inorder pointer, with their corresponding start and end indices of the smaller right subtree
+        // Recursively construct the smaller right subtree, the 5 parameters are postorder array pointer with the corresponding start and end indices of the inorder and postorder array
+        // According to the above information, the 5 parameters are writtern below
         root.right = buildTreeHelper(postorder, postStart + leftSize, postEnd - 1, rootIndex + 1, inEnd);
         // Until the end of the recursion, we return the root node
         return root;
