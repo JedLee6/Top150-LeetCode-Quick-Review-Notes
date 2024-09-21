@@ -150,8 +150,6 @@ An alternative approach involves using the already established `next` pointers t
 1. Use a dummy node to manage the next level's nodes.
 2. Use the `next` pointers to traverse the current level and establish the `next` pointers for the next level.
 
-Here's the code implementation with detailed annotations:
-
 ```java
 public class Solution {
     public Node connect(Node root) {
@@ -188,7 +186,7 @@ public class Solution {
             }
             // After finishing the current level, move `current` to the first node of the next level `dummy.next`. This is because we made `dummy.next` point into the start node of the next level in the code above
             current = dummy.next;
-            // Reset `dummy.next` to null to prepare for building connections in the traversal of next level. If we don't reset it, a endless loop could happen, as in the final outer iteration, `dummy.next` won't be assign to null, and `current` would be assign to `dummy.next` again, which cause the endless loop
+            // Reset `dummy.next` to null to prepare for building connections in the traversal of next level. If we don't reset it, a infinite loop could happen, as in the final outer iteration, `dummy.next` won't be assign to null, and `current` would be assign to `dummy.next` again, which cause the infinite loop
             dummy.next = null;
             // Reset 'prev' to the dummy node to start building the next level's connections
             prev = dummy;
@@ -210,6 +208,4 @@ The space complexity is \(O(1)\) since no additional space proportional to the n
 ### Conclusion
 
 By explaining both the queue-based level order traversal approach and the space-efficient approach using established `next` pointers, we ensure a comprehensive understanding of solving the problem of populating next right pointers in a binary tree.
-
-
 
