@@ -171,7 +171,7 @@ By using a HashMap, we optimize the search for the root index in the inorder arr
 
 ### Preorder, Inorder and Postorder traversals of a binary tree Recursively and Iteratively
 
-#### Definition
+**Preorder**, **Inorder**, and **Postorder** tree traversals are all forms of **Depth-First Search (DFS)**. They are different ways of visiting the nodes of a binary tree by exploring as deep as possible along each branch before backtracking, which is the core principle of DFS.
 
 **Preorder Traversal (Root, Left, Right)**:
 
@@ -243,11 +243,12 @@ Consider the following binary tree:
     - Visit the root: 1
     - Postorder: [4, 5, 2, 6, 3, 1]
 
-#### Java code implementations for performing Preorder, Inorder and Postorder traversals of a binary tree
+#### Java code implementations for performing Preorder, Inorder, Postorder traversals and Breadth-First Search of a binary tree
 
 ```java
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
-
 // Definition for a binary tree node. Defines the structure of a node in the binary tree, with integer value `val`, and references to left and right child nodes.
 class TreeNode {
     int val;
@@ -267,7 +268,6 @@ public class BinaryTreeTraversals {
         // Traverse the right subtree
         preorderTraversalRecursively(root.right);
     }
-
     public static void preorderTraversalIteratively(TreeNode root) {
         if (root == null) { return; }
         // Use a stack to simulate the recursion
@@ -348,8 +348,32 @@ public class BinaryTreeTraversals {
             System.out.print(stack2.pop().val + " ");
         }
     }
+    public static void breadthFirstSearch(TreeNode root) {
+        if (root == null) return;
+        // A queue is used to keep track of nodes at each level. We enqueue the root node first and then, for every node we dequeue, we enqueue its left and right children (if they exist). The queue ensures that nodes are processed level by level.
+        Queue<TreeNode> queue = new LinkedList<>();
+        // Start at the root of the tree, and enqueue the root node
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            TreeNode currentNode = queue.poll();  // Dequeue the front node
+            System.out.print(currentNode.val + " ");  // Process the current node
+            // Enqueue left child of the current node if it exists
+            if (currentNode.left != null) {
+                queue.add(currentNode.left);
+            }
+            // Enqueue right child of the current node if it exists
+            if (currentNode.right != null) {
+                queue.add(currentNode.right);
+            }
+        }
+    }
     public static void main(String[] args) {
         // Constructing the example binary tree
+        //       1
+        //      / \
+        //     2   3
+        //    / \   \
+        //   4   5   6
         TreeNode root = new TreeNode(1);
         root.left = new TreeNode(2);
         root.right = new TreeNode(3);
@@ -371,9 +395,14 @@ public class BinaryTreeTraversals {
         BinaryTreeTraversals.postorderTraversalRecursively(root);
         System.out.print("Postorder Traversal Iteratively: ");
         BinaryTreeTraversals.postorderTraversalIteratively(root);
+        // Breadth-First Search(BFS, Level-Order Traversal): 1 2 3 4 5 6
+        System.out.print("Breadth-First Search(BFS, Level-Order Traversal): ");
+        BinaryTreeTraversals.breadthFirstSearch(root);
     }
 }
 ```
+
+
 
 ### Understanding Why a Binary Tree Cannot Be Reconstructed From Pre-order and Post-order Traversals  Alone
 
