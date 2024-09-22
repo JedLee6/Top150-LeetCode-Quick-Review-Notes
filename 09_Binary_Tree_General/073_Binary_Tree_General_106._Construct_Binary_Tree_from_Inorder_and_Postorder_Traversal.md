@@ -166,7 +166,7 @@ By providing both the recursive and iterative approaches, we ensure that we have
 
 
 
-### Preorder, Inorder and Postorder traversals of a binary tree
+### Preorder, Inorder and Postorder traversals of a binary tree Recursively and Iteratively
 
 #### Definition
 
@@ -178,6 +178,12 @@ The preorder traversal of a binary tree recursively visits the the root node fir
 2. Recursively visit the left subtree.
 3. Recursively visit the right subtree.
 
+The preorder traversal of a binary tree iteratively uses a stack to simulate the recursion.
+
+1. Push the root node to the stack.
+2. Pop the top of the stack, process the node, and push its right child (if it exists), followed by its left child (if it exists), so that left is processed first (LIFO)
+3. Continue this process until the stack is empty.
+
 **Inorder Traversal (Left, Root, Right)**:
 
 The inorder traversal of a binary tree recursively visits the left subtree first, then visits the root node, followed by the right subtree.
@@ -186,6 +192,12 @@ The inorder traversal of a binary tree recursively visits the left subtree first
 2. Visit the root node.
 3. Recursively visit the right subtree.
 
+The inorder traversal of a binary tree iteratively uses a stack to simulate the recursion.
+
+1. Start from the root, and push all left children to the stack until we reach the leftmost node.
+2. pop the top node from the stack, process the node, and move to its right child.
+3. The loop continues until both the current node is null and the stack is empty.
+
 **Postorder Traversal (Left, Right, Root)**:
 
 The postorder traversal of a binary tree recursively visits the left subtree first, then visits the right subtree, followed by the root node.
@@ -193,6 +205,12 @@ The postorder traversal of a binary tree recursively visits the left subtree fir
 1. Recursively visit the left subtree.
 2. Recursively visit the right subtree.
 3. Visit the root node.
+
+The postorder traversal of a binary tree iteratively uses two stacks. One for performing a modified pre-order traversal(Root -> Right -> Left), and one for reversing the modified pre-order traversal.
+
+1. Use stack1 to perform a modified pre-order traversal (Root -> Right -> Left), where we process the root first, followed by the right child, and then the left child.
+2. Each time we pop a node from stack1, we push it onto stack2. This is reversing the modified pre-order traversal, so we get the nodes in post-order (left -> right -> root) when we pop from stack2.
+3. After stack1 is empty, we pop all elements from stack2 to get the post-order traversal.
 
 #### Real Example
 
@@ -225,50 +243,108 @@ Consider the following binary tree:
 #### Java code implementations for performing Preorder, Inorder and Postorder traversals of a binary tree
 
 ```java
+import java.util.Stack;
+
 // Definition for a binary tree node. Defines the structure of a node in the binary tree, with integer value `val`, and references to left and right child nodes.
 class TreeNode {
     int val;
     TreeNode left;
     TreeNode right;
-
-    TreeNode(int x) {
-        val = x;
-    }
+    TreeNode(int x) { val = x;}
 }
 
 public class BinaryTreeTraversals {
-    // Preorder traversal method visits the root node first, then recursively visits
-    // the left subtree, followed by the right subtree.
-    public static void preorderTraversal(TreeNode root) {
+    // Preorder traversal method visits the root node first, then recursively visits the left subtree, followed by the right subtree.
+    public static void preorderTraversalRecursively(TreeNode root) {
         if (root == null) { return; }
         // Visit the root node
         System.out.print(root.val + " ");
         // Traverse the left subtree
-        preorderTraversal(root.left);
+        preorderTraversalRecursively(root.left);
         // Traverse the right subtree
-        preorderTraversal(root.right);
-    }
-    // Inorder traversal method
-    public static void inorderTraversal(TreeNode root) {
-        if (root == null) { return; }
-        // Traverse the left subtree
-        inorderTraversal(root.left);
-        // Visit the root node
-        System.out.print(root.val + " ");
-        // Traverse the right subtree
-        inorderTraversal(root.right);
-    }
-    // Postorder traversal method
-    public static void postorderTraversal(TreeNode root) {
-        if (root == null) { return; }
-        // Traverse the left subtree
-        postorderTraversal(root.left);
-        // Traverse the right subtree
-        postorderTraversal(root.right);
-        // Visit the root node
-        System.out.print(root.val + " ");
+        preorderTraversalRecursively(root.right);
     }
 
+    public static void preorderTraversalIteratively(TreeNode root) {
+        if (root == null) { return; }
+        // Use a stack to simulate the recursion
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
+        while (!stack.isEmpty()) {
+            // Pop the top of the stack, process the node, and push its right child (if it exists), followed by its left child (if it exists). Continue this process until the stack is empty.
+            TreeNode current = stack.pop();
+            System.out.print(current.val + " ");
+            // Push right first so that left is processed first (LIFO)
+            if (current.right != null) {
+                stack.push(current.right);
+            }
+            if (current.left != null) {
+                stack.push(current.left);
+            }
+        }
+    }
+    // Inorder traversal method
+    public static void inorderTraversalRecursively(TreeNode root) {
+        if (root == null) { return; }
+        // Traverse the left subtree
+        inorderTraversalRecursively(root.left);
+        // Visit the root node
+        System.out.print(root.val + " ");
+        // Traverse the right subtree
+        inorderTraversalRecursively(root.right);
+    }
+    public static void inorderTraversalIteratively(TreeNode root) {
+        // Use a stack to simulate recursion
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode current = root;
+        // The loop continues until both the current node is null and the stack is empty
+        while (current != null || !stack.isEmpty()) {
+            // Push all the left children onto the stack
+            while (current != null) {
+                stack.push(current);
+                current = current.left;
+            }
+            // When we reach the leftmost node, we pop the top node from the stack, process the node, and move to its right child
+            current = stack.pop();
+            System.out.print(current.val + " ");
+            // Move to the right subtree
+            current = current.right;
+        }
+    }
+    // Postorder traversal method
+    public static void postorderTraversalRecursively(TreeNode root) {
+        if (root == null) { return; }
+        // Traverse the left subtree
+        postorderTraversalRecursively(root.left);
+        // Traverse the right subtree
+        postorderTraversalRecursively(root.right);
+        // Visit the root node
+        System.out.print(root.val + " ");
+    }
+    public static void postorderTraversalIteratively(TreeNode root) {
+        if (root == null) { return; }
+        // Use stack1 to perform a modified pre-order traversal (Root -> Right -> Left), where we process the root first, followed by the right child, and then the left child.
+        Stack<TreeNode> stack1 = new Stack<>();
+        // Each time we pop a node from stack1, we push it onto stack2. This is reversing the modified pre-order traversal, so we get the nodes in post-order (left -> right -> root) when we pop from stack2.
+        Stack<TreeNode> stack2 = new Stack<>();
+        stack1.push(root);
+        // Perform a modified pre-order traversal: Root -> Right -> Left
+        while (!stack1.isEmpty()) {
+            TreeNode current = stack1.pop();
+            stack2.push(current); // Push the node to stack2
+            // Push the left and right children to stack1
+            if (current.left != null) {
+                stack1.push(current.left);
+            }
+            if (current.right != null) {
+                stack1.push(current.right);
+            }
+        }
+        // After stack1 is empty, pop all the elements from stack2 to get the post-order
+        while (!stack2.isEmpty()) {
+            System.out.print(stack2.pop().val + " ");
+        }
+    }
     public static void main(String[] args) {
         // Constructing the example binary tree
         TreeNode root = new TreeNode(1);
@@ -278,15 +354,75 @@ public class BinaryTreeTraversals {
         root.left.right = new TreeNode(5);
         root.right.right = new TreeNode(6);
         // Preorder Traversal: 1 2 4 5 3 6
-        System.out.print("Preorder Traversal: ");
-        BinaryTreeTraversals.preorderTraversal(root);
+        System.out.print("Preorder Traversal Recursively: ");
+        BinaryTreeTraversals.preorderTraversalRecursively(root);
+        System.out.print("Preorder Traversal Iteratively: ");
+        BinaryTreeTraversals.preorderTraversalIteratively(root);
         // Inorder Traversal: 4 2 5 1 3 6
-        System.out.print("Inorder Traversal: ");
-        BinaryTreeTraversals.inorderTraversal(root);
+        System.out.print("Inorder Traversal Recursively: ");
+        BinaryTreeTraversals.inorderTraversalRecursively(root);
+        System.out.print("Inorder Traversal Iteratively: ");
+        BinaryTreeTraversals.inorderTraversalIteratively(root);
         // Postorder Traversal: 4 5 2 6 3 1
-        System.out.print("Postorder Traversal: ");
-        BinaryTreeTraversals.postorderTraversal(root);
+        System.out.print("Postorder Traversal Recursively: ");
+        BinaryTreeTraversals.postorderTraversalRecursively(root);
+        System.out.print("Postorder Traversal Iteratively: ");
+        BinaryTreeTraversals.postorderTraversalIteratively(root);
     }
 }
 ```
 
+
+
+### Understanding Why a Binary Tree Cannot Be Reconstructed From Pre-order and Post-order Traversals  Alone
+
+#### 1. **Pre-order and Post-order Traversals**
+
+- **Pre-order traversal** visits the nodes in the order: **Root → Left → Right**.
+- **Post-order traversal** visits the nodes in the order: **Left → Right → Root**.
+
+When we have **pre-order** and **post-order** traversal results, the problem is that these two sequences do not provide enough information to **unambiguously determine the tree structure**, especially if the tree is not strictly binary (i.e., nodes can have either no children, one child, or two children).
+
+Consider a simple example:
+
+- A pre-order traversal of a tree gives: `A B C`
+- A post-order traversal of the same tree gives: `B C A`
+
+From these two traversals alone, you can't definitively say whether the tree has a structure like:
+
+```
+    A
+   /
+  B
+   \
+    C
+```
+
+or like:
+
+```
+    A
+   /
+  C
+ /
+B
+```
+
+The reason is that **both structures** would generate the same pre-order and post-order sequences. Thus, **pre-order and post-order traversals do not provide enough information to reconstruct the tree uniquely**.
+
+#### 2. **Pre-order and In-order Traversals**
+
+In contrast, when we combine **pre-order** and **in-order** traversal results, we can recover the tree unambiguously.
+
+- **Pre-order traversal** always begins with the **root node**.
+- **In-order traversal** allows us to determine the **structure of the left and right subtrees**.
+
+For example, if the pre-order traversal is `A B D E C F` and the in-order traversal is `D B E A F C`, you can deduce the following:
+
+- The root (`A`) comes first in pre-order.
+- In the in-order sequence, everything to the left of `A` (i.e., `D B E`) is part of the left subtree, and everything to the right of `A` (i.e., `F C`) is part of the right subtree.
+- Recursively applying this logic to the left and right subtrees helps reconstruct the entire tree uniquely.
+
+#### 3. **Post-order and In-order Traversals**
+
+Similarly, **post-order** and **in-order** traversals allow us to reconstruct the binary tree. Post-order gives the root last, and the in-order sequence helps in identifying the subtrees, making it possible to rebuild the tree in a unique way.

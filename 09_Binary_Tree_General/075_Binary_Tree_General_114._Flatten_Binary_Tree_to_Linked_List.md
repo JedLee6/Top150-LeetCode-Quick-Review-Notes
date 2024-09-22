@@ -1,4 +1,4 @@
-# 075_Binary_Tree_General114. Flatten Binary Tree to Linked List
+# 075_Binary_Tree_General_114. Flatten Binary Tree to Linked List
 
 Given the `root` of a binary tree, flatten the tree into a "linked list":
 
@@ -50,12 +50,6 @@ The main idea to solve this problem are 2 steps:
 1. **Pre-order traversal** means that for every node, we first process the current node, then the left subtree, and finally the right subtree.
 2. During the flattening process, the left subtree should be flattened and connected to the right of the current node, and the original right subtree should be moved to the end of this flattened left subtree.
 
-
-
-The main idea is to flatten the binary tree into a linked list using a pre-order traversal. This means that we should first process the root, then the left subtree, and finally the right subtree. During this process, we need to ensure that:
-1. The left child of each node is set to `null`.
-2. The right child of each node points to the next node in the pre-order traversal.
-
 ### Detailed Solution:
 
 We'll discuss three different approaches to solve this problem:
@@ -86,7 +80,7 @@ public class Solution {
         // Recursively flatten the left subtree, then the right subtree
         flatten(root.left);
         flatten(root.right);
-        // Store the right subtree because we will overwrite root.right when moving the left subtree to the right
+        // After the recrusion, we'll store the original right subtree because we will overwrite root.right when moving the left subtree to the right
         TreeNode rightSubtree = root.right;
         // If there is a left subtree, we need to move it to the right
         if (root.left != null) {
@@ -109,6 +103,8 @@ public class Solution {
 - **Space complexity**: The recursion depth can go up to the height of the tree. In the worst case, the height of the tree can be N (for a skewed tree), so the space complexity is **O(N)** due to the recursive call stack.
 
 > skew /skjuː/ v. to move or lie at an angle, especially in a position that is not normal
+>
+> predecessor /ˈpredəsesər/  n The predecessor of an object or machine is the object or machine that came before it in a sequence or process of development.
 
 #### 2. Iterative Pre-order Traversal with a Stack
 
