@@ -142,6 +142,8 @@ public class Solution {
 >
 > - **`|`** is spelled as **"bitwise OR"**.
 > - **`||`** is spelled as **"logical OR"**.
+>
+> boolean /ˈbuːlin/ enqueue /ɪnˈkjuː/
 
 #### **Time Complexity Analysis**:
 
@@ -154,7 +156,7 @@ public class Solution {
 
 ### **Solution 2: Iterative DFS Using a Stack**
 
-In this approach, we use a stack to simulate the recursive DFS. For each node, we store the remaining target sum along with the node itself. Then we'll create a while loop to traverse all nodes. For each iteration of the while loop, we pop a node from the stack and check if it is a leaf. If we reach a leaf node, check if the currentSum equals 0. If so, we return true. Otherwize we push the not-null right subtree and not-null left subtree into the stack with updated sums. We break the while loop when the stack becomes empty.
+In this approach, we use a stack to simulate the recursive DFS. For each node, we store the remaining target sum along with the node itself. Then we'll create a while loop to traverse all nodes. For each iteration of the while loop, we pop a node from the stack and check if it is a leaf. If we reach a leaf node, check if the currentSum equals 0. If so, we return true. Otherwize we push the not-null right subtree and not-null left subtree into the stack with updated remaining target sums. We break the while loop when the stack becomes empty.
 
 **Code Implementation:**
 
@@ -167,7 +169,7 @@ public class Solution {
         Stack<Pair<TreeNode, Integer>> stack = new Stack<>();
         stack.push(new Pair<>(root, targetSum - root.val));
         while (!stack.isEmpty()) {
-            // In the while loop, pop a node from the stack and check if it is a leaf
+            // In the while loop, pop a node from the stack and check if it is a leaf node
             Pair<TreeNode, Integer> current = stack.pop();
             TreeNode node = current.getKey();
             int currentSum = current.getValue();
@@ -175,7 +177,8 @@ public class Solution {
             if (node.left == null && node.right == null && currentSum == 0) {
                 return true;
             }
-            // Push the right and left children (if exist) to the stack with updated sums
+            // Push the right and left children (if exist) to the stack with updated remaining target sums
+            // Push right subtree first so that left subtree is processed first in the stack (LIFO), which obeys the sequence of pre-order traversal (root->left->right)
             if (node.right != null) {
                 stack.push(new Pair<>(node.right, currentSum - node.right.val));
             }
@@ -197,7 +200,7 @@ public class Solution {
 
 ### **Solution 3: Breadth-First Search (BFS) Using a Queue**
 
-In BFS, we use a queue to traverse the tree level by level. Similar to DFS, we maintain the current node and the remaining sum at each step. For each iteration, we check if reached a leaf node with sum 0, if so we return true. Otherwize, we enqueque the not-null right subtree and not-null left subtree with updated sums. And we break the loop when the queue becomes empty.
+In BFS, we use a queue to traverse the tree level by level. Similar to DFS, we maintain the current node and the remaining sum at each step. For each iteration, we check if reached a leaf node with sum 0, if so we return true. Otherwize, we enqueque the not-null right subtree and not-null left subtree with updated remaining sums. And we break the loop when the queue becomes empty.
 
 **Code Implementation:**
 
@@ -208,17 +211,22 @@ import java.util.Queue;
 public class Solution {
     public boolean hasPathSum(TreeNode root, int targetSum) {
         if (root == null) return false;
+        // A queue is used to keep track of nodes at each level. We enqueue the root node first and then, for every node we dequeue, we enqueue its left and right children (if they exist). The queue ensures that nodes are processed level by level.
         Queue<Pair<TreeNode, Integer>> queue = new LinkedList<>();
+        // Start at the root of the tree, and enqueue the root node and corresponding target sum
         queue.add(new Pair<>(root, targetSum - root.val));
         while (!queue.isEmpty()) {
+            // Dequeue the front node
             Pair<TreeNode, Integer> current = queue.poll();
+            // Process the current node
             TreeNode node = current.getKey();
             int currentSum = current.getValue();
-            // Check if we have reached a leaf with sum 0
+            // Check if we have reached a leaf node with sum 0
             if (node.left == null && node.right == null && currentSum == 0) {
                 return true;
             }
-            // Add children to the queue with updated sums
+            // Enqueue the not-null left and right subtree with updated remaining sums
+            // Enqueue the left subtree first to obey the sequence of pre-order traversal (root->left->right)
             if (node.left != null) {
                 queue.add(new Pair<>(node.left, currentSum - node.left.val));
             }

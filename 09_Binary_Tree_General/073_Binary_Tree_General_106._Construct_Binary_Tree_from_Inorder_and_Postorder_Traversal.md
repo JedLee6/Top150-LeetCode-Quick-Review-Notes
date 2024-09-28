@@ -276,7 +276,7 @@ public class BinaryTreeTraversals {
             // Pop the top of the stack, process the node, and push its right child (if it exists), followed by its left child (if it exists). Continue this process until the stack is empty.
             TreeNode current = stack.pop();
             System.out.print(current.val + " ");
-            // Push right first so that left is processed first (LIFO)
+            // Push right subtree first so that left subtree is processed first in the stack (LIFO), which obeys the sequence of pre-order traversal (root->left->right)
             if (current.right != null) {
                 stack.push(current.right);
             }
