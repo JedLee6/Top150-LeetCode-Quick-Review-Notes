@@ -45,29 +45,17 @@ Therefore, sum = 495 + 491 + 40 = 1026.
 
 
 
-### **Problem Understanding:**
-
-We are given a binary tree where each root-to-leaf path represents a number formed by the digits at the nodes in that path. The task is to sum all such numbers formed by different root-to-leaf paths. For example, if the tree has paths `1 -> 2 -> 3`, this forms the number `123`, and similar numbers should be computed for all root-to-leaf paths. Finally, we return the sum of these numbers.
-
 ### **Intuition and Main Idea:**
 
-1. **Recursive DFS (Depth-First Search):**
-   - The core idea is to traverse the tree from the root to all leaf nodes.
-   - At each node, we keep track of the number formed by the path from the root to that node.
-   - If we reach a leaf node (a node with no children), the number formed by the path is added to the total sum.
-   - We can achieve this efficiently with a DFS approach where, as we move from a parent node to its children, we propagate the current number downwards, multiplying the previous number by 10 and adding the current node's value.
-
-2. **Iterative DFS (Using a Stack):**
-   - Another approach is to simulate the DFS using a stack. We can store the node along with the current number formed by the path. This helps us avoid recursion and use an explicit stack.
+- We need to traverse the tree to visit all root-to-leaf paths. And there are multiple ways to traverse a binary tree:
+    - **DFS (Depth-First Search)**: We can perform a depth-first traversal (either recursively or iteratively using a stack).
+    - **BFS (Breadth-First Search)**: We can also solve this problem using BFS by traversing the tree level by level, where each node stores the current path number.
+- When we traverse from the root to a leaf, we compute the new number by multiplying the current number by 10 and adding the value of the current node.
+- When we reach a leaf node, the number formed by the path from the root to that leaf is added to the total sum.
 
 ### **Solution 1: Recursive DFS Approach**
 
-#### **Step-by-Step Explanation:**
-
-1. **Base Case**: If the node is `null`, return 0 because there's no number to form from a `null` node.
-2. **Recursive Case**: If we are at a leaf node (both left and right children are `null`), return the number formed by the path from the root to this leaf node.
-3. **Recursive Traversal**: For each node, we recursively compute the sum for the left and right subtrees, passing the current number formed so far.
-4. **Sum Accumulation**: At each step, we multiply the current path number by 10 and add the current node's value, then pass it down to its children.
+We will first explore the solution using a recursive DFS approach, where we traverse the tree, updating the number as we go deeper into the tree.
 
 #### **Java Code for Recursive DFS Solution**:
 
@@ -80,21 +68,21 @@ class TreeNode {
     }
 }
 
-public class SumRootToLeaf {
+public class Solution {
     // Function to calculate the total sum of all root-to-leaf numbers
     public int sumNumbers(TreeNode root) {
         // Call the helper function with the initial sum (currentSum) as 0
         return dfs(root, 0);
     }
-    // Helper function to perform DFS
+    // Helper function to perform DFS, which takes a `node` and the `currentSum` formed by the path from the root to this node
     private int dfs(TreeNode node, int currentSum) {
-        // If the node is null, return 0
+        // If the node is null, return 0, as there's no path to sum
         if (node == null) {
             return 0;
         }
         // Update the current sum by multiplying the previous sum by 10 and adding the node's value
         currentSum = currentSum * 10 + node.val;
-        // If we reach a leaf node, return the current sum as this is a root-to-leaf number
+        // If we reach a leaf node, return the current sum this is the path sum
         if (node.left == null && node.right == null) {
             return currentSum;
         }
@@ -103,16 +91,6 @@ public class SumRootToLeaf {
     }
 }
 ```
-
-### **Explanation of Code:**
-
-- **Line 1-6**: The `TreeNode` class defines the structure of the binary tree nodes, where each node contains an integer value and references to left and right child nodes.
-- **Line 9**: The `sumNumbers` function is the main function that initiates the DFS traversal.
-- **Line 14**: The `dfs` function takes a `node` and the `currentSum` formed by the path from the root to this node.
-- **Line 17**: If the node is `null`, return `0` (no path to sum).
-- **Line 21**: Update the `currentSum` by shifting it by one decimal place (multiplying by 10) and adding the current node's value.
-- **Line 24**: If the node is a leaf node, return the `currentSum` since this is a root-to-leaf number.
-- **Line 28**: Recursively call the `dfs` function for both left and right subtrees and sum the results.
 
 ### **Time Complexity and Space Complexity Analysis**:
 
@@ -124,72 +102,103 @@ public class SumRootToLeaf {
 
 ### **Solution 2: Iterative DFS Using a Stack**
 
-In this approach, we use an explicit stack to simulate the DFS traversal. Along with each node, we store the current sum formed by the path up to that node.
+In this approach, we use an explicit stack to simulate the DFS traversal. And each element in the stack contains both a reference to a node and the current path sum formed up to that node.
 
 #### **Java Code for Iterative DFS Solution**:
 
 ```java
 import java.util.Stack;
-
-class Pair {
-    TreeNode node;
-    int currentSum;
-    
-    Pair(TreeNode node, int currentSum) {
-        this.node = node;
-        this.currentSum = currentSum;
-    }
-}
-
-public class SumRootToLeafIterative {
-    
+class Solution {
+    // Main function to calculate the total sum of root-to-leaf numbers
     public int sumNumbers(TreeNode root) {
-        if (root == null) return 0;
-        
-        // Stack to store pairs of (node, currentSum)
-        Stack<Pair> stack = new Stack<>();
-        stack.push(new Pair(root, 0));
+        if (root == null) return 0;  // If tree is empty, return 0  
+        // Stack to simulate DFS, each element contains a pair (node, currentPathSum)
+        Stack<Pair<TreeNode, Integer>> stack = new Stack<>();
+        stack.push(new Pair<>(root, 0));
         int totalSum = 0;
         
         while (!stack.isEmpty()) {
-            Pair current = stack.pop();
-            TreeNode node = current.node;
-            int currentSum = current.currentSum;
-            
-            // Update the current sum by multiplying by 10 and adding the node's value
+            // For each iteration, pop a pair from the stack to check if its node is a leaf node and update the current path sum
+            Pair<TreeNode, Integer> current = stack.pop();
+            TreeNode node = current.getKey();
+            int currentSum = current.getValue();
+            // Update the current path sum
             currentSum = currentSum * 10 + node.val;
-            
-            // If it's a leaf node, add the current sum to the total sum
+            // If the node is a leaf, add the current sum to the total sum
             if (node.left == null && node.right == null) {
                 totalSum += currentSum;
             }
-            
-            // Push right and left children into the stack if they exist
+            // Push the right and left child into the stack if they exist
+            // Push right subtree first so that left subtree is processed first in the stack (LIFO), which obeys the sequence of pre-order traversal (root->left->right)
             if (node.right != null) {
-                stack.push(new Pair(node.right, currentSum));
+                stack.push(new Pair<>(node.right, currentSum));
             }
             if (node.left != null) {
-                stack.push(new Pair(node.left, currentSum));
+                stack.push(new Pair<>(node.left, currentSum));
             }
         }
-        
-        return totalSum;
+        return totalSum;  // Return the total sum of all root-to-leaf paths
     }
 }
 ```
-
-### **Explanation of Code**:
-
-- **Pair Class**: A helper class `Pair` is created to store a `TreeNode` and the `currentSum` formed along the path to this node.
-- **Stack**: We use a stack to simulate DFS. Each element of the stack is a pair of a node and the `currentSum` formed up to that node.
-- **Leaf Node Check**: Whenever we encounter a leaf node, we add the `currentSum` to the `totalSum`.
 
 ### **Time and Space Complexity**:
 
 - **Time Complexity**: **O(n)** since we visit each node exactly once.
 - **Space Complexity**: **O(n)** in the worst case due to the stack holding all nodes during traversal.
 
+#### **Solution 3: BFS(Breadth-First Search) Using a Queue**
+
+We can also solve this problem using BFS. The idea is to use a queue, where each element in the queue stores both a node and the current sum formed by the path from the root to that node. We process each level of the tree, updating the sum at each node, and when we reach a leaf node, we add the current sum to the total sum.
+
+**Java Code for BFS solution**
+
+```java
+import java.util.LinkedList;
+import java.util.Queue;
+class Solution {
+    // Main function to calculate the total sum of root-to-leaf numbers
+    public int sumNumbers(TreeNode root) {
+        if (root == null) return 0;  // If tree is empty, return 0
+        // Queue to store pairs of (node, currentSum)
+        Queue<Pair<TreeNode, Integer>> queue = new LinkedList<>();
+        queue.offer(new Pair<>(root, 0));
+        int totalSum = 0;
+        while (!queue.isEmpty()) {
+            // Dequeue the front element
+            Pair<TreeNode, Integer> current = queue.poll();
+            // Process the current node
+            TreeNode node = current.getKey();
+            int currentSum = current.getValue();
+            // Update the current sum
+            currentSum = currentSum * 10 + node.val;
+            // If the node is a leaf, add the current sum to the total sum
+            if (node.left == null && node.right == null) {
+                totalSum += currentSum;
+            }
+            // Enqueue the left and right subtreeif they exist
+            // Enqueue the left subtree first to obey the sequence of pre-order traversal (root->left->right)
+            if (node.left != null) {
+                queue.offer(new Pair<>(node.left, currentSum));
+            }
+            if (node.right != null) {
+                queue.offer(new Pair<>(node.right, currentSum));
+            }
+        }
+        return totalSum;  // Return the total sum of all root-to-leaf paths
+    }
+}
+```
+
+### **Time and Space Complexity Analysis**:
+
+- Time Complexity
+    - **O(n)**, as we process each node exactly once.
+- Space Complexity
+    - **O(n)**, In a worst case, a balanced binary tree, we could store up to (n/2) nodes in the queue during the traversal.
+
+> "n/2" is spelled as "n over two", which refers to https://en.wikipedia.org/wiki/Fraction.
+
 ### **Conclusion:**
 
-- Both the recursive DFS and the iterative DFS (using a stack) have the same time complexity of **O(n)**, but the iterative approach avoids recursion and may be preferred when recursion depth could be large.
-- The recursive approach is elegant and easy to implement, while the iterative approach may be more suitable for avoiding potential stack overflow errors in deep trees.
+Each approach has the same time complexity, but the space complexity differs based on how deep or wide the tree is. The best approach depends on the specific tree structure and whether recursion depth is a concern.
