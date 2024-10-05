@@ -1,4 +1,4 @@
-# 079_Binary_Tree_General_173._Binary_Search_Tree_Iterator
+# 079_Binary_Tree_General_173._Binary Search Tree Iterator
 
 Implement the `BSTIterator` class that represents an iterator over the **[in-order traversal](https://en.wikipedia.org/wiki/Tree_traversal#In-order_(LNR))** of a binary search tree (BST):
 
