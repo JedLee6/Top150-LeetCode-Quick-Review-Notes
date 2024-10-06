@@ -43,7 +43,7 @@ Output: 1
 
 ### Problem Understanding & Intuition:
 
-First, we can easily use the Depth-First Search or Breadth-First Search method to solve the problem with O(n) time complexity. But we need to do it more efficiently than **O(n)**. A complete binary tree has specific properties that all levels except the last level may not be completely filled, and all nodes on the last level are as far left as possible. So we can leverage to improve the algorithm’s time complexity.
+First, we can easily use the Depth-First Search or Breadth-First Search method to solve the problem with O(n) time complexity. But we need to do it more efficiently than **O(n)**. A complete binary tree has specific properties that all levels except the last level may not be completely filled, and all nodes on the last level are as far left as possible. So we can leverage these properties to improve the algorithm’s time complexity.
 
 ### Approach 1: **Recursive Solution**
 
