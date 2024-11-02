@@ -2,8 +2,6 @@
 
 Given the `root` of a binary tree, imagine yourself standing on the **right side** of it, return *the values of the nodes you can see ordered from top to bottom*.
 
- 
-
 **Example 1:**
 
 ![img](https://raw.githubusercontent.com/JedLee6/PublicPicBed/main/uPic/tree-20241013173605075.jpg)
@@ -46,7 +44,7 @@ When asked to return the right-side view of a binary tree, the goal is to return
 
 Another approach could be **depth-first search (DFS)**, where we prioritize exploring the right subtree first. If we explore the right subtree before the left, the first node we encounter at each depth is the rightmost node for that level.
 
-I'll discuss two solutions: BFS and DFS.
+> prioritize /praɪˈɒrɪˌtaɪz/ vt. If you prioritize something, you treat it as more important than other things
 
 ---
 
@@ -70,24 +68,24 @@ public class Solution {
         if (root == null) {
             return result;
         }
-
-        // Queue for BFS traversal
+        // We use a queue (`LinkedList`) to perform a level-order traversal
         Queue<TreeNode> queue = new LinkedList<>();
+        // We start by adding the root node to the queue
         queue.offer(root);
-
         // Start BFS traversal
         while (!queue.isEmpty()) {
-            // Track the number of nodes in the current level
+            // In each iteration of the outer loop, we process all the nodes in the current level. The variable `levelSize` keeps track of how many nodes are in the current level.
             int levelSize = queue.size();
             // Iterate through all nodes in the current level
             for (int i = 0; i < levelSize; i++) {
+                // The inner loop processes each node in the current level.
                 TreeNode currentNode = queue.poll(); // Get the next node from the queue
                 
                 // If this is the last node in the current level, add it to the result list
                 if (i == levelSize - 1) {
                     result.add(currentNode.val);
                 }
-
+                //For every node, if it has a left child, we enqueue it. Similarly, if it has a right child, we also enqueue it. Enqueue the left subtree first to obey the sequence of pre-order traversal (root->left->right), so we can process each level's nodes from left to right.
                 // Add the left child to the queue for the next level
                 if (currentNode.left != null) {
                     queue.offer(currentNode.left);
@@ -98,33 +96,14 @@ public class Solution {
                 }
             }
         }
-
-        // Return the list of nodes visible from the right side
+        // After processing all the levels, the `result` list will contain the rightmost node of each level.
         return result;
     }
 }
 ```
 
-### Explanation:
-
-1. **Initial Setup**:
-   - We initialize an empty list `result` to store the nodes visible from the right.
-   - If the tree is empty (i.e., `root == null`), we return an empty list early.
-
-2. **Queue for BFS**:
-   - We use a queue (`LinkedList`) to perform a level-order traversal. We start by adding the root node to the queue.
-
-3. **Level-Order Traversal**:
-   - In each iteration of the outer loop, we process all the nodes in the current level. The variable `levelSize` keeps track of how many nodes are in the current level.
-   - The inner loop processes each node in the current level. If it's the last node in the level (`i == levelSize - 1`), we add it to the result list.
-   
-4. **Child Nodes**:
-   - For every node, if it has a left child, we enqueue it. Similarly, if it has a right child, we also enqueue it. This ensures that we process each level's nodes from left to right.
-
-5. **Return Result**:
-   - After processing all the levels, the `result` list will contain the rightmost node of each level.
-
 ### Time Complexity:
+
 - **O(N)**: We traverse all the nodes in the tree exactly once.
 
 ### Space Complexity:
@@ -143,49 +122,32 @@ import java.util.*;
 
 public class Solution {
     public List<Integer> rightSideView(TreeNode root) {
-        // List to store the right-side view of the tree
+        // We initialize a list `result` to store the rightmost nodes of each level.
         List<Integer> result = new ArrayList<>();
-        // Helper function to perform DFS
+        // The `dfs` helper function is used to perform a depth-first traversal. We call it starting from the root at depth `0`.
         dfs(root, result, 0);
         return result;
     }
 
     // Helper function for DFS traversal
     private void dfs(TreeNode node, List<Integer> result, int depth) {
-        // Base case: if the current node is null, return
+        // In each call to `dfs`, we first check if the current node is `null`. If it is, we return immediately (base case).
         if (node == null) {
             return;
         }
-
-        // If visiting this level for the first time, add the current node to the result list
+		// If this is the first time visiting this depth (i.e., `depth == result.size()`), we add the current node to the result list.
         if (depth == result.size()) {
             result.add(node.val);
         }
-
-        // Recur for the right subtree first to prioritize right-side nodes
+        // We prioritize visiting the right subtree first by calling `dfs` method. This ensures that the first node we encounter at each depth is the rightmost node.
+        // Recursion for the right subtree first to prioritize right-side nodes
         dfs(node.right, result, depth + 1);
-        // Recur for the left subtree to visit the remaining nodes at the same depth
+        // Recursion for the left subtree to visit the remaining nodes at the same depth
         dfs(node.left, result, depth + 1);
+        //After the DFS completes, `result` will contain the rightmost node of each level.
     }
 }
 ```
-
-### Explanation:
-
-1. **Initial Setup**:
-   - We initialize a list `result` to store the rightmost nodes of each level.
-   - The `dfs` helper function is used to perform a depth-first traversal. We call it starting from the root at depth `0`.
-
-2. **DFS Traversal**:
-   - In each call to `dfs`, we first check if the current node is `null`. If it is, we return immediately (base case).
-   - If this is the first time visiting this depth (i.e., `depth == result.size()`), we add the current node to the result list.
-
-3. **Right-First Traversal**:
-   - We prioritize visiting the right subtree first by calling `dfs(node.right, ...)`. This ensures that the first node we encounter at each depth is the rightmost node.
-   - After exploring the right subtree, we explore the left subtree by calling `dfs(node.left, ...)`.
-
-4. **Return Result**:
-   - After the DFS completes, `result` will contain the rightmost node of each level.
 
 ### Time Complexity:
 - **O(N)**: We visit each node once during the DFS traversal.
