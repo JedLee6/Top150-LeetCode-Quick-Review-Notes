@@ -1,8 +1,8 @@
 # 083_Binary_Tree_BFS_637. Average of Levels in Binary Tree
 
-Given the `root` of a binary tree, return *the average value of the nodes on each level in the form of an array*. Answers within `10-5` of the actual answer will be accepted.
+Given the `root` of a binary tree, return *the average value of the nodes on each level in the form of an array*. Answers within 10^(-5) of the actual answer will be accepted.
 
- 
+> "Ten to the negative five" (10^-5) means 0.00001. It is a way to represent very small numbers in scientific notation. The notation "10^-5" indicates that 1 is divided by 10 raised to the power of 5, which results in a decimal point followed by four zeros and a 1 (0.00001). This expression is often used in scientific and mathematical contexts to denote precision or very small quantities.
 
 **Example 1:**
 
