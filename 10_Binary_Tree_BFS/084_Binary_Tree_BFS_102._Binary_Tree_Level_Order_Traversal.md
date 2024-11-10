@@ -76,7 +76,6 @@ public class BinaryTreeLevelOrderTraversal {
             List<Integer> currentLevel = new ArrayList<>();
             // Determine the number of nodes at the current level by checking the queue size.
             int levelSize = queue.size();
-            
             // Process all nodes at the current level
             for (int i = 0; i < levelSize; i++) {
                 TreeNode node = queue.poll(); // Dequeue the front node
@@ -107,16 +106,6 @@ public class BinaryTreeLevelOrderTraversal {
 ### Solution 2: Using Recursion
 
 An alternative approach is to use recursion to achieve level order traversal. This involves using a helper function to traverse the tree and collect nodes at each level.
-
-1. **Helper Function**: Define a recursive helper function that takes the current node, the current level, and the result list as arguments.
-
-2. **Base Case**: If the current node is null, return immediately.
-
-3. **Level Processing**: If the result list does not have a list for the current level, add a new list.
-
-4. **Add Node**: Add the current node's value to the list corresponding to the current level.
-
-5. **Recursive Calls**: Recursively call the helper function for the left and right children, incrementing the level by 1.
 
 Here's the Java code for the recursive approach:
 
