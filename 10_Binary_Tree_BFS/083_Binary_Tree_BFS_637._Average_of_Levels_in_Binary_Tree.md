@@ -89,6 +89,7 @@ public class Solution {
         // A queue is used for level-order traversal. 
         Queue<TreeNode> queue = new LinkedList<>();
         // We start by adding the root node to the queue.
+        // In Java's Queue interface, queue.add() and queue.offer() are both used to insert elements, but they differ in how they handle capacity limitations or failures to add an element. Queue.add(): Throws an exception on failure. Queue.offer(): Returns false on failure.
         queue.offer(root);
         // BFS traversal
         while (!queue.isEmpty()) {
