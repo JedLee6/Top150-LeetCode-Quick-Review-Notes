@@ -32,9 +32,6 @@ Output: []
 
 
 
-
-To solve LeetCode Problem 103, **Binary Tree Zigzag Level Order Traversal**, I’ll break down the solution step by step, explain my intuition, and provide different approaches with detailed code annotations. I will also analyze the time and space complexity for each approach.
-
 ### Problem Understanding:
 We are given a **binary tree**, and we are required to traverse it in **zigzag level order**. This means we traverse each level of the tree alternately:
 - **Level 1** (root): left to right
@@ -62,34 +59,48 @@ To solve this problem, the approach involves:
 ### Code Solution (Approach 1):
 
 ```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
 import java.util.*;
-
 public class Solution {
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
-        List<List<Integer>> result = new ArrayList<>();
+        List<List<Integer>> result = new ArrayList<>(); // Initialize a list to store each level's list
+        // Base case: if the root is null, return an empty list since there are no nodes to traverse.
         if (root == null) {
             return result;
         }
-        
+        // Initialize a queue and add the root node to it. This queue will help us keep track of nodes to be processed at each level.
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
-        
         boolean leftToRight = true; // Flag to toggle the direction of traversal
-        
+        // implement a while loop to traverse each level
         while (!queue.isEmpty()) {
+            //For each level, we first determine the number of nodes (`levelSize`) at that level.
             int levelSize = queue.size();
             List<Integer> level = new ArrayList<>();
             
             for (int i = 0; i < levelSize; i++) {
-                TreeNode currentNode = queue.poll();
-                // Add the current node's value to the list for this level
+                TreeNode currentNode = queue.poll(); // Poll a treeNode from the queue
+                // Add the current node's value to the front or the end of list for this level according to the `leftToRight` flag
                 if (leftToRight) {
                     level.add(currentNode.val);
                 } else {
                     level.add(0, currentNode.val); // Insert at the beginning for right-to-left
                 }
-                
-                // Add children to the queue
+                // Add subtree to the queue
                 if (currentNode.left != null) {
                     queue.offer(currentNode.left);
                 }
@@ -97,29 +108,15 @@ public class Solution {
                     queue.offer(currentNode.right);
                 }
             }
-            
             // Toggle the direction for the next level
             leftToRight = !leftToRight;
-            
             // Add the current level's list to the result
             result.add(level);
         }
-        
         return result;
     }
 }
 ```
-
-### Code Explanation:
-
-1. **Queue Initialization**: We use a queue (`LinkedList`) to perform the level-order traversal. The root node is initially added to the queue.
-2. **Direction Flag**: We use a boolean flag `leftToRight` to toggle between left-to-right and right-to-left traversal at each level.
-3. **Level Traversal**: 
-   - For each level, we first determine the number of nodes (`levelSize`) at that level.
-   - We process each node in the queue, and depending on the value of `leftToRight`, we either append the node value to the end or insert it at the beginning of the `level` list.
-4. **Queue Update**: As we process each node, we enqueue its left and right children (if they exist) for the next level.
-5. **Toggle Direction**: After each level, we toggle the `leftToRight` flag to alternate the direction for the next level.
-6. **Result**: The `result` list is updated after processing each level.
 
 ### Time Complexity:
 - Each node in the binary tree is visited exactly once, and each operation (inserting a node's value or adding children to the queue) takes constant time.
@@ -149,37 +146,29 @@ public class Solution {
         dfs(root, 0, result);
         return result;
     }
-    
+    /**
+     * The `dfs` method takes the current node, the current depth, and the result list as arguments.
+     **/
     private void dfs(TreeNode node, int depth, List<List<Integer>> result) {
         if (node == null) {
             return;
         }
-        
         // If the current depth level doesn't exist in the result, add it
         if (result.size() <= depth) {
             result.add(new ArrayList<>());
         }
-        
         // Insert the node value in the appropriate order based on the depth
         if (depth % 2 == 0) {
             result.get(depth).add(node.val); // left to right
         } else {
             result.get(depth).add(0, node.val); // right to left
         }
-        
-        // Recursively process left and right children
+        // Recursively process left and right subtree
         dfs(node.left, depth + 1, result);
         dfs(node.right, depth + 1, result);
     }
 }
 ```
-
-### Code Explanation:
-
-1. **DFS Function**: The `dfs` function takes the current node, the current depth, and the result list as arguments.
-2. **Level Handling**: If the current depth exceeds the size of the result list, a new list is created for that depth.
-3. **Alternating Insertion**: Based on the parity of the depth (`depth % 2`), the node's value is either added to the end of the list (left to right) or inserted at the beginning (right to left).
-4. **Recursive Calls**: The function then recursively calls `dfs` on the left and right children, incrementing the depth.
 
 ### Time Complexity:
 - Similar to the BFS approach, we visit each node once, and each insertion operation takes constant time.
