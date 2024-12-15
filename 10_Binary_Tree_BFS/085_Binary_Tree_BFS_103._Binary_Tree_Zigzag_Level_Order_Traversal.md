@@ -153,7 +153,7 @@ public class Solution {
         if (node == null) {
             return;
         }
-        // If the current depth level doesn't exist in the result, add it
+        // If the current depth level doesn't exist in the result, add it to store elements in this level
         if (result.size() <= depth) {
             result.add(new ArrayList<>());
         }
