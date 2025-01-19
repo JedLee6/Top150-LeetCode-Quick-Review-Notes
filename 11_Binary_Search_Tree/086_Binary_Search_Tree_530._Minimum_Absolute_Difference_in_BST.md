@@ -1,6 +1,6 @@
-## 086_Binary_Tree_BFS_530. Minimum Absolute Difference in BST
+## 086_Binary_Search_Tree_530. Minimum Absolute Difference in BST
 
-Given the `root` of a Binary Search Tree (BST), return *the minimum absolute difference between the values of any two different nodes in the tree*.
+Given the `root` of a Binary Search Tree (BST), return *the minimum absolute difference between the values of any two different nodes in the tree*.†
 
 **Example 1:**
 
@@ -56,6 +56,21 @@ Output: 1
 In this solution, we store the node values in a list during the in-order traversal, then compute the minimum difference.
 
 ```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
 import java.util.ArrayList;
 import java.util.List;
 
@@ -106,13 +121,11 @@ Instead of storing all node values, we track the previous node value during trav
 ```java
 class Solution {
     private int minDiff = Integer.MAX_VALUE;
-    private Integer prevValue = null; // Tracks the previous node value
-
+    private Integer prevValue = null; // Tracks the previous node value during traversal and calculate the difference on each step.
     public int getMinimumDifference(TreeNode root) {
         inOrderTraversal(root);
         return minDiff;
     }
-
     private void inOrderTraversal(TreeNode node) {
         if (node == null) {
             return;
@@ -122,10 +135,10 @@ class Solution {
 
         // Visit current node
         if (prevValue != null) {
+            // Calculate the difference as they are consecutive values during the in-order traversal
             minDiff = Math.min(minDiff, node.val - prevValue);
         }
         prevValue = node.val;
-
         // Recursive right
         inOrderTraversal(node.right);
     }
@@ -133,6 +146,7 @@ class Solution {
 ```
 
 #### **Analysis**:
+
 - **Time Complexity**:  
   - In-order traversal visits each node once: **O(n)**.
 
@@ -166,6 +180,7 @@ class Solution {
             // Visit node
             current = stack.pop();
             if (prevValue != null) {
+                // Calculate the difference as they are consecutive values during the in-order traversal
                 minDiff = Math.min(minDiff, current.val - prevValue);
             }
             prevValue = current.val;
@@ -195,40 +210,49 @@ This advanced approach uses **Morris Traversal** to perform an in-order traversa
 ```java
 class Solution {
     public int getMinimumDifference(TreeNode root) {
-        TreeNode current = root, prev = null;
-        int minDiff = Integer.MAX_VALUE;
-
+        // Initialize variables to keep track of the previous node value and the minimum difference.
+        Integer prev = null; // Will store the value of the previously visited node.
+        int minDiff = Integer.MAX_VALUE;  // Start with the maximum possible difference.
+        TreeNode current = root;  // Start traversal from the root.  
+        // Begin Morris In-Order Traversal.
         while (current != null) {
+            // If there is no left child, process current and move right.
             if (current.left == null) {
-                // Visit current node
+                // If prev is set, update minDiff.
                 if (prev != null) {
-                    minDiff = Math.min(minDiff, current.val - prev.val);
+                    // Calculate the difference with previous value.
+                    minDiff = Math.min(minDiff, current.val - prev);
                 }
-                prev = current;
+                // Update prev to current node's value.
+                prev = current.val;
+                
+                // Move to the right subtree.
                 current = current.right;
             } else {
-                // Find the predecessor
+                // Find the inorder predecessor of current.
                 TreeNode predecessor = current.left;
+                // Navigate to the rightmost node of the left subtree, which is is the rightmost node in the left subtree
                 while (predecessor.right != null && predecessor.right != current) {
                     predecessor = predecessor.right;
                 }
-
+                // If right child of predecessor is null, establish temporary link to backtrack without extra space.
                 if (predecessor.right == null) {
-                    // Make current the right child of its predecessor
-                    predecessor.right = current;
-                    current = current.left;
+                    predecessor.right = current;  // Create a thread to the current node to backtrack without extra space.
+                    current = current.left; // Move to left child to continue traversal.
                 } else {
-                    // Restore tree structure
-                    predecessor.right = null;
-                    // Visit current node
+                    // If the thread already exists, it means we've finished left subtree.
+                    predecessor.right = null; // Remove the temporary link to avoid endless loop.
+                    // Process current node: update minDiff as we did before.
                     if (prev != null) {
-                        minDiff = Math.min(minDiff, current.val - prev.val);
+                        minDiff = Math.min(minDiff, current.val - prev);
                     }
-                    prev = current;
+                    prev = current.val; // Update prev to current value.
+                    // Move to the right subtree after finishing left subtree.
                     current = current.right;
                 }
             }
         }
+        // Return the smallest difference found during traversal.
         return minDiff;
     }
 }
@@ -239,7 +263,7 @@ class Solution {
   - Visits each node twice: **O(n)**.
 
 - **Space Complexity**:  
-  - No extra space (excluding tree modification): **O(1)**.
+  - No extra space (excluding tree modification): **O(1)**. Because it create teporary link between inorder predecessor  and its related node to backtrack  without extra space.
 
 ---
 
