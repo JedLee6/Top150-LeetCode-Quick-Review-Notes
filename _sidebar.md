@@ -1,6 +1,8 @@
 
 - 00 LeetCode Data Structure Documents
-  - [Common Questions](00_LeetCode_Data_Structure_Documents/Common_Questions.md)
+  - [00 Common Questions](00_LeetCode_Data_Structure_Documents/00_Common_Questions.md)
+  - [01 DFS and BFS for Binary Trees: Overview, Use Cases, and Comparisons](00_LeetCode_Data_Structure_Documents/01_DFS_and_BFS_for_Binary_Trees:_Overview,_Use_Cases,_and_Comparisons.md)
+  - [02 Binary Search Tree](00_LeetCode_Data_Structure_Documents/02_Binary_Search_Tree.md)
 
 - 01 Array,String
   - [Array,String 001 88. Merge Sorted Array](01_Array,String/Array,String_001_88._Merge_Sorted_Array.md)
@@ -108,6 +110,7 @@
   - [085 Binary Tree BFS 103. Binary Tree Zigzag Level Order Traversal](10_Binary_Tree_BFS/085_Binary_Tree_BFS_103._Binary_Tree_Zigzag_Level_Order_Traversal.md)
 
 - 11 Binary Search Tree
-  - [086 530. Minimum Absolute Difference in BST](11_Binary_Search_Tree/086_530._Minimum_Absolute_Difference_in_BST.md)
+  - [086 Binary Search Tree 530. Minimum Absolute Difference in BST](11_Binary_Search_Tree/086_Binary_Search_Tree_530._Minimum_Absolute_Difference_in_BST.md)
+  - [087 Binary Search Tree 230. Kth Smallest Element in a BST](11_Binary_Search_Tree/087_Binary_Search_Tree_230._Kth_Smallest_Element_in_a_BST.md)
 
 - [README](README.md)

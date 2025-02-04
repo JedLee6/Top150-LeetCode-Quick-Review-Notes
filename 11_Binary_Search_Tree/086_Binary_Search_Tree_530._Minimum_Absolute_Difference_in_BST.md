@@ -205,7 +205,9 @@ class Solution {
 
 ### **Solution 4: Morris In-Order Traversal (Constant Space)**
 
-This advanced approach uses **Morris Traversal** to perform an in-order traversal without a stack or recursion. It modifies the tree temporarily during traversal.
+This advanced approach uses **Morris Traversal** to perform an in-order traversal without extra space. It modifies the tree temporarily during traversal. The idea is creating teporary right pointers from a node's in-order predecessor back to the node itself to backtrack without a stack or recursion.
+
+> We can watch this youtube video to understand it more clearly: https://www.youtube.com/watch?v=wGXB9OWhPTg.
 
 ```java
 class Solution {
@@ -225,13 +227,12 @@ class Solution {
                 }
                 // Update prev to current node's value.
                 prev = current.val;
-                
-                // Move to the right subtree.
+                // If the current node has real right subtree, then move to the right subtree. Otherwise, the current node backtracks to next in-order node by temporary link.
                 current = current.right;
             } else {
                 // Find the inorder predecessor of current.
                 TreeNode predecessor = current.left;
-                // Navigate to the rightmost node of the left subtree, which is is the rightmost node in the left subtree
+                // Navigate to the rightmost node of the left subtree, which is is the rightmost node in the left subtree; The condition "predecessor.right != current" avoids endless loop.
                 while (predecessor.right != null && predecessor.right != current) {
                     predecessor = predecessor.right;
                 }
@@ -247,7 +248,7 @@ class Solution {
                         minDiff = Math.min(minDiff, current.val - prev);
                     }
                     prev = current.val; // Update prev to current value.
-                    // Move to the right subtree after finishing left subtree.
+                    // After finishing left subtree, if the current node has real right subtree, then move to the right subtree. Otherwise, the current node backtracks to next in-order node by temporary link.
                     current = current.right;
                 }
             }
@@ -259,11 +260,11 @@ class Solution {
 ```
 
 #### **Analysis**:
-- **Time Complexity**:  
-  - Visits each node twice: **O(n)**.
 
+- **Time Complexity**:  
+  - Visits each node twice: **O(n)**. Each edge in the tree is traversed at most twice (once going down and once coming back up). Thus, the overall time complexity is O(n), where n is the number of nodes in the tree.
 - **Space Complexity**:  
-  - No extra space (excluding tree modification): **O(1)**. Because it create teporary link between inorder predecessor  and its related node to backtrack  without extra space.
+  - No extra space (excluding tree modification): **O(1)**. Because it create teporary right pointers from a node's in-order predecessor back to the node itself to backtrack without a stack or recursion. The tree is modified temporarily but restored to its original form, so no additional space is permanently consumed.
 
 ---
 
@@ -277,3 +278,7 @@ class Solution {
 | **Morris Traversal**   | O(n)            | O(1)             | Most space-efficient        |
 
 The **Optimized In-Order Traversal** is usually the best choice due to its balance of simplicity and efficiency.
+
+
+
+- 
