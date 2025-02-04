@@ -280,5 +280,3 @@ class Solution {
 The **Optimized In-Order Traversal** is usually the best choice due to its balance of simplicity and efficiency.
 
 
-
-- 
