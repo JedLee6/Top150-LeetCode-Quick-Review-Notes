@@ -96,11 +96,10 @@ class Solution {
         if (lower != null && val <= lower) return false;
         // If there's an upper bound and the current node's value is not less, return false.
         if (upper != null && val >= upper) return false;
-        
-        // Recursively validate the right subtree. The current node's value becomes the new lower bound.
-        if (!isValidBST(node.right, val, upper)) return false;
         // Recursively validate the left subtree. The current node's value becomes the new upper bound.
         if (!isValidBST(node.left, lower, val)) return false;
+        // Recursively validate the right subtree. The current node's value becomes the new lower bound.
+        if (!isValidBST(node.right, val, upper)) return false;
         // If both subtrees are valid, then the current subtree is valid.
         return true;
     }
@@ -265,7 +264,7 @@ class Solution {
 
 **Time and Space Complexity:**
 
-- **Time Complexity:** O(n) because each node is visited at most twice (once when establishing the thread and once when removing it).
+- **Time Complexity:** O(n) because each node is visited at most twice (once when establishing the temporary link and once when removing it).
 - **Space Complexity:** O(1) extra space, aside from the input tree (temporary modifications are undone).
 
 ---
