@@ -57,7 +57,7 @@ The key idea is to scan the grid and, upon encountering a cell with a `'1'`, per
 
 ### **Solution 1: DFS Approach**
 
-The idea is simple: we traverse the grid cell by cell. When we encounter a `'1'`, which mean an island is found. Then, use DFS to “sink” the entire island by marking all connected lands as visited (for example, by changing them to `'0'`). This prevents counting the same island more than once.
+The idea is simple: we traverse the grid cell by cell. When we encounter a `'1'`, which means an island is found. Then, use DFS to “sink” the entire island by marking all connected lands as visited (for example, by changing them to `'0'`). This prevents counting the same island more than once.
 
 ```java
 class Solution {
@@ -200,6 +200,8 @@ OK. We've completed the entire solution. Now it's time to submit our code and se
 
 Lastly, I’ll briefly explain an alternative solution using the Union-Find data structure. Here, every land cell is treated as a node in a disjoint-set. Initially, each '1' is its own parent. We then scan the grid and union adjacent land cells. Every union operation effectively merges two islands, and the final count of disjoint sets gives the number of islands. This method is efficient and particularly elegant for handling connectivity problems.
 
+> island /ˈaɪlənd/ n. An island is a piece of land that is completely surrounded by water.
+>
 > disjoint /dɪsˈdʒɔɪnt/ adj. (of two sets) having no members in common
 >
 > adjacent /əˈdʒeɪs(ə)nt/ adj. If one thing is adjacent to another, the two things are next to each other.
@@ -212,8 +214,8 @@ class Solution {
         // We begin with a simple edge-case check. If the grid is null or has no rows, there's nothing to process, so we return 0.
         if (grid == null || grid.length == 0) return 0;
         // Next, we retrieve the rows and columns of the grid
-        int rows = grid.length;
-        int cols = grid[0].length;
+        int rows = grid.length; // Initialize `rows` as `grid dot length`
+        int cols = grid[0].length; // Initialize `columns` as `grid at index 0 dot length`
         // Then we create an instance of the UnionFind class that initializes each land cell as its own component.
         UnionFind uf = new UnionFind(grid);
         // We then iterate over every cell in the grid using nested loops.
