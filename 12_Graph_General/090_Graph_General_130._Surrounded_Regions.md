@@ -92,7 +92,7 @@ public class Solution {
         }
     }
     
-    // Now, let's impleemnt the DFS helper method.
+    // Now, let's implement the DFS helper method.
     private void dfs(char[][] board, int i, int j) {
         // We start by getting the number of rows and columns in the grid
         int m = board.length, n = board[0].length;
@@ -105,7 +105,7 @@ public class Solution {
         dfs(board, i + 1, j); // Down
         dfs(board, i, j - 1); // Left
         dfs(board, i, j + 1); // Right
-        // Once all recursive calls complete, the DFS method will return control to the main method, where we continue scanning for the next unvisited piece of land.
+        // Once all recursive calls complete, the DFS method will return control to the main method
     }
 }
 ```
