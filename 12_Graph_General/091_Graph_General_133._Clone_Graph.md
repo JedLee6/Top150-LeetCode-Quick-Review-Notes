@@ -43,12 +43,6 @@ Explanation: There are 4 nodes in the graph.
 
 ![img](https://raw.githubusercontent.com/JedLee6/PublicPicBed/main/uPic/graph-20250310225225438.png)
 
-
-
-
-
-
-
 ```
 Input: adjList = [[]]
 Output: [[]]

@@ -3,6 +3,9 @@
   - [00 Common Questions](00_LeetCode_Data_Structure_Documents/00_Common_Questions.md)
   - [01 DFS and BFS for Binary Trees: Overview, Use Cases, and Comparisons](00_LeetCode_Data_Structure_Documents/01_DFS_and_BFS_for_Binary_Trees:_Overview,_Use_Cases,_and_Comparisons.md)
   - [02 Binary Search Tree](00_LeetCode_Data_Structure_Documents/02_Binary_Search_Tree.md)
+  - [03 Common Java APIs and complexity analysis](00_LeetCode_Data_Structure_Documents/03_Common_Java_APIs_and_complexity_analysis.md)
+  - [04 English Pronunciation for keyboard symbol, math and code complexity](00_LeetCode_Data_Structure_Documents/04_English_Pronunciation_for_keyboard_symbol,_math_and_code_complexity.md)
+  - [05 pronounciation tips for programming expressions](00_LeetCode_Data_Structure_Documents/05_pronounciation_tips_for_programming_expressions.md)
 
 - 01 Array,String
   - [Array,String 001 88. Merge Sorted Array](01_Array,String/Array,String_001_88._Merge_Sorted_Array.md)
@@ -118,5 +121,6 @@
   - [089 Graph General 200. Number of Islands](12_Graph_General/089_Graph_General_200._Number_of_Islands.md)
   - [090 Graph General 130. Surrounded Regions](12_Graph_General/090_Graph_General_130._Surrounded_Regions.md)
   - [091 Graph General 133. Clone Graph](12_Graph_General/091_Graph_General_133._Clone_Graph.md)
+  - [092 Graph General 399. Evaluate Division](12_Graph_General/092_Graph_General_399._Evaluate_Division.md)
 
 - [README](README.md)
