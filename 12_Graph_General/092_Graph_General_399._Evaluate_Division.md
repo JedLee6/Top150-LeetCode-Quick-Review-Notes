@@ -64,189 +64,232 @@ You’re given a set of equations like `"a / b = 2.0"`, and you need to answer q
 
 ## **Intuition and Main Idea**
 
-Now, let's start with the intuition of this problem. Our idea is to model this problem as a graph where each variable is a node and each equation is a weighted edge. The idea is that to compute something like `a / c`(a over c), we need to find a path from node `a` to node `c` and multiply the weights along that path. We can achieve this using graph traversal methods like DFS or BFS, and Union-Find approach. Let's start with DFS.
+Now, let's start with the intuition of this problem. Our idea is to treat the given equations as a graph where each variable is a node and each equation is a weighted edge. The idea is that to compute something like `a / c`(a over c), we need to find a path from node `a` to node `c` and multiply the weights along that path. If a valid path exists, the product of these weights gives us the answer; otherwise, we return -1.0. We can achieve this using graph traversal methods like DFS or BFS, and Union-Find approach. Alright, let's start with DFS to see how it works.
 
 ---
 
 ## **Solution 1: Graph DFS**
 
-### **Java Code with Detailed Annotations**
-
 ```java
-class Solution {
-    // Method to calculate equations using DFS approach.
-    public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) {
-        // Graph: Map each variable to its neighbors and the corresponding division factor.
+class Solution {  
+    public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) {  
+        // In the code, we start by creating a graph using a HashMap where each key is a variable and the value is another HashMap representing neighbors and their weights. Graph structure is like "{A -> {B: 2.0}, B -> {A: 0.5, C: 3.0}, ...}", which means "a / b = 2."
         Map<String, Map<String, Double>> graph = new HashMap<>();
-        
-        // Build the graph from the equations.
-        for (int i = 0; i < equations.size(); i++) {
+        // Next, we loop over each equation to build the graph with proper connections.
+        for (int i = 0; i < equations.size(); i++) {  
+            // Inside the loop, first, we get the current equation as a list of strings, and assign its first element to 'dividend' and its second element to 'divisor'.
             List<String> equation = equations.get(i);
             String dividend = equation.get(0);
             String divisor = equation.get(1);
+            // Then, we get the corresponding value from the values array.
             double value = values[i];
-            
-            // For dividend -> divisor, assign weight value.
+            // Now, we call "graph.putIfAbsent(dividend, new HashMap<>())" to ensure that the dividend key exists in the graph.
             graph.putIfAbsent(dividend, new HashMap<>());
+            // Next we access the dividend's inner map and put the divisor with the given weight into it.
             graph.get(dividend).put(divisor, value);
-            
-            // For divisor -> dividend, assign weight 1 / value.
+            // Similarly, we add the reverse edge by ensuring the divisor key exists and then adding the dividend with the reciprocal weight.
             graph.putIfAbsent(divisor, new HashMap<>());
             graph.get(divisor).put(dividend, 1 / value);
         }
-        
-        // Prepare the result array for queries.
+        // After building the graph, we initialize a results array to hold the answer for each query.
         double[] results = new double[queries.size()];
-        
-        // Process each query using DFS.
-        for (int i = 0; i < queries.size(); i++) {
+        // Then, We loop over each query, extract the start and end variables, and then process the query accordingly.
+        for (int i = 0; i < queries.size(); i++) {  
+            // First, we get the current query from the list.
             List<String> query = queries.get(i);
+            // And we extract the start and end variable for the query
             String start = query.get(0);
             String end = query.get(1);
-            
-            // If either variable is not in the graph, answer is -1.0.
-            if (!graph.containsKey(start) || !graph.containsKey(end)) {
+            // Now, we handle the query with some checks. If the start or end variable is missing in our graph, we assign -1.0 to the result for this query.
+            if (!graph.containsKey(start) || !graph.containsKey(end)) {  
                 results[i] = -1.0;
+            // Otherwise, if the start and end are the same, we know the result must be 1.0.
             } else if (start.equals(end)) {
-                // Division of same variable is always 1.
                 results[i] = 1.0;
+            // Finally, if the two nodes exist, but they are different, we need to perform the DFS search.
             } else {
                 // Use DFS to find the product along the path from start to end.
+                // Before starting DFS, we create a HashSet to keep track of nodes visited during the search and prevent cycles.            
                 Set<String> visited = new HashSet<>();
+                // Then we call our 'dfs' helper method and pass the 'start' node, the 'end' target node, an initial product of 1 (since start/start = 1), the newly created 'visited' set, and the 'graph'.
                 results[i] = dfs(start, end, 1, visited, graph);
             }
         }
+        // Finally, after processing all the queries, we return the results array containing answers for all queries.
         return results;
     }
     
-    // DFS helper method.
-    private double dfs(String current, String target, double product, Set<String> visited,
-                       Map<String, Map<String, Double>> graph) {
-        // Mark current node as visited.
+    // Now, let's implement the 'dfs' helper method which performs the actual path search from the current variable to the target variable.
+    private double dfs(String current, String target, double product, Set<String> visited, Map<String, Map<String, Double>> graph) {  
+        // The very first step inside dfs is to mark the 'current' node as visited by adding it to the 'visited'to prevents infinite cycles in graphs.
         visited.add(current);
-        
-        // Get neighbors of the current variable.
+        // Then we retrieve all the adjacent variables (neighbors) from the graph.
         Map<String, Double> neighbors = graph.get(current);
-        
-        // If the target is a direct neighbor, return the product immediately.
-        if (neighbors.containsKey(target)) {
+        // Now, if the target variable is found among the neighbors, we immediately return the current product multiplied by the edge weight.
+        if (neighbors.containsKey(target)) {  
             return product * neighbors.get(target);
         }
-        
-        // Otherwise, traverse each neighbor recursively.
-        for (Map.Entry<String, Double> entry : neighbors.entrySet()) {
+        // Otherwise, if the target is not a direct neighbor, we iterate through each neighbor to continue the DFS.
+        for (Map.Entry<String, Double> entry : neighbors.entrySet()) { 
+            // Inside the loop, we get the neighbor node's key at first.
             String next = entry.getKey();
+            // Next, we check if we have already visited this node during this DFS path. If so, we skip this loop iteration and move to the next neighbor to avoid cycles.
             if (visited.contains(next)) continue;
-            // Recursively search from neighbor to target, accumulating the product.
+            // Otherwise, we call dfs recursively on the neighbor and update the product by multiplying the current product with the edge weight.
             double result = dfs(next, target, product * entry.getValue(), visited, graph);
-            // If a valid result is found, propagate it upward.
-            if (result != -1.0) {
+            // After the recursive call returns, we check if it found a valid path, which means the result isn't -1.0. If so, we return the result immediately.      
+            if (result != -1.0) {  
                 return result;
             }
         }
-        // If no path found, return -1.
+        // Finally, after iterating through all neighbors, if no valid path exists from the current variable to the target, we return -1.0.
         return -1.0;
     }
 }
 ```
 
-### **Analysis**
+Okay, that's all of the code. Let's submit our code and check if our solution passes all the test cases. Yes, our code got accepted. Now, Let's discuss the time and space complexity.
 
-- **Time Complexity:**  
-  - **Building the graph:** O(E) where E is the number of equations.
-  - **DFS for each query:** In the worst case, it may traverse all nodes: O(V + E) per query.
+### **Complexity Analysis**
+
+We'll use 'E' for the number of initial equations, 'V' for the number of unique variables (which become nodes in our graph), and 'Q' for the number of queries.
+
+- **Time Complexity is consist of 2 factors:**  
   
-- **Space Complexity:**  
-  - O(V + E) for the graph.
-  - O(V) for the recursion stack and visited set in the worst case.
+  - **Graph Building:** We iterate through each of the 'E' equations once. Inside the loop, we perform map operations like `putIfAbsent`, `get` and `put`. HashMap operations take O(1) time on average. So, building the graph takes **O(E)** time.
+  - **Query Processing (DFS):** For each query (there are 'Q' of them), we may perform a Depth-First Search. In the worst case, a DFS might visit every node ('V') and traverse every edge in its connected component. The number of edges in our graph is actually 2*E (because we add both forward and backward edges). So, a single DFS takes O(V + 2E) time, which is simply **O(V + E)**. Since we do this for 'Q' queries, the total time for query processing is **O(Q \* (V + E))**.
+  - **Overall Time:** According to the two factors above, the total time complexity is dominated by the graph building and the query processing, which is **O(E + Q * (V + E))**.
+  
+- **Space Complexity is also made of 2 factors:**  
+  
+  - **Graph Storage:** We store the graph in our nested HashMap. In the worst case, we might have 'V' nodes. The total number of edges stored is 2E (or just simple E). The space needed for the adjacency list representation is proportional to the number of nodes plus the number of edges. So, the graph takes **O(V + E)** space.
+  
+      **DFS Auxiliary Space:** During a single DFS call, we use a `visited` set, which can store up to 'V' nodes in the worst case. Additionally, the recursion call stack depth can also go up to 'V' in the worst case (e.g., a long chain). So, the space needed for a single query's execution is **O(V)**.
+  
+      **Overall Space:** According to the two factors above, the dominant factor is the graph storage. Therefore, the total space complexity is **O(V + E)**.
 
 ---
 
 ## **Solution 2: Graph BFS**
 
-### **Java Code with Detailed Annotations**
-
 ```java
 class Solution {
-    // Method to calculate equations using BFS approach.
-    public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) {
+    public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) { 
+        // Here, we define the main method that will take a list of equations, their corresponding values, and a list of queries.
         // Graph: Map each variable to its neighbors and the corresponding division factor.
-        Map<String, Map<String, Double>> graph = new HashMap<>();
-        
+        Map<String, Map<String, Double>> graph = new HashMap<>(); 
+        // We initialize a HashMap called 'graph' that will store each variable as a key, and its value will be another map of connected variables (neighbors) along with their division factors.
         // Build the graph.
-        for (int i = 0; i < equations.size(); i++) {
-            List<String> equation = equations.get(i);
-            String dividend = equation.get(0);
-            String divisor = equation.get(1);
-            double value = values[i];
-            
-            graph.putIfAbsent(dividend, new HashMap<>());
-            graph.get(dividend).put(divisor, value);
-            
-            graph.putIfAbsent(divisor, new HashMap<>());
-            graph.get(divisor).put(dividend, 1 / value);
+        for (int i = 0; i < equations.size(); i++) { 
+            // We loop over each equation provided.
+            List<String> equation = equations.get(i); 
+            // We extract the current equation from the list.
+            String dividend = equation.get(0); 
+            // The first element in the equation list is treated as the dividend.
+            String divisor = equation.get(1); 
+            // The second element is the divisor.
+            double value = values[i]; 
+            // The corresponding division value for this equation is taken from the values array.
+            graph.putIfAbsent(dividend, new HashMap<>()); 
+            // We ensure that the dividend is a key in our graph by adding it if it isn’t already present.
+            graph.get(dividend).put(divisor, value); 
+            // We then connect the dividend to the divisor with the given value as the edge weight.
+            graph.putIfAbsent(divisor, new HashMap<>()); 
+            // Similarly, we ensure that the divisor is also present in the graph.
+            graph.get(divisor).put(dividend, 1 / value); 
+            // We add the reverse connection from the divisor back to the dividend using the reciprocal of the value.
         }
-        
         // Prepare results for each query.
-        double[] results = new double[queries.size()];
-        
+        double[] results = new double[queries.size()]; 
+        // We initialize an array to store the results for each query.
         // Process each query using BFS.
-        for (int i = 0; i < queries.size(); i++) {
-            List<String> query = queries.get(i);
-            String start = query.get(0);
-            String end = query.get(1);
+        for (int i = 0; i < queries.size(); i++) { 
+            // We iterate over each query.
+            List<String> query = queries.get(i); 
+            // Extract the current query.
+            String start = query.get(0); 
+            // The first element in the query is the starting variable.
+            String end = query.get(1); 
+            // The second element is the target variable we want to reach.
             
-            if (!graph.containsKey(start) || !graph.containsKey(end)) {
-                results[i] = -1.0;
-            } else if (start.equals(end)) {
-                results[i] = 1.0;
+            if (!graph.containsKey(start) || !graph.containsKey(end)) { 
+                // If either the start or end variable is not present in the graph,
+                results[i] = -1.0; 
+                // we set the result for this query to -1.0 as the division cannot be computed.
+            } else if (start.equals(end)) { 
+                // If the start and end variables are the same,
+                results[i] = 1.0; 
+                // the division of any number by itself is 1.0.
             } else {
-                results[i] = bfs(start, end, graph);
+                results[i] = bfs(start, end, graph); 
+                // Otherwise, we perform a BFS search to find a path between the start and end variables, and store the resulting product.
             }
         }
-        return results;
+        return results; 
+        // Finally, we return the array of results for all queries.
     }
     
     // BFS helper method.
-    private double bfs(String start, String end, Map<String, Map<String, Double>> graph) {
+    private double bfs(String start, String end, Map<String, Map<String, Double>> graph) { 
+        // This helper method performs a breadth-first search starting from the 'start' variable to find the 'end' variable in the graph.
+        
         // Queue to hold the current variable and its cumulative product.
-        Queue<Pair> queue = new LinkedList<>();
-        queue.offer(new Pair(start, 1.0));
-        
+        Queue<Pair> queue = new LinkedList<>(); 
+        // We initialize a queue that will help us explore the graph level by level.
+        queue.offer(new Pair(start, 1.0)); 
+        // We add the starting variable to the queue with an initial product of 1.0.
         // Set to track visited variables.
-        Set<String> visited = new HashSet<>();
-        visited.add(start);
+        Set<String> visited = new HashSet<>(); 
+        // We initialize a set to keep track of visited nodes to avoid cycles.
+        visited.add(start); 
+        // We mark the starting variable as visited.
         
-        while (!queue.isEmpty()) {
-            Pair currentPair = queue.poll();
-            String current = currentPair.variable;
-            double product = currentPair.product;
+        while (!queue.isEmpty()) { 
+            // We continue processing until there are no more nodes in the queue.
+            Pair currentPair = queue.poll(); 
+            // We remove the front element of the queue, which contains the current variable and the cumulative product so far.
+            String current = currentPair.variable; 
+            // 'current' holds the current variable.
+            double product = currentPair.product; 
+            // 'product' holds the cumulative multiplication result along the path taken.
             
             // If we find the target variable, return the product.
-            if (current.equals(end)) {
-                return product;
+            if (current.equals(end)) { 
+                // If the current variable is the target,
+                return product; 
+                // we return the cumulative product as the result of the query.
             }
-            
             // Traverse the neighbors.
-            for (Map.Entry<String, Double> entry : graph.get(current).entrySet()) {
-                if (!visited.contains(entry.getKey())) {
-                    visited.add(entry.getKey());
+            for (Map.Entry<String, Double> entry : graph.get(current).entrySet()) { 
+                // We iterate over all the neighbors of the current variable.
+                if (!visited.contains(entry.getKey())) { 
+                    // If a neighbor has not been visited yet,
+                    visited.add(entry.getKey()); 
+                    // we mark it as visited.
                     // Multiply the cumulative product by the edge weight.
-                    queue.offer(new Pair(entry.getKey(), product * entry.getValue()));
+                    queue.offer(new Pair(entry.getKey(), product * entry.getValue())); 
+                    // We then add the neighbor to the queue with the updated product (the product so far multiplied by the weight of the edge connecting to this neighbor).
                 }
             }
         }
         // If no valid path is found, return -1.
-        return -1.0;
+        return -1.0; 
+        // When the BFS completes without finding the target, we return -1.0 to indicate that there is no connection between the variables.
     }
     
     // Helper class to store variable and the cumulative product.
-    class Pair {
-        String variable;
-        double product;
-        Pair(String variable, double product) {
-            this.variable = variable;
-            this.product = product;
+    class Pair { 
+        // This helper class is used to store a variable along with its current cumulative product during the BFS traversal.
+        String variable; 
+        // The 'variable' field stores the variable name.
+        double product; 
+        // The 'product' field stores the cumulative multiplication product up to this point.
+        Pair(String variable, double product) { 
+            // Constructor for initializing the Pair with a variable and its product.
+            this.variable = variable; 
+            // Assign the variable.
+            this.product = product; 
+            // Assign the product.
         }
     }
 }
@@ -254,102 +297,139 @@ class Solution {
 
 ### **Analysis**
 
-- **Time Complexity:**  
-  - **Graph Building:** O(E).
-  - **BFS per query:** O(V + E) in the worst-case scenario per query.
-  
-- **Space Complexity:**  
-  - O(V + E) for the graph.
-  - O(V) for the queue and visited set.
+- **Time Complexity:**
+    - **Graph Building:** This part is identical to the DFS solution. We iterate through 'E' equations, and map operations are O(1) on average. So, building the graph still takes **O(E)** time.
+    - **Query Processing (BFS):** For each of the 'Q' queries, we perform a BFS. Standard BFS on a graph visits each node ('V') and each edge (E' = 2*E) at most once. Inside the BFS loop, queue operations (`offer`, `poll`) and set operations (`add`, `contains`) take roughly O(1) time on average for LinkedLists and HashSets. Therefore, a single BFS search takes **O(V + E')** or **O(V + E)** time. Since we do this for 'Q' queries, the total time for query processing is **O(Q \* (V + E))**.
+    - **Overall Time:** Combining graph building and query processing, the total time complexity is **O(E + Q \* (V + E))**. Notice this is asymptotically the same as the DFS solution!
+- **Space Complexity:**
+    - **Graph Storage:** Again, same as DFS. Storing the adjacency list in the nested HashMap takes space proportional to the number of nodes plus edges: **O(V + E')** or **O(V + E)**.
+    - **BFS Auxiliary Space:** During a single BFS run, we need space for:
+        - The `visited` set: In the worst case, this can store up to 'V' nodes, taking **O(V)** space.
+        - The `queue`: In the worst case (e.g., a graph where one node connects to many others), the queue might hold up to O(V) `Pair` objects simultaneously. So, the queue takes **O(V)** space.
+        - The auxiliary space for BFS execution is therefore **O(V)**.
+    - **Overall Space:** The graph storage (O(V + E)) is typically the dominant factor. So, the overall space complexity remains **O(V + E)**, which is also asymptotically the same as the DFS solution.
 
 ---
 
 ## **Solution 3: Union-Find (with Ratio Information)**
 
-This approach uses the Union-Find (Disjoint Set) data structure to group connected components and maintain the division ratios between each variable and its parent.
+The main idea is to treat each variable as a node in a disjoint-set structure where the ratio between variables is maintained. By unioning two variables with a given ratio, we can later quickly determine if two variables are connected, and if so, compute the division result by comparing their ratios relative to their ultimate parents. This strategy helps us efficiently answer multiple queries about variable relationships. 
 
 ### **Java Code with Detailed Annotations**
 
 ```java
 class Solution {
     // Map to store parent of each variable.
-    private Map<String, String> parent;
+    private Map<String, String> parent; // Here, we declare a map to track each variable's parent in the disjoint set.
     // Map to store the ratio between the variable and its parent.
-    private Map<String, Double> ratio;
-    
-    public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) {
-        parent = new HashMap<>();
-        ratio = new HashMap<>();
-        
+    private Map<String, Double> ratio; // And here, we declare a map to maintain the multiplication ratio from a variable to its parent.
+    public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) { 
+        // This public method calculates the results for the division queries given the equations and corresponding values.
+        parent = new HashMap<>(); // We initialize the parent map.
+        ratio = new HashMap<>();  // We initialize the ratio map.
         // Initialize each variable: set parent to itself and ratio to 1.0.
-        for (int i = 0; i < equations.size(); i++) {
-            String var1 = equations.get(i).get(0);
-            String var2 = equations.get(i).get(1);
-            if (!parent.containsKey(var1)) {
-                parent.put(var1, var1);
-                ratio.put(var1, 1.0);
+        for (int i = 0; i < equations.size(); i++) { 
+            // We iterate through each equation in the list, and for each equation we process both variables.
+            String var1 = equations.get(i).get(0); 
+            // We extract the first variable from the equation, and
+            String var2 = equations.get(i).get(1); 
+            // we extract the second variable from the equation, and
+            if (!parent.containsKey(var1)) { 
+                // if the first variable is not in the parent map, then
+                parent.put(var1, var1); 
+                // we initialize it by setting its own parent to itself, and
+                ratio.put(var1, 1.0); 
+                // we set its ratio relative to itself as 1.0.
             }
-            if (!parent.containsKey(var2)) {
-                parent.put(var2, var2);
-                ratio.put(var2, 1.0);
+            if (!parent.containsKey(var2)) { 
+                // Similarly, if the second variable is not present in the parent map, then
+                parent.put(var2, var2); 
+                // we initialize it by setting its parent to itself, and
+                ratio.put(var2, 1.0); 
+                // we set its ratio relative to itself as 1.0.
             }
             // Union the two variables with the given ratio.
-            union(var1, var2, values[i]);
+            union(var1, var2, values[i]); 
+            // We then union these two variables using the provided ratio value, which represents var1/var2.
         }
-        
-        double[] results = new double[queries.size()];
-        for (int i = 0; i < queries.size(); i++) {
-            List<String> query = queries.get(i);
-            String var1 = query.get(0);
-            String var2 = query.get(1);
+        double[] results = new double[queries.size()]; 
+        // We prepare an array to store the results of each query.
+        for (int i = 0; i < queries.size(); i++) { 
+            // Next, we iterate through each query in the queries list.
+            List<String> query = queries.get(i); 
+            // We extract the current query, and
+            String var1 = query.get(0); 
+            // we get the first variable of the query, and
+            String var2 = query.get(1); 
+            // we get the second variable of the query.
             // If one of the variables is not present, answer is -1.0.
-            if (!parent.containsKey(var1) || !parent.containsKey(var2)) {
-                results[i] = -1.0;
+            if (!parent.containsKey(var1) || !parent.containsKey(var2)) { 
+                // If either variable does not exist in our parent map, then
+                results[i] = -1.0; 
+                // we assign -1.0 as the result for that query.
             } else {
-                // Find roots for both variables.
-                Pair p1 = find(var1);
-                Pair p2 = find(var2);
+                // Otherwise, we proceed to find the roots of both variables.
+                Pair p1 = find(var1); 
+                // We find the ultimate parent of the first variable along with its accumulated ratio, and
+                Pair p2 = find(var2); 
+                // we do the same for the second variable.
                 // If roots differ, they are not connected.
-                if (!p1.parent.equals(p2.parent)) {
-                    results[i] = -1.0;
+                if (!p1.parent.equals(p2.parent)) { 
+                    // If the root parents of var1 and var2 are different, then
+                    results[i] = -1.0; 
+                    // the variables are not connected, so we set the result to -1.0.
                 } else {
                     // Otherwise, the ratio between var1 and var2 is computed.
-                    results[i] = p1.ratio / p2.ratio;
+                    results[i] = p1.ratio / p2.ratio; 
+                    // We compute the result by dividing the ratio of var1 by the ratio of var2.
                 }
             }
         }
-        return results;
+        return results; 
+        // Finally, we return the array of computed results for all the queries.
     }
-    
     // Union two variables with the given value (ratio var1 / var2 = value).
-    private void union(String var1, String var2, double value) {
-        Pair p1 = find(var1);
-        Pair p2 = find(var2);
+    private void union(String var1, String var2, double value) { 
+        // This method unites the sets containing var1 and var2, considering the ratio between them.
+        Pair p1 = find(var1); 
+        // We find the root and accumulated ratio for var1, and
+        Pair p2 = find(var2); 
+        // we find the root and accumulated ratio for var2.
         // Merge p1's parent to p2's parent.
-        parent.put(p1.parent, p2.parent);
+        parent.put(p1.parent, p2.parent); 
+        // We merge the set by setting the parent of p1's root to be p2's root, and
         // Adjust the ratio: p1.ratio * value gives the ratio for var1, so set parent ratio accordingly.
-        ratio.put(p1.parent, p2.ratio * value / p1.ratio);
+        ratio.put(p1.parent, p2.ratio * value / p1.ratio); 
+        // We update the ratio for p1's root to reflect the ratio relationship between var1 and var2.
     }
-    
     // Find operation with path compression.
-    private Pair find(String var) {
-        if (!parent.get(var).equals(var)) {
-            Pair p = find(parent.get(var));
+    private Pair find(String var) { 
+        // This method finds the root of the variable 'var' and compresses the path for efficiency.
+        if (!parent.get(var).equals(var)) { 
+            // If the current variable is not its own parent, then
+            Pair p = find(parent.get(var)); 
+            // we recursively call find to reach the root of the variable, and
             // Path compression: update the parent.
-            parent.put(var, p.parent);
+            parent.put(var, p.parent); 
+            // we update the parent of var to its root, and
             // Update ratio to be relative to the root.
-            ratio.put(var, ratio.get(var) * p.ratio);
+            ratio.put(var, ratio.get(var) * p.ratio); 
+            // we update the ratio of var by multiplying its current ratio with the ratio of its parent.
         }
-        return new Pair(parent.get(var), ratio.get(var));
+        return new Pair(parent.get(var), ratio.get(var)); 
+        // Finally, we return a new Pair containing the root parent and the updated ratio for var.
     }
-    
     // Helper class to store a pair of parent and ratio.
-    class Pair {
-        String parent;
-        double ratio;
-        Pair(String parent, double ratio) {
-            this.parent = parent;
-            this.ratio = ratio;
+    class Pair { 
+        // This helper class stores the information about a variable's ultimate parent and its ratio relative to that parent.
+        String parent; // It has a field for the parent variable, and
+        double ratio; // it has a field for the ratio from the variable to its parent.
+        Pair(String parent, double ratio) { 
+            // The constructor initializes the Pair with a given parent and ratio.
+            this.parent = parent; 
+            // It assigns the parent, and
+            this.ratio = ratio; 
+            // it assigns the ratio.
         }
     }
 }
@@ -357,38 +437,19 @@ class Solution {
 
 ### **Analysis**
 
-- **Time Complexity:**  
-  - **Initialization and Union operations:** Approximately O(E * α(V)) where α(V) is the inverse Ackermann function (almost constant).
-  - **Query Processing:** Each find operation is nearly O(1) on average.
-  
-- **Space Complexity:**  
-  - O(V) for both the `parent` and `ratio` maps.
+**Time Complexity:**
+
+1. **Building the Structure (Union Loop):** We loop through 'E' equations. Inside, we might initialize variables (O(1) map access on average) and call `union`. The `union` calls `find` twice. Now, the magic of Union-Find with *path compression* (and often union by rank/size, though not explicitly used here, path compression dominates) makes the amortized time complexity of `find` (and thus `union`) *almost* constant. It's technically O(α(V)), where α is the super slow-growing **Inverse Ackermann function**. For any practical value of V you'll ever encounter, α(V) is effectively a very small constant (like 4 or 5). So, building the structure takes roughly **O(E \* α(V))** time.
+2. **Query Processing:** We loop through 'Q' queries. Inside, we do a couple of O(1) map checks and then make two `find` calls. Each `find` is O(α(V)) amortized time. So, processing queries takes **O(Q \* α(V))** time.
+3. **Overall Time:** Combining these, the total time complexity is **O((E + Q) \* α(V))**. This is considered *nearly linear* time, which is typically much faster than the O(E + Q * (V + E)) complexity we saw with the graph traversal methods, especially if V or E is large relative to Q.
+
+**Space Complexity:**
+
+1. **Data Structures:** We store the `parent` map and the `ratio` map. Both maps store an entry for each unique variable 'V'. This takes **O(V)** space.
+2. **Recursion Stack:** The `find` method is recursive. In the worst-case theoretical scenario without path compression fully applied yet, the stack could go deep. However, path compression keeps the effective tree depth very shallow (related to α(V)). We can still bound the worst-case stack space as O(V), although practically it's much less.
+3. **Overall Space:** The dominant space cost comes from the `parent` and `ratio` maps. Therefore, the overall space complexity is **O(V)**. This is generally better than the O(V + E) needed for storing an explicit graph, especially if there are many equations (edges).
 
 ---
-
-## **Vlog Oral Script**
-
-*Intro:*  
-"Hey everyone, welcome back to my vlog where I break down LeetCode problems step-by-step. Today, we’re solving Problem 399: Evaluate Division. We need to find the result of division queries based on a set of given equations like `a / b = 2.0`."
-
-*Intuition & Idea:*  
-"My intuition was to model this problem as a graph where each variable is a node and each equation is a weighted edge. The idea is that to compute something like `a / c`, we need to find a path from node `a` to node `c` and multiply the weights along that path. We can achieve this using graph traversal methods like DFS or BFS, and there’s even a neat Union-Find approach to precompute relationships."
-
-*Explaining the DFS Solution:*  
-"In my first solution, I built an adjacency list to represent the graph. For every equation, I created two entries – one for the direct division and one for the inverse. Then, I used a DFS function to traverse from the start variable to the target, multiplying the values along the path. I carefully used a visited set to avoid cycles. As you see in the code, every line has a clear purpose: from initializing the graph, traversing each neighbor, and returning the cumulative product if a valid path exists."
-
-*Time and Space Analysis:*  
-"The DFS solution, in the worst case, might traverse all nodes and edges for each query, which gives us a time complexity of O(V+E) per query. The space complexity is driven by the graph and the recursion stack, leading to O(V+E) space usage."
-
-*Explaining the BFS & Union-Find Solutions:*  
-"I also explored a BFS approach which works similarly by using a queue to traverse level by level. In contrast, the Union-Find solution leverages disjoint sets to group variables and efficiently find conversion ratios. Both methods are efficient, with Union-Find being nearly constant for query operations after setup."
-
-*Conclusion:*  
-"To sum up, the key to solving Evaluate Division is recognizing the graph structure and choosing the right traversal or union method to compute the desired ratios. Each method has its trade-offs in terms of complexity, and understanding these helps you choose the best approach depending on the problem constraints."
-
-"Thanks for watching, and I hope this detailed breakdown helps you in your coding journey. Don't forget to like and subscribe for more LeetCode problem walkthroughs!"
-
-
 
 ## Terms explain
 
@@ -449,6 +510,12 @@ An **inequality** (or **inequation**) is a mathematical statement that asserts a
     - `-10 ≤ temperature < 25` (This is a *compound inequality*, stating that `temperature` is greater than or equal to -10 AND less than 25.)
 
 > inequation /ɪnɪˈkweɪʒn/	inequality /ˌɪnɪˈkwɑːləti/
+>
+> absent /ˈæbsənt/ ADJ. If someone or something is absent from a place or situation where they should be or where they usually are, they are not there.
+>
+> reciprocal /rɪˈsɪprəkəl/ N. In mathematics, the **reciprocal** of a number is simply **1 divided by that number**. In other words, for any non-zero number `x`, the reciprocal of `x` is `1/x`.
+>
+> product N. In mathematics, the **product** is the result of multiplying two or more numbers or expressions together. It is the outcome you get after applying the multiplication operation. The product of 5 and 6 is **30**.
 >
 > contradiction n. If you describe an aspect of a situation as a contradiction, you mean that it is completely different from other aspects, and so makes the situation confused or difficult to understand.
 >
