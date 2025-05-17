@@ -123,7 +123,7 @@ class Solution {
         }
         // Once all neighbors are safe, we mark u as Visited
         state[u] = 2;
-        // Finallu, we return false because no cycle was found starting from the node u
+        // Finally, we return false because no cycle was found starting from the node u
         return false;
     }
 }

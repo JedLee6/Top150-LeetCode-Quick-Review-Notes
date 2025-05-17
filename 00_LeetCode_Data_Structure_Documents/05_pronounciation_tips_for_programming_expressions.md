@@ -225,3 +225,8 @@ Here are several ways to pronounce `for (Map.Entry<String, Double> entry : neigh
     - **Variation:** "**For each Map dot Entry entry in neighbors dot entrySet...**" (Slightly less verbose type reading).
     - **Explanation:** This follows the structure "for each `Type variable` in `collection`". It explicitly states the type (`Map.Entry<String, Double>`, read conceptually), the variable name (`entry`), reads the colon `:` as "in", and specifies the source collection by reading the method call `neighbors.entrySet()`.
     - **Usage Frequency:** **Very High**. This is a very standard, clear, and widely understood way to read the loop header, balancing syntactic structure with conceptual reading of types.
+
+### 1.11 Code expressions
+
+how to read out java code expression "adjList.get(prerequisite).add(course);" orally?
+
