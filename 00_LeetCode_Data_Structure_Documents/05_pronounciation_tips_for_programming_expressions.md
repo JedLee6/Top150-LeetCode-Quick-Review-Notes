@@ -230,3 +230,20 @@ Here are several ways to pronounce `for (Map.Entry<String, Double> entry : neigh
 
 how to read out java code expression "adjList.get(prerequisite).add(course);" orally?
 
+
+
+### 1.12 Subtraction and minus sign (−)
+
+Subtraction is a mathematical operation that represents the operation of removing objects from a collection. It is signified by the minus sign (−).
+
+One minus one is zero. If you subtract 3 from 5, you get 2.
+
+### 1.13 modulo operator (%)
+
+>   model[ˈmɒdəl] n模型,模式,榜样,模特	module[ˈmɑːdʒuːl] n(机械,计算机)模块,(课程)单元	modulo[ˈmɒdjʊləʊ] prep以...为模	modulus[ˈmɒdʒələs] n模数	modular[ˈmɒdjʊlə]a(电脑)模块的,模数的	congruent[ˈkɒŋɡrʊənt] a合适的,(模数)全等的	remainder[rɪˈmeɪndər]n剩余的部分,余数	division[dɪˈvɪʒən]n除法	dividend[ˈdɪvɪdend]n股票利息,被除数	divisor[dɪˈvaɪzər]n除数
+
+Given an integer n > 1, called a modulus, two integers a and b are said to be congruent modulo n, if n is a divisor of their difference, such as 15 is congruent to 12 modulo 3, which is `15 ≡ 12 (modulo 3)`.给定一个大于1的整数n，我们把n称为模数，如果n是两个整数a和b的差的除数，则称a和b以n为模全等。
+
+In programming domain, the modulus operator `%` returns the remainder of two numbers after division. Given two numbers, X and Y, X is the dividend and Y is the divisor, `X mod Y` is equal to the remainder of the division of X by Y, such as 16 mod 3 is equal to 1, which is written as `16 modulo 3 = 1`.
+
+`int a = b % c;` is read as `Integer a is assigned b modulo 'c'` orally.
