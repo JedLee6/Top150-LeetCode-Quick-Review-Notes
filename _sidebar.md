@@ -127,5 +127,6 @@
 
 - 13 Graph BFS
   - [095 Graph BFS 909. Snakes and Ladders](13_Graph_BFS/095_Graph_BFS_909._Snakes_and_Ladders.md)
+  - [096 Graph BFS 433. Minimum Genetic Mutation](13_Graph_BFS/096_Graph_BFS_433._Minimum_Genetic_Mutation.md)
 
 - [README](README.md)
