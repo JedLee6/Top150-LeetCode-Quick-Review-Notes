@@ -66,7 +66,7 @@ The main idea with a naive DFS would be to recursively try every possible mutati
 
 **Why it's less optimal:** DFS explores deeply. It might find a very long path to the `endGene` (or explore many dead ends) before finding the shortest one. To guarantee the shortest path, DFS would have to explore *all* possible paths, which can be combinatorially explosive. It also requires careful handling of visited states to avoid infinite loops, and managing path lengths can be more complex than BFS's level-order traversal. For shortest path problems in unweighted graphs, BFS is generally superior.
 
-I won't code this one out fully because it's not the recommended approach, but it's useful to consider *why* BFS is preferred.
+We won't code this one out fully because it's not the recommended approach, but it's useful to consider *why* BFS is preferred.
 
 ## Solution 2: Standard BFS
 
@@ -77,93 +77,77 @@ We'll use a queue to manage the genes to visit and a set to keep track of visite
 ```java
 class Solution {
     public int minMutation(String startGene, String endGene, String[] bank) {
-        // First, we need to convert the bank to a HashSet for O(1) lookups
-        // This will make it efficient to check if a mutation is valid
+        //  In the code, we start by creating a HashSet variable, as we need to convert the bank to a HashSet for O(1) lookups, which will make it efficient to check if a mutation is valid
         Set<String> bankSet = new HashSet<>(Arrays.asList(bank));
-        
-        // If the target gene isn't in the bank, we can't reach it with valid mutations
-        // So we immediately return -1 to indicate it's impossible
+        // Next, we check if the target gene isn't in the bank or not, we can't reach it with valid mutations. So we immediately return -1 to indicate it's impossible
         if (!bankSet.contains(endGene)) {
             return -1;
         }
-        
-        // These are the only possible characters in a gene string according to the problem
-        // We'll use this to generate all possible mutations
+        // We then create a character arrays containing 4 characters in a gene to generate all possible mutations
         char[] validChars = {'A', 'C', 'G', 'T'};
-        
-        // We'll use a queue to perform our BFS, starting with the startGene
+        // After that, we create a queue to perform our BFS, starting with the startGene
         Queue<String> queue = new LinkedList<>();
         queue.offer(startGene);
-        
-        // We need to track genes we've already visited to avoid cycles
-        // and redundant processing
+        // And we need to track genes we've already visited to avoid cycles and redundant processing
         Set<String> visited = new HashSet<>();
         visited.add(startGene);
-        
-        // This variable will track how many mutations we've made so far
+        // Following that, we declare a variable to track how many mutations we've made so far
         int mutations = 0;
-        
-        // Now we begin our BFS
+        // Now we begin our BFS with a while loop
         while (!queue.isEmpty()) {
-            // We process all genes at the current mutation level together
-            // This ensures we find the minimum number of mutations
+            // For each iteration, we process all genes at the current mutation level together
+            // Firstly, we get the static size of the queue before modifying it
             int levelSize = queue.size();
-            
-            // Process all genes at the current level
+            // Secondly, we process all genes at the current level
             for (int i = 0; i < levelSize; i++) {
-                // Get the current gene we're examining
+                // Inside the inner for-loop, we get the current gene we're examining
                 String currentGene = queue.poll();
-                
-                // If we've reached our target, return the current mutation count
+                // Next, If we've reached our target, return the current mutation count
                 if (currentGene.equals(endGene)) {
                     return mutations;
                 }
-                
-                // We'll try changing each position in the current gene
+                // Or, we'll try changing each position in the current gene by transforming the currentGene string to character arrays at first
                 char[] geneArray = currentGene.toCharArray();
+                // Then we use a for-loop to iterate all characters in currentGene
                 for (int j = 0; j < geneArray.length; j++) {
-                    // Save the original character so we can restore it later
+                    // For each iteration, we save the original character so we can restore it later
                     char originalChar = geneArray[j];
-                    
-                    // Try each possible character at the current position
+                    // Now we create a enhanced for-loop to try each possible character at the current position
                     for (char c : validChars) {
-                        // Skip if it's the same character (not a mutation)
+                        // For each possible character, we'll skip it if it's the same character (not a mutation)
                         if (c == originalChar) {
                             continue;
                         }
-                        
-                        // Apply the mutation
+                        // Otherwise, we apply the mutation and get the mutated gene string
                         geneArray[j] = c;
                         String mutatedGene = new String(geneArray);
-                        
-                        // Check if this mutation is valid and not visited
+                        // After that, we check if this mutation is valid and not visited
                         if (bankSet.contains(mutatedGene) && !visited.contains(mutatedGene)) {
-                            // Add it to our queue for further exploration
+                            // If so, we add it to our queue for further exploration
                             queue.offer(mutatedGene);
-                            // Mark it as visited to avoid processing it again
+                            // And we mark it as visited to avoid processing it again
                             visited.add(mutatedGene);
                         }
                     }
-                    
-                    // Restore the original character for the next iteration
+                    // Out of the enhanced for-loop, we need to restore the original character for the next iteration
                     geneArray[j] = originalChar;
                 }
             }
-            
             // After processing all genes at the current level, increment mutation count
             mutations++;
         }
-        
-        // If we've exhausted all possibilities without finding the endGene,
-        // there's no valid mutation path
+        // If we've checked all possibilities without finding the endGene, we return -1, as there's no valid mutation path
         return -1;
     }
 }
 ```
 
+Alright, that's all of the code. Let's submit our code and check if our solution passes all the test cases. Yes, our code got accepted. Now, Let's analyze the time and space complexity.
+
 ### Time and Space Complexity Analysis:
 
 **Time Complexity**: O(N * L * 4)
+
 - N is the number of genes in the bank
 - L is the length of each gene (which is 8 in this problem)
 - For each gene, we try to mutate each position with 3 other characters (4 total minus the original)
