@@ -33,13 +33,11 @@ startGene, endGene, and bank[i] consist of only the characters ['A', 'C', 'G', '
 
 
 
- # Solving Minimum Genetic Mutation - LeetCode 433
-
 ## Initial Intuition
 
-Looking at this problem, we immediately recognize it as a graph traversal scenario. Each gene string represents a node, and there's an edge between two genes if they differ by exactly one character. What we need to find is the shortest path from the startGene to the endGene, going through only valid mutations in the bank.
+Looking at this problem, we immediately recognize it as a shortest path problem. Each gene string represents a node, and there's an edge between two genes if they differ by exactly one character. What we need to find is the shortest path from the startGene to the endGene, going through only valid mutations in the bank.
 
-This is a classic shortest path problem, which makes me think of breadth-first search (BFS). BFS is perfect for this because it explores all possible mutations at the current "distance" before moving further away, ensuring we find the minimum number of mutations.
+This is a classic shortest path problem, which makes us think of breadth-first search (BFS). BFS is perfect for this because it explores all possible mutations at the current "distance" before moving further away, ensuring we find the minimum number of mutations.
 
 We can think of several solutions, from less optimal to more optimal:
 
@@ -154,6 +152,7 @@ Alright, that's all of the code. Let's submit our code and check if our solution
 - In worst case, we might examine all genes in the bank
 
 **Space Complexity**: O(N)
+
 - We store the bank in a HashSet: O(N)
 - The queue and visited set can contain at most N genes
 - Overall space complexity is O(N)
