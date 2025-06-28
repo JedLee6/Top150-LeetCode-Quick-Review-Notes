@@ -138,6 +138,7 @@ Alright, that's all of the code. Let's submit our code and check if our solution
 **Time Complexity**: O(N * L² * 26)
 
 - Let **N** be the number of words in `wordList` and **L** be the length of the words.
+
 - The BFS loop, in the worst case, visits every word once. For each word, we iterate through its `L` positions. For each position, we try 26 letters. Inside this loop, creating a new string and checking for its existence in the `HashSet` both take O(L) time.
 
     So, processing one word is `L * 26 * O(L) = O(L²)`.
