@@ -14,9 +14,9 @@
 >exponent /ik'spounent/ n倡导者,(技能)擅长者;指数
 >exponential /ekspe'nenshl/ a越来越快的(增长),指数的
 
-As for **3^2^ (3^2)**, 3 is the base value and 2 is the exponent. Exponents are also called powers. We can say `3 raised to the power of 2` to describe **3^2^ (3^2)**,  or `3 to the second power`, or 3 raised to the power of 2. An exponent tells you how many times the base value is being multiplied by itself.
+As for **3^2**, 3 is the base value and 2 is the exponent. Exponents are also called powers. We can say `3 raised to the power of 2` to describe **3^2**,  or `3 to the second power`, or 3 raised to the power of 2. An exponent tells you how many times the base value is being multiplied by itself.
 
-n^2^ and n^3^ are so common that they even have special names. When a number is raised to the second power, we say it's being squared. 5^2^ is also referred to as "5 squared". For numbers that are raised to the third power, we say that the number is being "cubed". 5^3^ is "5 cubed". 
+n^2 and n^3 are so common that they even have special names. When a number is raised to the second power, we say it's being squared. 5^2^ is also referred to as "5 squared". For numbers that are raised to the third power, we say that the number is being "cubed". 5^3^ is "5 cubed". 
 
 ### 2.2 对数 logarithm[ˈlɔːɡərɪðəm]
 

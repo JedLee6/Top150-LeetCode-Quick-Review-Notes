@@ -247,3 +247,36 @@ Given an integer n > 1, called a modulus, two integers a and b are said to be co
 In programming domain, the modulus operator `%` returns the remainder of two numbers after division. Given two numbers, X and Y, X is the dividend and Y is the divisor, `X mod Y` is equal to the remainder of the division of X by Y, such as 16 mod 3 is equal to 1, which is written as `16 modulo 3 = 1`.
 
 `int a = b % c;` is read as `Integer a is assigned b modulo 'c'` orally.
+
+
+
+### 1.14 exponent symbols or caret (^)
+
+The symbol `^` is called a **caret** and is commonly used in programming and mathematics to represent **exponentiation** (raising a number to a power).
+
+The expression `a^b` is most commonly pronounced **"a to the power of b"**.
+
+### General Pronunciation: a^b
+
+There are a few ways to say this:
+
+- **"a to the power of b"** (most formal and clear)
+- **"a to the b-th power"** (also very common)
+- **"a to the b"** (a common, shorter version)
+
+### Pronunciation for Specific Numbers
+
+For the powers of 2 and 3, there are special, more common names.
+
+- **When b is 2 (`a^2`):** You say **"a squared"**.
+- **When b is 3 (`a^3`):** You say **"a cubed"**.
+- **When b is 4 or bigger (`a^4`, `a^5`...):** You use the ordinal number (fourth, fifth, etc.).
+    - `a^4` is **"a to the fourth power"**.
+    - `a^5` is **"a to the fifth power"**.
+
+| Expression | Most Common Pronunciation | Also Correct           |
+| ---------- | ------------------------- | ---------------------- |
+| **`a^b`**  | a to the power of b       | a to the b             |
+| **`a^2`**  | a squared                 | a to the second power  |
+| **`a^3`**  | a cubed                   | a to the third power   |
+| **`a^4`**  | a to the fourth power     | a to the power of four |
