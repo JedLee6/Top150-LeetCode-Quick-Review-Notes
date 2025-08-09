@@ -133,5 +133,6 @@
 - 14 Trie
   - [098 Trie 208. Implement Trie (Prefix Tree)](14_Trie/098_Trie_208._Implement_Trie_(Prefix_Tree).md)
   - [099 Trie 211. Design Add and Search Words Data Structure](14_Trie/099_Trie_211._Design_Add_and_Search_Words_Data_Structure.md)
+  - [100 Trie 212. Word Search II](14_Trie/100_Trie_212._Word_Search_II.md)
 
 - [README](README.md)
