@@ -104,7 +104,7 @@ class Solution {
             current.append(letters.charAt(i));
             // Recursively build combinations for the next digits
             backtrack(digits, index + 1, current);
-            // Backtrack by removing the last letter, so we can try the next letter
+            // Backtrack by removing the last letter, so we can try the next letter. When we reach a dead end or finish exploring one path in a maze, we must retrace our steps to a previous intersection to try a different path. Removing the last letter is the equivalent of taking one step back.
             current.deleteCharAt(current.length() - 1);
         }
     }

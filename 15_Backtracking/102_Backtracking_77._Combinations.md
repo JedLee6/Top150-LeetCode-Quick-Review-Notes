@@ -31,6 +31,14 @@ Explanation: There is 1 choose 1 = 1 total combination.
 - `1 <= k <= n`
 
 > "Exponential nature" describes a pattern of growth where the rate of increase is proportional to the current amount, causing the growth to become faster and faster over time. the word **nature** means the **fundamental quality, character, or essence** of something.
+>
+> binominal /baɪˈnəʊmɪəl/ N. a mathematical expression consisting of two terms, such as 3x+2y.
+>
+> coefficient /ˌkəʊɪˈfɪʃənt/ N. A <b>coefficient</b> is a number that expresses a measurement of a particular quality of a substance or object under specified conditions.
+>
+> The binomial coefficient counts the number of ways to choose a smaller, unordered subset of items from a larger set. It answers the question: "If I have **n** items, how many different combinations of **k** items can I choose?" The order in which you choose the items does not matter. It is written as C(n,k) and is read aloud as "**n choose k**."
+>
+> **`C(n,k)`** is pronounced "**n choose k**", which refers to the number of combinations.
 
 ## Initial Thoughts
 
@@ -38,9 +46,9 @@ Alright, let's analyze this problem. We need to find all possible combinations o
 
 The key insight is that for each number from 1 to n, we have two choices: either include it in our combination or exclude it. And we need to form combinations of exactly k numbers.
 
-We can think of 2 ways to approach this, from worst to best:
+We can think of 2 ways to approach this:
 
-1. **Backtracking (Best and Standard):** This is the approach I described. It's the most efficient and standard way to solve this problem because it builds the combinations directly and avoids generating duplicates from the start. Given the constraints (`n <= 20`), the exponential nature of this solution is perfectly acceptable.
+1. **Backtracking (Best and Standard):** This is the most efficient and standard way to solve this problem because it builds the combinations directly and avoids generating duplicates from the start. Given the constraints (`n <= 20`), the exponential nature of this solution is perfectly acceptable.
 2. **Iterative Approach:** We could also implement the backtracking logic iteratively using a stack to manage the state, which would avoid deep recursion. However, the recursive solution is often more intuitive and easier to write correctly, so we'll focus on that one first as it's the most common and clear solution.
 
 I believe we can solve this by starting with backtracking, which is a common approach for combination problems.
@@ -51,17 +59,15 @@ Our first approach would be using backtracking. In backtracking, we build the so
 
 The basic idea is to consider each number from 1 to n, and for each number, we have two choices: include it in our current combination or skip it. When we've selected exactly k numbers, we've found a valid combination.
 
-Let me code this up:
+Let's code this up:
 
 ```java
 // This function will solve the combinations problem using backtracking
 public List<List<Integer>> combine(int n, int k) {
     // We'll store all valid combinations in this list
     List<List<Integer>> result = new ArrayList<>();
-   ac
     // We'll use this list to build each combination during backtracking
     List<Integer> currentCombination = new ArrayList<>();
-    
     // Start the backtracking process from number 1
     backtrack(result, currentCombination, 1, n, k);
     // Return all found combinations
@@ -72,7 +78,7 @@ public List<List<Integer>> combine(int n, int k) {
 private void backtrack(List<List<Integer>> result, List<Integer> currentCombination, int start, int n, int k) {
     // If we've selected exactly k numbers, we've found a valid combination
     if (currentCombination.size() == k) {
-        // Add a copy of the current combination to our result
+        // Add a copy of the current combination to our result as the currentCombination list is a mutable object that continues to be modified throughout the backtracking process. 
         result.add(new ArrayList<>(currentCombination));
         return;
     }
@@ -83,7 +89,7 @@ private void backtrack(List<List<Integer>> result, List<Integer> currentCombinat
         // Recursively find all combinations that include this number
         // We start from i+1 to avoid using the same number twice
         backtrack(result, currentCombination, i + 1, n, k);
-        // Backtrack: remove the last added number to try other possibilities
+        // Backtrack: remove the last added number to try other possibilities. When we reach a dead end or finish exploring one path in a maze, we must retrace our steps to a previous intersection to try a different path. Removing the number is the equivalent of taking one step back.
         currentCombination.remove(currentCombination.size() - 1);
     }
 }
@@ -98,8 +104,6 @@ Let's analyze the time and space complexity:
 Time Complexity: O(C(n,k) * k), where C(n,k) is the binomial coefficient (n choose k). This is because we generate all possible combinations, and for each combination, we spend O(k) time to create a copy of the current combination.
 
 Space Complexity: O(k) for the recursion stack and the currentCombination list. The result list will contain all combinations, so that's O(C(n,k) * k), but that's for the output and not typically counted in space complexity analysis.
-
-This approach is quite efficient, but let's see if we can optimize it further.
 
 ## Approach 2: Iterative Solution
 
