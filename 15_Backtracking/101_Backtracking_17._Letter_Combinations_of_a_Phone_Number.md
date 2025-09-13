@@ -47,7 +47,7 @@ We have a string of digits from 2-9, and each digit maps to several letters on a
 This is clearly a combination problem where we need to consider all possible choices at each position. For example, if the input is '23', digit '2' maps to 'abc' and '3' maps to 'def'. We need to generate: 'ad', 'ae', 'af', 'bd', 'be', 'bf', 'cd', 'ce', 'cf'.
 
 I'm thinking of a few approaches:
-1. Backtracking (DFS): Build combinations one character at a time
+1. Backtracking (DFS): Build combinations one character at a time. For each digit, we'll try all possible letters and recursively build the rest of the combination.
 2. BFS approach: Start with empty string and build up combinations level by level
 3. Iterative approach: Similar to BFS but using a queue
 
