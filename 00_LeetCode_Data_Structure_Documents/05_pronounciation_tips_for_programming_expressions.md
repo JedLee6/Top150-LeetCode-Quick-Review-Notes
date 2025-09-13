@@ -280,3 +280,9 @@ For the powers of 2 and 3, there are special, more common names.
 | **`a^2`**  | a squared                 | a to the second power  |
 | **`a^3`**  | a cubed                   | a to the third power   |
 | **`a^4`**  | a to the fourth power     | a to the power of four |
+
+
+
+### 1.15 range
+
+"the range [1, n]" is spelled as "the range one to n" or "the range one to n, inclusive". The square brackets `[ ]` imply that the range is inclusive of both endpoints, but in most technical conversations, this is understood, so you don't need to say "inclusive" unless you want to be extra clear.
