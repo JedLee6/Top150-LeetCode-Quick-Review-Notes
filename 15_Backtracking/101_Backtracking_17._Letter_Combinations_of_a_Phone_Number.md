@@ -44,7 +44,7 @@ Output: ["a","b","c"]
 
 We have a string of digits from 2-9, and each digit maps to several letters on a phone keypad. We need to find all possible letter combinations.
 
-This is clearly a combination problem where we need to consider all possible choices at each position. For example, if the input is '23', digit '2' maps to 'abc' and '3' maps to 'def'. We need to generate: 'ad', 'ae', 'af', 'bd', 'be', 'bf', 'cd', 'ce', 'cf'.
+When we see a problem that asks for "all possible" arrangements or combinations, it’s a huge clue that we should be thinking about backtracking. This is clearly a combination problem where we need to consider all possible choices at each position. For example, if the input is '23', digit '2' maps to 'abc' and '3' maps to 'def'. We need to generate: 'ad', 'ae', 'af', 'bd', 'be', 'bf', 'cd', 'ce', 'cf'.
 
 I'm thinking of a few approaches:
 1. Backtracking (DFS): Build combinations one character at a time. For each digit, we'll try all possible letters and recursively build the rest of the combination.

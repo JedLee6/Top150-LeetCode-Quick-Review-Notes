@@ -42,7 +42,7 @@ Explanation: There is 1 choose 1 = 1 total combination.
 
 ## Initial Thoughts
 
-Alright, let's analyze this problem. We need to find all possible combinations of k numbers from the range [1, n]. This is a classic combination problem.
+Alright, let's analyze this problem. We need to find all possible combinations of k numbers from the range [1, n]. When we see a problem that asks for "all possible" arrangements or combinations, it’s a huge clue that we should be thinking about backtracking.
 
 The key insight is that for each number from 1 to n, we have two choices: either include it in our combination or exclude it. And we need to form combinations of exactly k numbers.
 
